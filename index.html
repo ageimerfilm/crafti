@@ -15928,6 +15928,7 @@ function permSummary(c){
   const gone = groups.filter(g => PERM.filter(u => u.g === g && permShown(u)).every(u => permState(me, u) === 'hide'));
   return `Can change: ${ed.join(', ') || 'nothing yet'}${gone.length ? ` · Hidden: ${gone.join(', ')}` : ''}`;
 }
+const permNames = tabs => (tabs || []).map(i => PERM_BY[i]).filter(u => u && permShown(u)).map(u => u.n);
 setTimeout(() => { PERM_ON = true; try{ permApply(); }catch(e){} }, 0);
 class CloudErr extends Error { constructor(msg, code){ super(msg); this.code = code; } }
 async function clRaw(path, opts = {}, auth = true){
