@@ -1225,7 +1225,10 @@ table.prcash tr.prshoot td{background:#FFF8EC}table.prcon td{vertical-align:top}
 .clinv{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .permbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:54;display:flex;flex-wrap:wrap;gap:2px 10px;align-items:center;justify-content:center;max-width:min(760px,calc(100vw - 24px));background:var(--ink);color:#fff;border-radius:999px;padding:8px 18px;box-shadow:var(--shadow);font-size:13px;pointer-events:none;text-align:center}.permbar span{opacity:.82}
 body.permro .work input:not([type=search]),body.permro .work textarea,body.permro .work [contenteditable="true"]{cursor:not-allowed}
-.permbox{display:flex;flex-direction:column;gap:10px;border:1px solid var(--rule);border-radius:10px;padding:12px;margin-top:2px}.permgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}.permgrid fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;min-width:0}.permgrid legend{font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px;padding:0}.permgrid label{display:flex;gap:6px;align-items:flex-start;font-size:13px;line-height:1.3;cursor:pointer}.permgrid input{margin:2px 0 0;accent-color:var(--brand)}.permmoney{font-style:normal;font-weight:700;color:var(--brand)}.cltabs{display:block;font-size:12px}.cllist li.permli{display:block}
+.permbox{display:flex;flex-direction:column;gap:10px;border:1px solid var(--rule);border-radius:10px;padding:12px;margin-top:2px}.permgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(262px,1fr));gap:14px 18px}.permgrid fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;min-width:0}.permgrid legend{font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px;padding:0}.permgrid label{display:flex;gap:6px;align-items:flex-start;font-size:13px;line-height:1.3;cursor:pointer}.permgrid input{margin:2px 0 0;accent-color:var(--brand)}.permmoney{font-style:normal;font-weight:700;color:var(--brand)}.cltabs{display:block;font-size:12px}
+.permgrid legend{display:flex;width:100%;justify-content:space-between;align-items:baseline;gap:6px}.permph{display:inline-flex;gap:2px;text-transform:none;letter-spacing:0;font-weight:400}.permph button{border:0;background:none;color:var(--brand);font:inherit;font-size:11.5px;cursor:pointer;padding:0 3px;text-decoration:underline}
+.permrow{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;line-height:1.25;padding:1px 0}.permrow.off>span:first-child{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(0,0,0,.25)}
+.permseg{display:inline-flex;flex:none;border:1px solid var(--rule);border-radius:6px;overflow:hidden;background:var(--panel)}.permgrid .permseg label{display:block;padding:2px 7px;font-size:11.5px;cursor:pointer;color:var(--muted);position:relative}.permseg label+label{border-left:1px solid var(--rule)}.permseg input{position:absolute;opacity:0;width:1px;height:1px;margin:0}.permseg label:has(input:checked){color:#fff}.permseg label.pm-edit:has(input:checked){background:var(--brand);color:var(--brand-ink,#fff)}.permseg label.pm-view:has(input:checked){background:var(--ink)}.permseg label.pm-hide:has(input:checked){background:#8A939D}.permseg label:has(input:disabled){opacity:.35;cursor:default}.permseg label:has(input:focus-visible){outline:2px solid var(--brand);outline-offset:-2px}.cllist li.permli{display:block}
 .clinv input.txt{flex:1 1 220px;width:auto;min-width:0}.clinv select.txt,.cllist select.txt{flex:0 0 auto;width:auto}.cllist li>div b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.clinvok{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;border:1px solid var(--rule);border-left:4px solid var(--brand);border-radius:8px;padding:8px 10px}.clinvok span{flex:1 1 260px}
 .acpage{display:grid;gap:10px}.acpage h3{margin:8px 0 0;font-size:14px}.acadd{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 10px;align-items:end;border:1px solid var(--rule);border-radius:10px;padding:10px 12px}.acadd .acwide{grid-column:1/-1}.acadd textarea{min-height:64px;resize:vertical}.acwrap{overflow:auto;border:1px solid var(--rule);border-radius:10px;max-width:100%}
 table.actbl{border-collapse:collapse;width:100%;font-size:12.5px}table.actbl th{position:sticky;top:0;background:var(--accent-soft);text-align:left;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:6px 8px;white-space:nowrap}table.actbl td{border-top:1px solid var(--rule);padding:5px 8px;vertical-align:middle}table.actbl .txt{min-width:0;padding:4px 6px;font-size:12.5px}table.actbl input[type=date]{width:136px}table.actbl input[data-acf=name]{width:130px}table.actbl select[data-acf=role]{width:100px}table.actbl select[data-acf=reviewer]{width:130px}table.actbl td.acem{white-space:nowrap}.acsoon{margin:0;padding-left:18px;display:grid;gap:3px}
@@ -14460,7 +14463,7 @@ document.addEventListener('keydown', e => {
 const EDITION = 'pro';
 /* version number and what's new; newest first */
 const APP_LOG = EDITION === 'pro' ? [
-  ['6.25', 'November 16, 2026', ['New: crew tabs for cloud sync. Add someone as Crew, pick their position (2nd AC, sound mixer, script supervisor and more) and tick the tabs they can change; every other tab opens view only for them', 'Money stays private: Budget, Costs, Financing, Contracts, Bid and Usage are hidden from crew unless you tick them', 'The cloud checks it too, so a crew member’s changes only ever reach the tabs you gave them. Run the new Crew tabs setup script in Supabase once', 'Projects now sync each tab’s data on its own, so two people on different tabs never hold each other up']],
+  ['6.25', 'November 16, 2026', ['New: crew tabs for cloud sync. Add someone as Crew and pick their position (2nd AC, sound mixer, script supervisor, editor and more): each tab is set to Edit, View or Hide to match the job, and you can change any of it', 'Hidden tabs, sections and whole phases disappear for that person, and their project opens on their own tabs. The Producer phase and the money tabs (Budget, Costs, Financing, Contracts, Bid, Usage) start hidden for all crew', 'On a View tab they can look, print and export, but not change anything', 'The cloud checks it too: crew changes only ever reach the tabs they can edit, and money, the production calendar and reviews aren’t sent to anyone they’re hidden from. Run the new Crew tabs setup script in Supabase once', 'Projects now sync each tab’s data on its own, so two people on different tabs never hold each other up']],
   ['6.24', 'November 16, 2026', ['New: Project › New project…: pick what you are making (short film, feature, documentary, TV pilot, vertical series, commercial or animation, with the technique for animation), give it a title, and start a blank project already set to that type', 'Start without a script and write it in Script › Drafts, or pick your screenplay PDF in the same step; the project you had open stays saved', 'The sample banner now offers Start a new project']],
   ['6.23', 'November 15, 2026', ['New Producer › Reviews: send a cut, storyboards or talent options to clients and execs as private links, one per person, with no account or app', 'Cuts on Vimeo or YouTube play inside the review, and every note is stamped with its timecode; storyboard frames get Looks good or Change this; talent gets Approve, Hold or Pass', 'Ask for an email code on confidential reviews; turn any link off, extend it, close it, or send the next round', 'Their notes arrive on the Reviews page: make a calendar task (assigned to the right person), add it to the cut notes, or mark it Not changing; reviewers see each note move from Planned to Done', 'Download an approval record (.docx) of who approved what, and when. Commercials also log each review on Producer › Approvals. Needs the review setup script run once on Supabase']],
   ['6.22', 'November 15, 2026', ['New Production › Walkies tab: sign walkie-talkies out and back in each shoot day, with a Now button for the time, the accessory that went with each radio, and its condition when it came back', 'Keep the radio kit (numbers, serials, make and model, where each one came from) and the channel list; the tab shows which radios are out and flags any still out from an earlier day or after wrap', 'Same as yesterday lines up each person with the radio they had the day before; Sign all back in at wrap', 'Download a printable sign-out sheet for the walkie table (.docx), with channels, signature lines and blank rows, or the log of every day (CSV)']],
@@ -15695,7 +15698,7 @@ const clBy = () => `${clName() || clMe()} · ${clDevice()}`;
 const clTitle = () => (S.sched && S.sched.settings && S.sched.settings.title) || baseName();
 const ROLE_NAME = {owner: 'Owner', editor: 'Editor', viewer: 'Viewer', reviewer: 'Reviewer'};
 const ROLE_SAYS = {reviewer: 'You can open and export this project as a reviewer, but can’t change it.', owner: 'Can change everything, invite and remove crew, and delete the project.', editor: 'Can change anything in the project.', viewer: 'Can look at and export everything, but can’t change the shared project.'};
-ROLE_NAME.crew = 'Crew'; ROLE_SAYS.crew = 'Can change only the tabs the owner picked; everything else is view only.'; CL.permSel = {}; CL.permPos = {}; CL.permEdit = null;
+ROLE_NAME.crew = 'Crew'; ROLE_SAYS.crew = 'Can change only the tabs the owner picked; everything else is view only.'; CL.permSel = {}; CL.permHide = {}; CL.permPos = {}; CL.permEdit = null;
 
 // ---- crew tab permissions: a "crew" member changes only the tabs the owner ticks; the rest is view only, and money stays hidden unless ticked
 // each tab lists where it shows ('section' or 'section:tabset=tab') and the saved parts it writes (the database checks the parts)
@@ -15765,21 +15768,38 @@ const PERM = [
   {id: 'aduse', n: 'Usage', g: 'Producer', at: ['aduse'], parts: ['sched.ad/use', 'sched.ad/pay'], money: true},
   {id: 'fin', n: 'Financing & dashboard', g: 'Producer', at: ['pfin', 'pdash'], parts: ['sched.producer'], money: true},
   {id: 'con', n: 'Contracts', g: 'Producer', at: ['pcon'], parts: ['sched.producer/cons', 'sched.producer/con', 'sched.green/rel'], money: true},
-  {id: 'pcal', n: 'Calendar', g: 'Producer', at: ['pcal'], parts: ['sched.pcal']}
+  {id: 'pcal', n: 'Calendar', g: 'Producer', at: ['pcal'], parts: ['sched.pcal'], priv: true},
+  {id: 'reviews', n: 'Reviews', g: 'Producer', at: ['prev'], parts: [], noedit: true}
 ];
 const PERM_BY = Object.fromEntries(PERM.map(u => [u.id, u]));
-// starting points by position; the owner can tick and untick from there
+// starting points by position: [position, tabs they change, tabs they can look at]; every other tab is hidden from them. The owner can change any of it
 const PERM_POS = [
-  ['1st AD', ['board', 'shots', 'calls', 'today', 'dpr', 'ts', 'ptr', 'bg', 'wk', 'inc', 'prog']], ['2nd AD', ['calls', 'today', 'ts', 'ptr', 'bg', 'wk']],
-  ['Production coordinator', ['crew', 'gear', 'calls', 'wk', 'inc', 'cater']], ['Script supervisor', ['setlog', 'slog', 'prog', 'lining', 'creative']],
-  ['Director of photography', ['shots', 'sboard', 'gear', 'cam']], ['1st AC', ['cam', 'gear']], ['2nd AC', ['cam']], ['DIT or data wrangler', ['data', 'dly']],
-  ['Gaffer or key grip', ['gear']], ['Sound mixer', ['snd']], ['Boom operator', ['snd']],
-  ['Production designer', ['mood', 'bd', 'sboard']], ['Costume designer', ['bd', 'creative', 'photo']], ['Hair and makeup', ['creative', 'photo']],
-  ['Location manager', ['locs']], ['Casting director', ['cast']], ['Craft services and catering', ['cater']], ['Accountant', ['budget', 'cost', 'fin', 'con', 'adbid', 'aduse']],
-  ['Writer', ['script', 'dlg', 'series', 'pitch']], ['Storyboard artist', ['sboard']], ['Animation lead', ['anim']],
-  ['Editor', ['cuts', 'paper', 'psched', 'dly']], ['Post supervisor', ['psched', 'cuts', 'turn', 'finish', 'deliv', 'credits']], ['Sound designer', ['psound']], ['Composer', ['music']],
-  ['VFX supervisor', ['vfx']], ['Colorist', ['turn', 'finish']], ['Publicist', ['kit', 'bb', 'mkt', 'fest', 'rplan']]
+  ['1st AD', ['board', 'shots', 'calls', 'today', 'dpr', 'ts', 'ptr', 'bg', 'wk', 'inc', 'prog'], ['lining', 'bd', 'cast', 'crew', 'locs', 'gear', 'cater', 'sboard', 'creative', 'green', 'setlog', 'slog', 'cam', 'snd', 'data', 'dly', 'photo']],
+  ['2nd AD', ['calls', 'today', 'ts', 'ptr', 'bg', 'wk'], ['board', 'shots', 'cast', 'crew', 'locs', 'cater', 'bd', 'dpr', 'setlog', 'prog', 'inc']],
+  ['Production coordinator', ['crew', 'gear', 'calls', 'wk', 'inc', 'cater'], ['board', 'shots', 'cast', 'locs', 'today', 'dpr', 'ts', 'pcal']],
+  ['Script supervisor', ['setlog', 'slog', 'prog', 'lining', 'creative'], ['script', 'bd', 'board', 'shots', 'calls', 'sboard', 'blocking', 'today', 'cam', 'snd', 'dpr']],
+  ['Director of photography', ['shots', 'sboard', 'gear', 'cam'], ['lining', 'board', 'calls', 'locs', 'mood', 'blocking', 'previz', 'today', 'setlog', 'data', 'dly']],
+  ['1st AC', ['cam', 'gear'], ['shots', 'calls', 'today', 'setlog', 'snd', 'data']],
+  ['2nd AC', ['cam'], ['shots', 'calls', 'today', 'setlog', 'snd', 'data', 'gear']],
+  ['DIT or data wrangler', ['data', 'dly'], ['calls', 'today', 'setlog', 'cam', 'snd']],
+  ['Gaffer or key grip', ['gear'], ['shots', 'calls', 'locs', 'today']],
+  ['Sound mixer', ['snd'], ['shots', 'calls', 'today', 'setlog', 'cam', 'data']], ['Boom operator', ['snd'], ['shots', 'calls', 'today', 'setlog']],
+  ['Production designer', ['mood', 'bd', 'sboard'], ['script', 'board', 'calls', 'locs', 'blocking', 'previz', 'creative', 'photo']],
+  ['Costume designer', ['bd', 'creative', 'photo'], ['script', 'cast', 'board', 'calls', 'sboard', 'mood']],
+  ['Hair and makeup', ['creative', 'photo'], ['cast', 'board', 'calls', 'bd', 'mood']],
+  ['Location manager', ['locs'], ['board', 'calls', 'today']], ['Casting director', ['cast'], ['script', 'dlg', 'board']],
+  ['Craft services and catering', ['cater'], ['board', 'calls', 'crew', 'today']],
+  ['Accountant', ['budget', 'cost', 'fin', 'con', 'adbid', 'aduse'], ['crew', 'cast', 'gear', 'cater', 'today', 'dpr', 'ts', 'pcal']],
+  ['Writer', ['script', 'dlg', 'series', 'pitch'], ['lining', 'bd', 'creative']],
+  ['Storyboard artist', ['sboard'], ['script', 'lining', 'shots', 'mood', 'blocking', 'previz']], ['Animation lead', ['anim'], ['script', 'sboard', 'mood', 'previz', 'board']],
+  ['Editor', ['cuts', 'paper', 'psched', 'dly'], ['script', 'lining', 'setlog', 'slog', 'cam', 'snd', 'data', 'psound', 'music', 'vfx', 'turn', 'finish', 'deliv', 'credits']],
+  ['Post supervisor', ['psched', 'cuts', 'turn', 'finish', 'deliv', 'credits'], ['dly', 'data', 'setlog', 'psound', 'music', 'vfx', 'paper', 'fest']],
+  ['Sound designer', ['psound'], ['psched', 'cuts', 'music', 'dly']], ['Composer', ['music'], ['psched', 'cuts', 'psound']],
+  ['VFX supervisor', ['vfx'], ['psched', 'cuts', 'sboard', 'previz', 'dly']], ['Colorist', ['turn', 'finish'], ['psched', 'cuts', 'dly', 'deliv']],
+  ['Publicist', ['kit', 'bb', 'mkt', 'fest', 'rplan'], ['credits', 'cast', 'crew', 'pitch']]
 ];
+// with no position picked: everything can be looked at except money and the Producer phase
+const permDefHide = () => PERM.filter(u => u.money || u.g === 'Producer').map(u => u.id);
 const permParts = ids => [...new Set(ids.flatMap(i => (PERM_BY[i] || {parts: []}).parts))].sort();
 const permAt = a => { const [sec, rest] = a.split(':'), [attr, val] = rest ? rest.split('=') : []; return {sec, attr, val}; };
 function permAtOk(a){
@@ -15796,27 +15816,53 @@ function permHere(){
 }
 // this person's tabs, when they're crew on the project open now
 function clCrewMe(){
-  if (!PERM_ON || typeof CLOUD === 'undefined' || !CLOUD || !CL.sess) return null;
+  if (!PERM_ON || !CLOUD || !CL.sess) return null;
   const l = clLink(); if (!l || clRoleNow() !== 'crew') return null; const c = CL.roles[l.id] || {};
-  return {tabs: c.tabs || l.tabs || [], parts: c.parts || l.parts || []};
+  return {tabs: c.tabs || l.tabs || [], parts: c.parts || l.parts || [], hide: c.hide || l.hide || null};
 }
+// edit, view or hide, for one tab (crew saved before hiding existed: money hidden unless they can change it)
+const permState = (me, u) => me.tabs.includes(u.id) && !u.noedit ? 'edit' : (me.hide ? me.hide.includes(u.id) : !!u.money) ? 'hide' : 'view';
 const clPartOk = (p, parts) => (parts || []).some(a => p === a || p.startsWith(a + '/'));
-function permHideSec(id){ const me = clCrewMe(); if (!me) return false; const u = PERM.find(x => x.money && x.at.includes(id)); return !!u && !me.tabs.includes(u.id); }
-function permHideBtn(b){
-  const me = clCrewMe(); if (!me || !b || !b.dataset) return false;
-  return PERM.some(u => u.money && !me.tabs.includes(u.id) && u.at.some(a => { const {attr, val} = permAt(a); return attr && attr !== 'stab' && b.dataset[attr] === val; }));
+const permSecUnits = id => PERM.filter(u => u.at.some(a => permAt(a).sec === id) && permShown(u));
+// a section is hidden when every tab in it is
+function permHideSec(id){ const me = clCrewMe(); if (!me) return false; const us = permSecUnits(id); return !!us.length && us.every(u => permState(me, u) === 'hide'); }
+function permUnitOfBtn(b){
+  if (!b || !b.dataset) return null;
+  return PERM.find(u => u.at.some(a => { const {attr, val} = permAt(a); return attr && b.dataset[attr] === val; })) || null;
+}
+function permHideBtn(b){ const me = clCrewMe(), u = me && permUnitOfBtn(b); return !!u && permState(me, u) === 'hide'; }
+// the first place this person can work (or at least look)
+function permHome(me){
+  const vis = PERM.filter(u => permShown(u) && permState(me, u) !== 'hide'); const u = vis.find(x => permState(me, x) === 'edit') || vis[0]; if (!u) return null;
+  return permAt(u.at.find(permAtOk));
+}
+function permGo(t){
+  if (!t) return; const s = PHASES.flatMap(p => p.secs).find(x => x.id === t.sec); if (!s) return;
+  if (t.attr === 'stab') S.navMem.stab[s.id] = t.val;
+  goSec(s.id);
+  if (t.attr && t.attr !== 'stab' && S[t.attr] !== t.val){ S[t.attr] = t.val; setMode(S.mode); }   // entering a phase can reset its tab
 }
 function permApply(){
   if (!PERM_ON) return; const me = clCrewMe();
   document.querySelectorAll('[data-permhid]').forEach(b => { b.hidden = false; delete b.dataset.permhid; });
-  if (me) PERM.filter(u => u.money && !me.tabs.includes(u.id)).forEach(u => u.at.forEach(a => { const {attr, val} = permAt(a); if (attr && attr !== 'stab') document.querySelectorAll(`[data-${attr}="${val}"]`).forEach(b => { if (!b.hidden){ b.hidden = true; b.dataset.permhid = '1'; } }); }));
+  const hideEl = el => { if (!el.hidden){ el.hidden = true; el.dataset.permhid = '1'; } };
+  if (me){
+    PERM.filter(u => permState(me, u) === 'hide').forEach(u => u.at.forEach(a => { const {attr, val} = permAt(a); if (attr) document.querySelectorAll(`[data-${attr}="${val}"]`).forEach(hideEl); }));
+    PHASES.forEach(ph => { if (!ph.secs.some(x => !x.act && secOk(x))) document.querySelectorAll(`.mode [data-phase="${ph.id}"]`).forEach(hideEl); });
+  }
   let s = null; try{ s = curSec(); }catch(e){}
-  if (me && s && permHideSec(s.id) && !PERM.__going){ PERM.__going = true; setTimeout(() => { PERM.__going = false; const u = PERM.find(x => me.tabs.includes(x.id) && permShown(x)); goSec(u ? permAt(u.at.find(permAtOk)).sec : (isDoc() ? 'snotes' : 'lining')); }, 0); return; }
-  const u = me ? permHere() : null, lock = !!me && !(u && me.tabs.includes(u.id));
+  const here = me && s ? permHere() : null;
+  if (me && s && !PERM.__going && (permHideSec(s.id) || (here && permState(me, here) === 'hide'))){
+    // on a hidden tab: the next tab in this section they can see, or else their own first tab
+    const attr = SEC_ATTR[s.id], next = attr && permSecUnits(s.id).find(u => permState(me, u) !== 'hide');
+    const t = next ? permAt(next.at.find(a => permAt(a).sec === s.id && permAtOk(a))) : permHome(me);
+    if (t){ PERM.__going = true; setTimeout(() => { try{ permGo(t); }finally{ PERM.__going = false; } }, 0); return; }
+  }
+  const lock = !!me && !(here && permState(me, here) === 'edit');
   document.body.classList.toggle('permro', lock);
   let bar = $('#permBar'); if (!lock){ if (bar) bar.remove(); return; }
   if (!bar){ bar = document.createElement('div'); bar.id = 'permBar'; bar.className = 'permbar'; bar.setAttribute('role', 'status'); document.body.append(bar); }
-  const mine = me.tabs.map(i => PERM_BY[i]).filter(x => x && permShown(x)).map(x => x.n);
+  const mine = PERM.filter(u => permShown(u) && permState(me, u) === 'edit').map(x => x.n);
   const html = `<b>View only.</b> Ask the producer to change this.${mine.length ? ` <span>You can change: ${esc(mine.join(', '))}.</span>` : ''}`;
   if (bar.innerHTML !== html) bar.innerHTML = html;
 }
@@ -15847,16 +15893,41 @@ function permBlock(e){
 }
 ['pointerdown', 'mousedown', 'touchstart', 'click', 'dblclick', 'dragstart', 'drop', 'paste', 'input', 'change', 'keydown', 'focusin', 'contextmenu'].forEach(ev => document.addEventListener(ev, permBlock, {capture: true, passive: false}));
 document.addEventListener('click', e => { if (e.target && e.target.closest && e.target.closest('[data-ztab],[data-stab],[data-ptab],[data-rtab],[data-gtab],[data-xtab],[data-btab],[data-sec],[data-phase]')) setTimeout(permApply, 0); });
-// the tab checklist the owner ticks, by phase
+// the owner's choices: each tab is Edit, View or Hide, set by phase or one at a time
 function permPicker(key){
-  const sel = CL.permSel[key] || new Set(), pos = CL.permPos[key] || '', units = PERM.filter(permShown), groups = [...new Set(units.map(u => u.g))];
+  const ed = CL.permSel[key] || new Set(), hd = CL.permHide[key] || new Set(permDefHide()), pos = CL.permPos[key] || '', units = PERM.filter(permShown), groups = [...new Set(units.map(u => u.g))];
+  const st = u => ed.has(u.id) && !u.noedit ? 'edit' : hd.has(u.id) ? 'hide' : 'view';
+  const nm = u => `pm-${key}-${u.id}`.replace(/[^\w-]/g, '_');
+  const seg = u => `<span class="permseg" role="radiogroup" aria-label="${esc(u.n)}">${[['edit', 'Edit'], ['view', 'View'], ['hide', 'Hide']].map(([v, l]) => `<label class="pm-${v}"><input type="radio" name="${nm(u)}" value="${v}" data-permst="${esc(key)}|${u.id}"${st(u) === v ? ' checked' : ''}${v === 'edit' && u.noedit ? ' disabled' : ''}>${l}</label>`).join('')}</span>`;
   return `<div class="permbox"><div class="row" style="gap:8px;flex-wrap:wrap;align-items:flex-end"><label class="fld" style="flex:1 1 220px;margin:0"><span>Position</span><select class="txt" data-permpos="${esc(key)}"><option value="">Choose a position to start from…</option>${PERM_POS.map(([n]) => `<option${n === pos ? ' selected' : ''}>${esc(n)}</option>`).join('')}</select></label>
-    <button class="btn ghost" type="button" data-permall="${esc(key)}|none">Clear</button></div>
-    <p class="note" style="margin:0">Tick the tabs they can change. They can look at everything else but not change it. Money tabs (marked $) stay hidden from them unless you tick them.</p>
-    <div class="permgrid">${groups.map(g => `<fieldset><legend>${esc(g)}</legend>${units.filter(u => u.g === g).map(u => `<label><input type="checkbox" data-permchk="${esc(key)}" value="${u.id}"${sel.has(u.id) ? ' checked' : ''}> ${esc(u.n)}${u.money ? ' <i class="permmoney" title="Money">$</i>' : ''}</label>`).join('')}</fieldset>`).join('')}</div>
-    ${key === 'inv' ? '' : `<div class="row" style="gap:8px"><button class="btn primary" type="button" data-clact="permsave" data-permkey="${esc(key)}">Save tabs</button><button class="btn ghost" type="button" data-clact="permcancel">Cancel</button></div>`}</div>`;
+    <button class="btn ghost" type="button" data-permall="${esc(key)}|none">Start over</button></div>
+    <p class="note" style="margin:0"><b>Edit</b>: they can change it. <b>View</b>: they can look but not change it. <b>Hide</b>: it doesn’t show for them at all. A position sets all three; change any tab after. Money tabs (marked $) and the Producer phase start hidden, and the cloud doesn’t send their data to anyone who can’t see them.</p>
+    <div class="permgrid">${groups.map(g => `<fieldset><legend><span>${esc(g)}</span><span class="permph"><button type="button" data-permph="${esc(key)}|${esc(g)}|view">View all</button><button type="button" data-permph="${esc(key)}|${esc(g)}|hide">Hide all</button></span></legend>${units.filter(u => u.g === g).map(u => `<div class="permrow${st(u) === 'hide' ? ' off' : ''}"><span>${esc(u.n)}${u.money ? ' <i class="permmoney" title="Money">$</i>' : ''}</span>${seg(u)}</div>`).join('')}</fieldset>`).join('')}</div>
+    ${key === 'inv' ? '' : `<div class="row" style="gap:8px"><button class="btn primary" type="button" data-clact="permsave" data-permkey="${esc(key)}">Save</button><button class="btn ghost" type="button" data-clact="permcancel">Cancel</button></div>`}</div>`;
 }
-const permNames = tabs => (tabs || []).map(i => PERM_BY[i]).filter(Boolean).map(u => u.n);
+// what goes to the cloud for one person
+function permBody(key){
+  const shown = new Set(PERM.map(u => u.id)), ed = [...(CL.permSel[key] || [])].filter(i => shown.has(i) && !PERM_BY[i].noedit);
+  const hd = [...(CL.permHide[key] || new Set(permDefHide()))].filter(i => !ed.includes(i));
+  const see = PERM.filter(u => u.money && !ed.includes(u.id) && !hd.includes(u.id)).map(u => u.id);
+  return {tabs: ed, parts: permParts(ed), hide: hd, see_parts: permParts(see), position: CL.permPos[key] || null};
+}
+function permSet(key, ids, v){
+  const ed = CL.permSel[key] = CL.permSel[key] || new Set(), hd = CL.permHide[key] = CL.permHide[key] || new Set(permDefHide());
+  ids.forEach(i => { ed.delete(i); hd.delete(i); if (v === 'edit' && !PERM_BY[i].noedit) ed.add(i); if (v === 'hide') hd.add(i); });
+}
+function permPreset(key, name){
+  const p = PERM_POS.find(x => x[0] === name); CL.permPos[key] = name || '';
+  if (!p){ CL.permSel[key] = new Set(); CL.permHide[key] = new Set(permDefHide()); return; }
+  CL.permSel[key] = new Set(p[1]); CL.permHide[key] = new Set(PERM.filter(u => !p[1].includes(u.id) && !p[2].includes(u.id)).map(u => u.id));
+}
+// a line for the crew list: what they change, and the phases they don't see
+function permSummary(c){
+  const ed = (c.tabs || []).map(i => PERM_BY[i]).filter(u => u && permShown(u)).map(u => u.n);
+  const me = {tabs: c.tabs || [], hide: c.hide || null}, groups = [...new Set(PERM.filter(permShown).map(u => u.g))];
+  const gone = groups.filter(g => PERM.filter(u => u.g === g && permShown(u)).every(u => permState(me, u) === 'hide'));
+  return `Can change: ${ed.join(', ') || 'nothing yet'}${gone.length ? ` · Hidden: ${gone.join(', ')}` : ''}`;
+}
 setTimeout(() => { PERM_ON = true; try{ permApply(); }catch(e){} }, 0);
 class CloudErr extends Error { constructor(msg, code){ super(msg); this.code = code; } }
 async function clRaw(path, opts = {}, auth = true){
@@ -15955,8 +16026,8 @@ const clImgPath = (pid, n) => `${CL_BUCKET}/${pid}/${encodeURIComponent(n)}`;
 async function clRoleOf(id, fresh){
   const c = CL.roles[id]; if (c && !fresh && Date.now() - c.t < 120000 && (c.role !== 'crew' || c.tabs)) return c.role;
   const role = await clApi('rpc/project_role', {method: 'POST', body: JSON.stringify({pid: id})});
-  let mine = {}; if (role === 'crew'){ const m = await clApi(`project_members?project_id=eq.${id}&email=eq.${encodeURIComponent(clMe())}&select=tabs,parts`).catch(() => null); mine = (m && m[0]) || {}; }
-  CL.roles[id] = Object.assign({role: role || null, t: Date.now()}, role === 'crew' ? {tabs: mine.tabs || [], parts: mine.parts || []} : {}); return role || null;
+  let mine = {}; if (role === 'crew'){ const m = await clApi(`project_members?project_id=eq.${id}&email=eq.${encodeURIComponent(clMe())}&select=tabs,parts,hide`).catch(() => null); mine = (m && m[0]) || {}; }
+  CL.roles[id] = Object.assign({role: role || null, t: Date.now()}, role === 'crew' ? {tabs: mine.tabs || [], parts: mine.parts || [], hide: mine.hide || null} : {}); return role || null;
 }
 const clRoleNow = () => { const l = clLink(); return l && CL.roles[l.id] ? CL.roles[l.id].role : (l && l.role) || null; };
 
@@ -15972,7 +16043,7 @@ async function clSync(opts = {}){
     const role = await clRoleOf(link.id, opts.fresh);
     if (!role){ clSetLink(null, key); CL.conflicts = []; clBanner(); toast('This project is no longer shared with you. Your copy stays on this device.', 4200); clStatus(''); return; }
     link.role = role; const canEdit = !clRO(role), full = role === 'owner' || role === 'editor', rc = CL.roles[link.id] || {};
-    if (role === 'crew'){ link.tabs = rc.tabs || link.tabs || []; link.parts = rc.parts || link.parts || []; } else { delete link.tabs; delete link.parts; }
+    if (role === 'crew'){ link.tabs = rc.tabs || link.tabs || []; link.parts = rc.parts || link.parts || []; link.hide = rc.hide || link.hide || null; } else { delete link.tabs; delete link.parts; delete link.hide; }
     const mayWrite = p => full || (role === 'crew' && clPartOk(p, link.parts));
     const remote = await clApi(`project_parts?project_id=eq.${link.id}&select=part,rev,updated_at,updated_by`) || [];
     const R = Object.fromEntries(remote.map(r => [r.part, r]));
@@ -16269,7 +16340,7 @@ document.addEventListener('change', async e => {
 async function clCrewLoad(force){
   const l = clLink(); if (!l || !CL.sess){ CL.crew = null; return; }
   if (!force && CL.crewFor === l.id && CL.crew) return;
-  CL.crew = await clApi(`project_members?project_id=eq.${l.id}&select=email,role,invited_by,created_at,tabs,parts,position&order=created_at`) || []; CL.crewFor = l.id;
+  CL.crew = await clApi(`project_members?project_id=eq.${l.id}&select=email,role,invited_by,created_at,tabs,parts,hide,position&order=created_at`) || []; CL.crewFor = l.id;
 }
 function clInviteText(email){
   const app = 'Crafti', where = /^https:/.test(location.protocol) && !/claude\.ai$/.test(location.hostname) ? location.origin + location.pathname : '';
@@ -16322,18 +16393,18 @@ function clRender0(){
     : `<div class="clhere"><div><b>${esc(baseName())}</b><small>On this device only</small></div><button class="btn primary" type="button" data-clact="push">Save this project to the cloud</button></div>`;
   const crewList = CL.crew && CL.crewFor === (l && l.id) ? CL.crew : null;
   const crew = !l ? '' : `<h3 style="margin:6px 0 0;font-size:14px">Crew</h3>
-    ${role === 'owner' ? `<p class="note" style="margin:0">Add people by the email they’ll sign in with. <b>Editors</b> can change anything; <b>crew</b> can change only the tabs you tick; <b>viewers</b> can look and export but not change the shared project.</p>
+    ${role === 'owner' ? `<p class="note" style="margin:0">Add people by the email they’ll sign in with. <b>Editors</b> can change anything; <b>crew</b> change only the tabs you pick, and you choose what they see; <b>viewers</b> can look and export but not change the shared project.</p>
       <div class="clinv"><input class="txt" id="clInvEmail" type="email" placeholder="crew@example.com" aria-label="Crew member’s email"><select class="txt" id="clInvRole" aria-label="Role"><option value="editor">Editor</option><option value="crew">Crew: chosen tabs</option><option value="viewer">Viewer</option></select><button class="btn primary" type="button" data-clact="invite">Add to crew</button></div>${CLF.clInvRole === 'crew' ? permPicker('inv') : ''}
       ${CL.invite ? `<div class="clinvok"><span>Added <b>${esc(CL.invite)}</b>. They’ll see the project when they sign in. Send them a note so they know:</span><button class="btn" type="button" data-clact="copyinv">Copy invite message</button>${navigator.share ? '<button class="btn ghost" type="button" data-clact="shareinv">Share…</button>' : ''}</div>` : ''}` : `<p class="note" style="margin:0">${esc(ROLE_SAYS[role] || '')}</p>`}
     ${crewList ? `<ul class="cllist">${`<li><div><b>${role === 'owner' ? esc(clName() || clMe()) + ' (you)' : 'The owner'}</b><small>${role === 'owner' ? esc(clMe()) : 'Shared this project'}</small></div><span class="pill">Owner</span></li>`}${crewList.map(c => { const me = c.email === clMe(), on = CL.here.find(h => h.email === c.email);
-      return `<li><div><b>${esc(c.email)}${me ? ' (you)' : ''}</b><small>${on ? 'Here now' + (on.area ? ' · in ' + esc(on.area) : '') : 'Added ' + esc(clWhen(c.created_at))}${c.role === 'crew' ? `<span class="cltabs">${c.position ? esc(c.position) + ' · ' : ''}Can change: ${esc(permNames(c.tabs).join(', ') || 'nothing yet')}</span>` : ''}</small></div>${role === 'owner' ? `<select class="txt" data-clrole="${esc(c.email)}" aria-label="Role for ${esc(c.email)}"><option value="editor"${c.role === 'editor' ? ' selected' : ''}>Editor</option><option value="crew"${c.role === 'crew' ? ' selected' : ''}>Crew</option><option value="viewer"${c.role === 'viewer' ? ' selected' : ''}>Viewer</option></select>${c.role === 'crew' ? `<button class="btn" type="button" data-clact="permedit" data-email="${esc(c.email)}">Tabs…</button>` : ''}<button class="btn ghost" type="button" data-clrm="${esc(c.email)}">Remove</button>` : `<span class="pill">${ROLE_NAME[c.role] || c.role}</span>`}</li>${role === 'owner' && CL.permEdit === c.email ? `<li class="permli">${permPicker(c.email)}</li>` : ''}`; }).join('')}</ul>
+      return `<li><div><b>${esc(c.email)}${me ? ' (you)' : ''}</b><small>${on ? 'Here now' + (on.area ? ' · in ' + esc(on.area) : '') : 'Added ' + esc(clWhen(c.created_at))}${c.role === 'crew' ? `<span class="cltabs">${c.position ? esc(c.position) + ' · ' : ''}${esc(permSummary(c))}</span>` : ''}</small></div>${role === 'owner' ? `<select class="txt" data-clrole="${esc(c.email)}" aria-label="Role for ${esc(c.email)}"><option value="editor"${c.role === 'editor' ? ' selected' : ''}>Editor</option><option value="crew"${c.role === 'crew' ? ' selected' : ''}>Crew</option><option value="viewer"${c.role === 'viewer' ? ' selected' : ''}>Viewer</option></select>${c.role === 'crew' ? `<button class="btn" type="button" data-clact="permedit" data-email="${esc(c.email)}">Tabs…</button>` : ''}<button class="btn ghost" type="button" data-clrm="${esc(c.email)}">Remove</button>` : `<span class="pill">${ROLE_NAME[c.role] || c.role}</span>`}</li>${role === 'owner' && CL.permEdit === c.email ? `<li class="permli">${permPicker(c.email)}</li>` : ''}`; }).join('')}</ul>
       ${!crewList.length && role === 'owner' ? '<p class="note" style="margin:0">No one else yet.</p>' : ''}` : '<p class="note" style="margin:0">Loading the crew…</p>'}
     ${role !== 'owner' && role !== 'reviewer' && (CL.crew || []).some(c => c.email === clMe()) ? '<div class="row"><button class="btn ghost" type="button" data-clact="leave">Leave this project</button></div>' : ''}`;
   const acc = CL.access, isAdmin = acc && acc.role === 'admin', revList = (CL.list || []).filter(r => r.role === 'reviewer'), myList = CL.list ? CL.list.filter(r => r.role !== 'reviewer') : null;
   const accLine = acc && acc.role === 'member' && acc.ends ? `<div class="clinvok"><span><b>Your cloud access.</b> ${esc(clAccessNote(acc, true))}</span>${S.key ? '<button class="btn" type="button" data-clact="dlproj">Download this project</button>' : ''}</div>` : '';
   const reviewHtml = revList.length && !isAdmin ? `<h3 style="margin:6px 0 0;font-size:14px">Projects you review</h3><ul class="cllist">${revList.map(r => `<li${l && l.id === r.id ? ' class="on"' : ''}><div><b>${esc(r.name || r.pdf_name || 'Untitled')}</b><small>Saved ${esc(clWhen(r.updated_at))}${r.updated_by ? ' by ' + esc(r.updated_by) : ''}</small></div>${l && l.id === r.id ? '<span class="pill ok">Open now</span>' : `<button class="btn" type="button" data-clopen="${esc(r.id)}">Open</button>`}</li>`).join('')}</ul>` : '';
   const list = myList ? (myList.length ? `<ul class="cllist">${myList.map(r => `<li${l && l.id === r.id ? ' class="on"' : ''}><div><b>${esc(r.name || r.pdf_name || 'Untitled')}</b><small>${r.role === 'owner' ? '' : r.mine ? 'Yours · read-only · ' : 'Shared with you · ' + ROLE_NAME[r.role] + ' · '}Saved ${esc(clWhen(r.updated_at))}${r.updated_by ? ' by ' + esc(r.updated_by) : ''}</small></div>${l && l.id === r.id ? '<span class="pill ok">Open now</span>' : `<button class="btn" type="button" data-clopen="${esc(r.id)}">Open</button>`}${r.mine ? `<button class="btn ghost" type="button" data-cldel="${esc(r.id)}" title="Delete the cloud copy for everyone (copies on devices stay)">Delete</button>` : ''}</li>`).join('')}</ul>` : '<p class="note" style="margin:0">No projects in the cloud yet.</p>') : '<p class="note" style="margin:0">Loading your projects…</p>';
-  m.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="clT" style="width:min(660px,100%)"><div class="sheet-h"><h2 id="clT">Cloud sync and crew</h2><button class="btn ghost" type="button" data-clact="close">Close</button></div>
+  m.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="clT" style="width:min(${CL.permEdit || CLF.clInvRole === 'crew' ? 960 : 660}px,100%)"><div class="sheet-h"><h2 id="clT">Cloud sync and crew</h2><button class="btn ghost" type="button" data-clact="close">Close</button></div>
     <div class="clbody">${CL.err ? `<p class="rbanner" style="margin:0">${esc(CL.err)}</p>` : ''}
       ${CL.sess ? `<div class="row" style="justify-content:space-between;gap:8px;flex-wrap:wrap"><span>Signed in as <b>${esc(CL.sess.email || '')}</b>${acc && acc.role && acc.role !== 'member' ? ` <span class="pill">${ACC_ROLE[acc.role]}</span>` : ''}</span><span class="row" style="gap:6px">${isAdmin ? '<button class="btn" type="button" data-clact="admin">Access list</button>' : ''}<button class="btn ghost" type="button" data-clact="signout">Sign out</button></span></div>${accLine}
         <label class="fld"><span>Your name (what the crew sees)</span><input class="txt" id="clName" value="${esc(clName())}" maxlength="40"></label>
@@ -16345,7 +16416,8 @@ document.addEventListener('click', async e => {
   const o = e.target.closest('[data-clopen]'); if (o){ $('#cloudModal').hidden = true; await clOpen(o.dataset.clopen); return; }
   const dl = e.target.closest('[data-cldel]'); if (dl){ if (!armed(dl, 'cldel' + dl.dataset.cldel, 'Click again: delete for everyone')) return; try{ await clDeleteProject(dl.dataset.cldel); const l = clLink(); if (l && l.id === dl.dataset.cldel) clSetLink(null); await clList(); toast('Deleted the cloud copy.'); }catch(er){ CL.err = er.message; } clRender(); clStatus(CL.state); return; }
   const rm = e.target.closest('[data-clrm]'); if (rm){ if (!armed(rm, 'clrm' + rm.dataset.clrm, 'Click again to remove')) return; const l = clLink(); try{ await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(rm.dataset.clrm)}`, {method: 'DELETE'}); await clCrewLoad(true); toast('Removed from the crew.'); }catch(er){ CL.err = er.message; } clRender(); return; }
-  const pa = e.target.closest('[data-permall]'); if (pa){ const k = pa.dataset.permall.split('|')[0]; CL.permSel[k] = new Set(); CL.permPos[k] = ''; clRender(); return; }
+  const pa = e.target.closest('[data-permall]'); if (pa){ permPreset(pa.dataset.permall.split('|')[0], ''); clRender(); return; }
+  const ph = e.target.closest('[data-permph]'); if (ph){ const [k, g, v] = ph.dataset.permph.split('|'); permSet(k, PERM.filter(u => u.g === g && permShown(u)).map(u => u.id), v); clRender(); return; }
   const a = e.target.closest('[data-clact]'); if (!a) return; const act = a.dataset.clact; CL.err = '';
   if (act === 'close' || (e.target.id === 'cloudModal')){ $('#cloudModal').hidden = true; return; }
   if (act === 'dlproj'){ const sp = $('#saveProj'); if (sp) sp.click(); return; }
@@ -16374,19 +16446,18 @@ document.addEventListener('click', async e => {
     if (act === 'unlink'){ if (!armed(a, 'clunlink', 'Click again to stop syncing')) return; clSetLink(null); CL.conflicts = []; clBanner(); CL.here = []; await clList(); clRender(); clStatus(''); return; }
     if (act === 'takecloud'){ await clResolve(false); return; }
     if (act === 'keepmine'){ await clResolve(true); return; }
-    if (act === 'permedit'){ const em = a.dataset.email, c = (CL.crew || []).find(x => x.email === em) || {}; CL.permEdit = em; CL.permSel[em] = new Set(c.tabs || []); CL.permPos[em] = c.position || ''; clRender(); return; }
+    if (act === 'permedit'){ const em = a.dataset.email, c = (CL.crew || []).find(x => x.email === em) || {}; CL.permEdit = em; CL.permSel[em] = new Set(c.tabs || []); CL.permHide[em] = new Set(c.hide || PERM.filter(u => u.money && !(c.tabs || []).includes(u.id)).map(u => u.id)); CL.permPos[em] = c.position || ''; clRender(); return; }
     if (act === 'permcancel'){ CL.permEdit = null; clRender(); return; }
-    if (act === 'permsave'){ const em = a.dataset.permkey, tabs = [...(CL.permSel[em] || [])], l = clLink(); a.disabled = true;
-      await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(em)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({role: 'crew', tabs, parts: permParts(tabs), position: CL.permPos[em] || null})});
-      CL.permEdit = null; await clCrewLoad(true); clRender(); toast('Tabs saved. It reaches them within a couple of minutes.'); return; }
+    if (act === 'permsave'){ const em = a.dataset.permkey, l = clLink(); a.disabled = true;
+      await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(em)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify(Object.assign({role: 'crew'}, permBody(em)))});
+      CL.permEdit = null; await clCrewLoad(true); clRender(); toast('Saved. It reaches them within a couple of minutes.'); return; }
     if (act === 'invite'){
-      const l = clLink(), em = ($('#clInvEmail').value || '').trim().toLowerCase(), role = $('#clInvRole').value, tabs = [...(CL.permSel.inv || [])];
-      if (role === 'crew' && !tabs.length){ CL.err = 'Tick at least one tab they can change.'; clRender(); return; }
+      const l = clLink(), em = ($('#clInvEmail').value || '').trim().toLowerCase(), role = $('#clInvRole').value;
       if (!/^\S+@\S+\.\S+$/.test(em)){ CL.err = 'Enter the crew member’s email address.'; clRender(); return; }
       if (em === clMe()){ CL.err = 'That’s you: you already own this project.'; clRender(); return; }
       a.disabled = true;
-      await clApi('project_members?on_conflict=project_id,email', {method: 'POST', headers: {Prefer: 'resolution=merge-duplicates,return=minimal'}, body: JSON.stringify(Object.assign({project_id: l.id, email: em, role, invited_by: clMe()}, role === 'crew' ? {tabs, parts: permParts(tabs), position: CL.permPos.inv || null} : {tabs: null, parts: null, position: null}))});
-      delete CLF.clInvEmail; delete CLF.clInvRole; CL.permSel.inv = new Set(); CL.permPos.inv = ''; CL.invite = em; await clCrewLoad(true); clRender(); return;
+      await clApi('project_members?on_conflict=project_id,email', {method: 'POST', headers: {Prefer: 'resolution=merge-duplicates,return=minimal'}, body: JSON.stringify(Object.assign({project_id: l.id, email: em, role, invited_by: clMe()}, role === 'crew' ? permBody('inv') : {tabs: null, parts: null, hide: null, see_parts: null, position: null}))});
+      delete CLF.clInvEmail; delete CLF.clInvRole; delete CL.permSel.inv; delete CL.permHide.inv; CL.permPos.inv = ''; CL.invite = em; await clCrewLoad(true); clRender(); return;
     }
     if (act === 'copyinv'){ const t = clInviteText(CL.invite); navigator.clipboard.writeText(t).then(() => toast('Invite message copied. Paste it into a text or email.'), () => toast('Copy was blocked here.')); return; }
     if (act === 'shareinv'){ try{ await navigator.share({text: clInviteText(CL.invite)}); }catch(er){} return; }
@@ -16397,10 +16468,10 @@ document.addEventListener('change', async e => {
   const t = e.target; if (!t || !t.closest || !t.closest('#cloudModal')) return;
   if (t.dataset.clact === 'auto'){ const l = clLink(); if (l){ l.auto = t.checked; clSetLink(l); } return; }
   if (t.id === 'clName'){ ls.set('filmtk:cloudname', t.value.trim() || null); return; }
-  if (t.dataset.permchk){ const k = t.dataset.permchk, set = CL.permSel[k] = CL.permSel[k] || new Set(); if (t.checked) set.add(t.value); else set.delete(t.value); return; }
-  if (t.dataset.permpos){ const k = t.dataset.permpos, p = PERM_POS.find(x => x[0] === t.value); CL.permPos[k] = t.value; CL.permSel[k] = new Set(p ? p[1].filter(i => PERM_BY[i] && permShown(PERM_BY[i])) : []); clRender(); return; }
+  if (t.dataset.permst){ const [k, id] = t.dataset.permst.split('|'); permSet(k, [id], t.value); const row = t.closest('.permrow'); if (row) row.classList.toggle('off', t.value === 'hide'); return; }
+  if (t.dataset.permpos){ permPreset(t.dataset.permpos, t.value); clRender(); return; }
   if (t.id === 'clInvRole'){ clRender(); return; }
-  if (t.dataset.clrole){ const l = clLink(), em = t.dataset.clrole, crew = t.value === 'crew'; try{ await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(em)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify(Object.assign({role: t.value}, crew ? {tabs: [], parts: []} : {tabs: null, parts: null, position: null}))}); await clCrewLoad(true); if (crew){ CL.permEdit = em; CL.permSel[em] = new Set(); CL.permPos[em] = ''; toast('Now tick the tabs they can change.'); } else toast('Role changed.'); }catch(er){ CL.err = er.message; } clRender(); }
+  if (t.dataset.clrole){ const l = clLink(), em = t.dataset.clrole, crew = t.value === 'crew'; try{ await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(em)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify(Object.assign({role: t.value}, crew ? (permPreset(em, ''), permBody(em)) : {tabs: null, parts: null, hide: null, see_parts: null, position: null}))}); await clCrewLoad(true); if (crew){ CL.permEdit = em; toast('Now pick what they can change and see.'); } else toast('Role changed.'); }catch(er){ CL.err = er.message; } clRender(); }
 });
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target && ['clEmail', 'clCode', 'clInvEmail'].includes(e.target.id)){ e.preventDefault(); const b = $('#cloudModal [data-clact="' + ({clEmail: 'send', clCode: 'verify', clInvEmail: 'invite'})[e.target.id] + '"]'); if (b) b.click(); } if (e.key === 'Escape' && $('#cloudModal') && !$('#cloudModal').hidden) $('#cloudModal').hidden = true; });
 window.addEventListener('online', () => { if (CL.state === 'offline') clSync(); });
