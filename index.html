@@ -1,27 +1,107 @@
 <!doctype html>
-<!--
-  Crafti — Keep things moving.
-  Copyright (C) 2026 Andrew Geimer
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as published
-  by the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU Affero General Public License for more details.
-
-  You should have received a copy of the GNU Affero General Public License
-  along with this program. If not, see <https://www.gnu.org/licenses/>.
--->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Crafti</title>
-<style>[hidden]{display:none!important}body{margin:0}</style>
+<style>[hidden]{display:none!important}body{margin:0}
+/* client reviews: producer side */
+.rvempty{border:1px dashed var(--rule);border-radius:10px;padding:18px 20px;background:var(--panel);max-width:760px}
+.rvempty h3{margin:0 0 6px;font-size:16px}
+.rvcard .sect-h{flex-wrap:wrap}
+.rvcard .sect-h h3{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rvkind{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--accent-soft,#E6EEFF);color:var(--ink);border-radius:999px;padding:2px 8px}
+.rvtools{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.rvclosed{opacity:.78}
+.rvmsg{margin:4px 0 10px;padding:8px 12px;border-left:3px solid var(--accent);background:var(--desk);border-radius:4px;white-space:pre-wrap}
+tr.rvoff td{opacity:.55}
+tr.rvdone td{background:var(--desk)}
+.rvbody{white-space:pre-wrap;margin-top:4px}
+.rvreply{margin-top:6px;width:100%;min-width:220px;font-size:12.5px}
+.rvitem{font-size:12px;font-weight:600;background:var(--desk);border:1px solid var(--rule);border-radius:6px;padding:1px 6px}
+.rvv{display:inline-block;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 8px;background:#EEF0F3;color:#333}
+.rvv-ok,.rvv-approve{background:#DFF3E5;color:#1D6B36}
+.rvv-flag,.rvv-pass{background:#FBE3E1;color:#A3271E}
+.rvv-hold{background:#FFF1CF;color:#7A5300}
+.rvtally{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:10px 0 0;font-size:13px}
+.rvtl{display:inline-flex;gap:4px;align-items:center}
+.rvwho{margin-left:auto}
+.rvwho .bsel{max-width:260px}
+.rvlink{display:grid;grid-template-columns:minmax(120px,180px) 1fr auto auto;gap:6px;align-items:center}
+.rvlink .txt{min-width:0;font-size:12.5px}
+.rvpick{display:grid;gap:4px;max-height:220px;overflow:auto;border:1px solid var(--rule);border-radius:8px;padding:8px 10px}
+.rvpeople{display:grid;gap:6px}
+.rvprow{display:grid;grid-template-columns:1.1fr 1.2fr 1.4fr auto auto;gap:6px;align-items:center}
+.rvprow .txt{min-width:0}
+@media (max-width:640px){.rvprow{grid-template-columns:1fr 1fr}.rvlink{grid-template-columns:1fr auto}.rvlink>div{grid-column:1/-1}}
+/* client reviews: the page a reviewer sees */
+body.rvshared{overflow:hidden}
+body.rvshared #rvPage{position:fixed;inset:0;z-index:210;background:var(--desk,#F5F7FA);overflow:auto;-webkit-overflow-scrolling:touch}
+.rvp-h{position:sticky;top:0;z-index:5;background:#111;color:#fff;padding:12px 18px}
+.rvp-h div{display:grid;gap:2px;max-width:1240px;margin:0 auto}
+.rvp-h b{font-size:16px}
+.rvp-h small{opacity:.75}
+.rvp-body{max-width:1240px;margin:0 auto;padding:16px 16px 40px;display:grid;gap:16px}
+.rvp-msg{max-width:560px;margin:48px auto;padding:0 16px}
+.rvp-msg h2{margin:0 0 8px}
+.rvp-row{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;margin-top:8px}
+.rvp-row .txt{flex:1;min-width:160px}
+.rvp-intro{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:12px 16px}
+.rvp-intro p{margin:6px 0 0;white-space:pre-wrap}
+.rvp-for{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.rvp-cut{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+@media (max-width:900px){.rvp-cut{grid-template-columns:1fr}}
+.rvp-frame{position:relative;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden}
+.rvp-frame iframe,.rvp-frame #rvPlayer{position:absolute;inset:0;width:100%;height:100%;border:0}
+.rvp-ext{position:absolute;inset:0;display:grid;place-content:center;gap:10px;text-align:center;color:#fff;padding:16px}
+.rvp-ext .note{color:#ccc}
+.rvp-cutinfo{margin:8px 2px}
+.rvp-compose{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:10px 12px}
+.rvp-compose .rvp-row{margin-top:0;align-items:center}
+.rvp-compose .rvp-row+.rvp-row{margin-top:8px}
+.rvp-at{font-size:13px;white-space:nowrap}
+.rvp-at b{font-variant-numeric:tabular-nums;font-size:15px}
+.rvp-side{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:10px 12px;max-height:72vh;overflow:auto}
+.rvp-side h3,.rvp-sec h3{margin:0 0 8px;font-size:15px}
+.rvp-sec{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:12px 16px}
+.rvp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.rvp-grid.tal{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.rvp-card{border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--panel);display:flex;flex-direction:column}
+.rvp-card img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#ddd}
+.rvp-grid.tal .rvp-card img,.rvp-nohs{aspect-ratio:4/5}
+.rvp-nohs{display:grid;place-items:center;background:var(--desk);font-size:34px;font-weight:700;color:var(--muted)}
+.rvp-cap{padding:8px 10px 0;font-size:13.5px}
+.rvp-links{display:flex;gap:10px;flex-wrap:wrap;padding:4px 10px 0;font-size:13px}
+.rvp-acts{display:flex;gap:6px;flex-wrap:wrap;padding:8px 10px}
+.rvchip{border:1px solid var(--rule);background:var(--panel);border-radius:999px;padding:5px 11px;font:inherit;font-size:13px;cursor:pointer;min-height:32px}
+.rvchip[aria-pressed="true"][data-rvv="ok"],.rvchip[aria-pressed="true"][data-rvv="approve"]{background:#DFF3E5;border-color:#3FA45B;color:#1D6B36;font-weight:700}
+.rvchip[aria-pressed="true"][data-rvv="flag"],.rvchip[aria-pressed="true"][data-rvv="pass"]{background:#FBE3E1;border-color:#D9443B;color:#A3271E;font-weight:700}
+.rvchip[aria-pressed="true"][data-rvv="hold"]{background:#FFF1CF;border-color:#D9A514;color:#7A5300;font-weight:700}
+.rvchip.ghost{border-style:dashed}
+.rvp-itemnotes{padding:0 10px 10px;display:grid;gap:6px}
+.rvp-itemnotes .rvp-row{margin-top:0}
+.rvp-others{display:flex;gap:4px;flex-wrap:wrap}
+.rvp-note{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--rule)}
+.rvp-itemnotes .rvp-note{padding:6px 0 0}
+.rvp-note.mine .rvp-nh b{color:var(--ink)}
+.rvp-nb{flex:1;min-width:0;white-space:pre-wrap;font-size:13.5px}
+.rvp-nh{display:flex;gap:6px;align-items:center;flex-wrap:wrap;white-space:normal;margin-bottom:2px}
+.rvp-nh .x{margin-left:4px}
+.rvp-tc{border:0;background:#111;color:#fff;border-radius:5px;padding:2px 7px;font:600 12px/1.4 ui-monospace,Menlo,monospace;cursor:pointer;flex:none}
+.rvp-st{margin-left:auto;font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px;background:#EEF0F3;color:#555}
+.rvp-st.st-doing{background:#FFF1CF;color:#7A5300}
+.rvp-st.st-done{background:#DFF3E5;color:#1D6B36}
+.rvp-st.st-wont{background:#EEF0F3;color:#555}
+.rvp-st.st-todo{background:#E6EEFF;color:#1D3F8A}
+.rvp-reply{margin-top:4px;padding:4px 8px;border-left:3px solid var(--accent);background:var(--desk);font-size:13px}
+.rvp-decide .rvp-ans{font-weight:700;margin:0 0 6px}
+.rvp-decide .rvp-ans.approved{color:#1D6B36}
+.rvp-decide .rvp-ans.changes{color:#A3271E}
+.rvp-decide .txt{width:100%;margin-top:6px}
+.rvp-foot{font-size:12px;color:var(--muted);text-align:center;margin:0}
+.rvp-row .rvp-at .txt{flex:none;min-width:0;width:76px}
+@media (max-width:560px){.rvp-compose .rvp-row{flex-wrap:nowrap}.rvp-body{padding:12px 10px 32px}}
+</style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#3B82F6">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1105,8 +1185,8 @@ span.mbslot{cursor:inherit}
 .wgrid{display:grid;grid-template-columns:272px minmax(0,1fr);height:100%;min-height:0}
 .wside{border-right:1px solid var(--rule);background:var(--panel);overflow:auto;min-height:0;padding:10px 12px 20px;display:grid;align-content:start;gap:8px}
 .mode .ph-prod{margin-left:7px;position:relative}.mode .ph-prod::before{content:'';position:absolute;left:-5px;top:6px;bottom:6px;width:1px;background:var(--rule)}
-.work[data-mode="pdash"],.work[data-mode="pfin"],.work[data-mode="pcon"],.work[data-mode="pcal"],.work[data-mode="adbrief"],.work[data-mode="adspots"],.work[data-mode="adbid"],.work[data-mode="adappr"],.work[data-mode="aduse"],.work[data-mode="anassets"],.work[data-mode="animatic"],.work[data-mode="anvoice"],.work[data-mode="anshots"],.work[data-mode="anprog"]{grid-template-columns:minmax(0,1fr)}
-.work[data-mode="pdash"] .pane,.work[data-mode="pdash"] .center,.work[data-mode="pfin"] .pane,.work[data-mode="pfin"] .center,.work[data-mode="pcon"] .pane,.work[data-mode="pcon"] .center,.work[data-mode="pcal"] .pane,.work[data-mode="pcal"] .center,.work[data-mode="adbrief"] .pane,.work[data-mode="adbrief"] .center,.work[data-mode="adspots"] .pane,.work[data-mode="adspots"] .center,.work[data-mode="adbid"] .pane,.work[data-mode="adbid"] .center,.work[data-mode="adappr"] .pane,.work[data-mode="adappr"] .center,.work[data-mode="aduse"] .pane,.work[data-mode="aduse"] .center,.work[data-mode="anassets"] .pane,.work[data-mode="anassets"] .center,.work[data-mode="animatic"] .pane,.work[data-mode="animatic"] .center,.work[data-mode="anvoice"] .pane,.work[data-mode="anvoice"] .center,.work[data-mode="anshots"] .pane,.work[data-mode="anshots"] .center,.work[data-mode="anprog"] .pane,.work[data-mode="anprog"] .center{display:none}
+.work[data-mode="prev"],.work[data-mode="pdash"],.work[data-mode="pfin"],.work[data-mode="pcon"],.work[data-mode="pcal"],.work[data-mode="adbrief"],.work[data-mode="adspots"],.work[data-mode="adbid"],.work[data-mode="adappr"],.work[data-mode="aduse"],.work[data-mode="anassets"],.work[data-mode="animatic"],.work[data-mode="anvoice"],.work[data-mode="anshots"],.work[data-mode="anprog"]{grid-template-columns:minmax(0,1fr)}
+.work[data-mode="prev"] .pane,.work[data-mode="prev"] .center,.work[data-mode="pdash"] .pane,.work[data-mode="pdash"] .center,.work[data-mode="pfin"] .pane,.work[data-mode="pfin"] .center,.work[data-mode="pcon"] .pane,.work[data-mode="pcon"] .center,.work[data-mode="pcal"] .pane,.work[data-mode="pcal"] .center,.work[data-mode="adbrief"] .pane,.work[data-mode="adbrief"] .center,.work[data-mode="adspots"] .pane,.work[data-mode="adspots"] .center,.work[data-mode="adbid"] .pane,.work[data-mode="adbid"] .center,.work[data-mode="adappr"] .pane,.work[data-mode="adappr"] .center,.work[data-mode="aduse"] .pane,.work[data-mode="aduse"] .center,.work[data-mode="anassets"] .pane,.work[data-mode="anassets"] .center,.work[data-mode="animatic"] .pane,.work[data-mode="animatic"] .center,.work[data-mode="anvoice"] .pane,.work[data-mode="anvoice"] .center,.work[data-mode="anshots"] .pane,.work[data-mode="anshots"] .center,.work[data-mode="anprog"] .pane,.work[data-mode="anprog"] .center{display:none}
 @media (max-width:560px){header.top .mode button{padding:0 4px;font-size:12px}.mode .ph-prod{margin-left:5px}.mode .ph-prod::before{left:-4px}}
 .prstage{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;margin:0 0 12px}.prstage b{font-size:20px}
 .prtiles{max-width:1180px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
@@ -9480,7 +9560,7 @@ function renderPost(){
   S.xtab = fixTab('xtab', S.xtab);
   document.querySelectorAll('[data-xtab]').forEach(b => b.setAttribute('aria-pressed', b.dataset.xtab === S.xtab));
   const A = $('#postActions'), B = $('#postBody'), top = B.scrollTop;
-  if (S.xtab === 'cuts'){ A.innerHTML = `<button class="btn" type="button" data-vropen="">${VR.url ? 'Open another video…' : 'Review a cut on video…'}</button><button class="btn primary" type="button" id="dlCuts">Cuts and notes (.docx)</button>`; B.innerHTML = renderCuts(); recHydrate(); }
+  if (S.xtab === 'cuts'){ A.innerHTML = `${typeof CLOUD !== 'undefined' && CLOUD ? '<button class="btn" type="button" data-rvnew="cut">Send for review</button>' : ''}<button class="btn" type="button" data-vropen="">${VR.url ? 'Open another video…' : 'Review a cut on video…'}</button><button class="btn primary" type="button" id="dlCuts">Cuts and notes (.docx)</button>`; B.innerHTML = renderCuts(); recHydrate(); }
   else if (S.xtab === 'trans'){ A.innerHTML = ''; B.innerHTML = renderTrans(); }
   else if (S.xtab === 'paper'){ A.innerHTML = `<button class="btn" type="button" id="dlPaperSrt">Captions draft (.srt)</button><button class="btn ghost" type="button" id="dlPaperCsv">CSV</button><button class="btn primary" type="button" id="dlPaper">Paper edit (.docx)</button>`; B.innerHTML = renderPaper(); }
   else if (S.xtab === 'arch'){ A.innerHTML = `<button class="btn ghost" type="button" id="dlArchCsv">CSV</button><button class="btn primary" type="button" id="dlArch">Archival and fact-check (.docx)</button>`; B.innerHTML = renderArch(); }
@@ -14274,6 +14354,7 @@ document.addEventListener('keydown', e => {
 const EDITION = 'pro';
 /* version number and what's new; newest first */
 const APP_LOG = EDITION === 'pro' ? [
+  ['6.23', 'November 15, 2026', ['New Producer › Reviews: send a cut, storyboards or talent options to clients and execs as private links, one per person, with no account or app', 'Cuts on Vimeo or YouTube play inside the review, and every note is stamped with its timecode; storyboard frames get Looks good or Change this; talent gets Approve, Hold or Pass', 'Ask for an email code on confidential reviews; turn any link off, extend it, close it, or send the next round', 'Their notes arrive on the Reviews page: make a calendar task (assigned to the right person), add it to the cut notes, or mark it Not changing; reviewers see each note move from Planned to Done', 'Download an approval record (.docx) of who approved what, and when. Commercials also log each review on Producer › Approvals. Needs the review setup script run once on Supabase']],
   ['6.22', 'November 15, 2026', ['New Production › Walkies tab: sign walkie-talkies out and back in each shoot day, with a Now button for the time, the accessory that went with each radio, and its condition when it came back', 'Keep the radio kit (numbers, serials, make and model, where each one came from) and the channel list; the tab shows which radios are out and flags any still out from an earlier day or after wrap', 'Same as yesterday lines up each person with the radio they had the day before; Sign all back in at wrap', 'Download a printable sign-out sheet for the walkie table (.docx), with channels, signature lines and blank rows, or the log of every day (CSV)']],
   ['6.21', 'November 13, 2026', ['Budget › Catering now shows meals and craft service day by day (and each Crafty shopping run), with links to edit them on the Catering and Crafty tabs; both tabs link back to the budget']],
   ['6.20', 'November 13, 2026', ['Number boxes in Safari: the numbers sit clear of Safari’s controls, and the Crafty and Catering boxes have no controls at all (they still bring up the number keypad on phones)']],
@@ -18705,7 +18786,7 @@ function prodr(){
   const P = sd.producer; if (!Array.isArray(P.fin)) P.fin = []; if (!Array.isArray(P.cons)) P.cons = []; if (!P.con || typeof P.con !== 'object') P.con = {}; if (!P.set || typeof P.set !== 'object') P.set = {};
   return P;
 }
-const PR_MODES = ['pdash', 'pfin', 'pcon', 'pcal', ...AD_MODES, ...AN_MODES];
+const PR_MODES = ['pdash', 'pfin', 'pcon', 'pcal', 'prev', ...AD_MODES, ...AN_MODES];
 const FIN_TYPE = [['equity', 'Investor (equity)'], ['grant', 'Grant'], ['crowd', 'Crowdfunding'], ['inkind', 'In-kind donation'], ['sponsor', 'Sponsor or brand partner'], ['loan', 'Loan'], ['incentive', 'Tax incentive or rebate'], ['personal', 'Personal funds'], ['gift', 'Donation or gift'], ['other', 'Other']];
 const FIN_ST = [['idea', 'Idea'], ['asked', 'Asked or applied'], ['pledged', 'Pledged or awarded'], ['received', 'Received'], ['declined', 'Declined']];
 const CON_TYPE = [['Investor agreement', 'Investor agreement'], ['Co-producer agreement', 'Co-producer agreement'], ['Option or rights agreement', 'Option or rights agreement'], ['Equipment rental', 'Equipment rental'], ['Vendor agreement', 'Vendor agreement'], ['Insurance policy', 'Insurance policy'], ['Music license', 'Music license'], ['Sponsorship agreement', 'Sponsorship agreement'], ['Grant agreement', 'Grant agreement'], ['Fiscal sponsorship', 'Fiscal sponsorship'], ['Distribution agreement', 'Distribution agreement'], ['Other', 'Other']];
@@ -18791,6 +18872,7 @@ function prFlags(){
   if (M.noRc) add('nice', `${M.noRc} expense${M.noRc === 1 ? '' : 's'} without a receipt`, {z: 'cost'});
   try{ adFlags(add); }catch(e){ console.error(e); }
   try{ anFlags(add); }catch(e){ console.error(e); }
+  try{ rvFlags(add); }catch(e){ console.error(e); }
   const rank = {must: 0, should: 1, nice: 2}; return out.sort((a, b) => rank[a.sev] - rank[b.sev]);
 }
 function prComing(days = 30){
@@ -18941,12 +19023,13 @@ async function exportConDocx(){
 function renderProducer(){
   if (!PR_MODES.includes(S.mode)) return;
   const A = $('#producerActions'), B = $('#producerBody'), y = B.scrollTop, T = $('#producerTitle');
-  const tt = AD_MODES.includes(S.mode) ? adTitle(S.mode) : AN_MODES.includes(S.mode) ? anTitle(S.mode) : {pdash: ['Dashboard', 'The whole production at a glance: money, paperwork, schedule and what’s coming up'], pfin: ['Financing', 'Where the money comes from, and when it arrives against when it’s spent'], pcal: ['Calendar', 'The production calendar: every task, milestone and deadline, who owns it, and what has to happen first'], pcon: ['Contracts', 'Every agreement, what was promised, and what is still owed']}[S.mode];
+  const tt = AD_MODES.includes(S.mode) ? adTitle(S.mode) : AN_MODES.includes(S.mode) ? anTitle(S.mode) : {pdash: ['Dashboard', 'The whole production at a glance: money, paperwork, schedule and what’s coming up'], pfin: ['Financing', 'Where the money comes from, and when it arrives against when it’s spent'], pcal: ['Calendar', 'The production calendar: every task, milestone and deadline, who owns it, and what has to happen first'], prev: ['Reviews', 'Private links for clients to review cuts, storyboards and talent, and the notes they send back'], pcon: ['Contracts', 'Every agreement, what was promised, and what is still owed']}[S.mode];
   if (T) T.innerHTML = `<b>${tt[0]}</b><span class="muted">${tt[1]}</span>`;
   try{
     if (AD_MODES.includes(S.mode)){ A.innerHTML = adActions(S.mode); B.innerHTML = adRender(S.mode); }
     else if (AN_MODES.includes(S.mode)){ A.innerHTML = anActions(S.mode); B.innerHTML = anRender(S.mode); if (S.mode === 'animatic'){ AP.pid = null; anShow(); } }
     else if (S.mode === 'pfin'){ A.innerHTML = `<button class="btn primary" type="button" data-prdl="fin">Financing plan (.docx)</button>`; B.innerHTML = renderPfin(); }
+    else if (S.mode === 'prev'){ A.innerHTML = ''; B.innerHTML = renderRv(); }
     else if (S.mode === 'pcon'){ A.innerHTML = `<button class="btn primary" type="button" data-prdl="con">Contracts register (.docx)</button>`; B.innerHTML = renderPcon(); }
     else if (S.mode === 'pcal'){ const tl0 = $('#pcTl'), sl = tl0 ? tl0.scrollLeft : null; A.innerHTML = `<button class="btn" type="button" data-prdl="ics">Calendar file (.ics)</button><button class="btn primary" type="button" data-prdl="cal">Production calendar (.docx)</button>`; B.innerHTML = renderPcal(); const tl1 = $('#pcTl'); if (tl1){ if (sl != null) tl1.scrollLeft = sl; else pcScrollTo(PCU.anchor || pcToday()); } }
     else { A.innerHTML = `<button class="btn primary" type="button" data-prdl="wk">Weekly report (.docx)</button>`; B.innerHTML = renderPdash(); }
@@ -19498,6 +19581,486 @@ document.addEventListener('click', async e => {
   }
 });
 const pcLinkUrl = tok => location.origin + location.pathname + '#cal=' + tok;
+/* ---------- Producer → Reviews: private review links for clients (cuts, storyboards, talent), and their notes ---------- */
+// Each reviewer gets their own link (no account). A link can also ask for a code sent to their email. Reviewers see only
+// what was sent. Their notes arrive here; the producer decides which become calendar tasks or cut notes. The database side
+// is the review setup script (crafti-review-setup.sql).
+const RV_KINDS = [['cut', 'Cut'], ['board', 'Storyboards'], ['talent', 'Talent']];
+const RV_DAYS = [[7, '1 week'], [14, '2 weeks'], [30, '30 days'], [60, '60 days']];
+const rvKindName = k => (RV_KINDS.find(x => x[0] === k) || ['', 'Review'])[1];
+const rvOn = () => typeof CLOUD !== 'undefined' && !!CLOUD;
+const rvToken = () => Array.from(crypto.getRandomValues(new Uint8Array(24)), b => b.toString(16).padStart(2, '0')).join('');
+const rvUrl = tok => location.origin + location.pathname + '#rv=' + tok;
+const rvTc = s => { if (s == null || s === '' || !isFinite(+s)) return ''; s = Math.max(0, Math.floor(+s)); const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(x).padStart(2, '0'); };
+const rvTcIn = t => { const p = String(t || '').trim().split(':').map(Number); if (!p.length || p.some(n => !isFinite(n))) return null; return p.reduce((a, n) => a * 60 + n, 0); };
+const rvWhen = iso => iso ? new Date(iso).toLocaleString('en-US', {month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'}) : '';
+const rvDay = iso => iso ? new Date(iso).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'}) : '';
+// the video services whose players report where you are, so notes can carry a timecode
+function rvVideo(url){
+  const u = String(url || '').trim(); let m;
+  if ((m = u.match(/vimeo\.com\/(?:.*?\/)?(?:video\/)?(\d{5,})(?:\/([0-9a-f]{6,}))?/i))){ const h = m[2] || (u.match(/[?&]h=([0-9a-f]{6,})/i) || [])[1] || ''; return {kind: 'vimeo', id: m[1], h}; }
+  if ((m = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/i))) return {kind: 'youtube', id: m[1]};
+  return /^https?:\/\//i.test(u) ? {kind: 'link', url: u} : null;
+}
+const rvImgUrl = u => /^https?:\/\/\S+\.(jpe?g|png|webp|gif|avif)(\?\S*)?$/i.test(String(u || '')) || /^https?:\/\/(\S+\.)?(googleusercontent|cloudinary|imgix|squarespace-cdn|wixstatic|castingnetworks|backstage)\.\S+/i.test(String(u || ''));
+// what a reviewer's note has turned into, in plain words
+function rvStatus(st){
+  const s = String(st || 'new'), [k, v] = s.split(':');
+  if (k === 'new') return ['Sent', 'new'];
+  if (k === 'wont') return ['Not changing', 'wont'];
+  if (k === 'task') return v === 'done' ? ['Done', 'done'] : ['doing', 'review'].includes(v) ? ['In progress', 'doing'] : v === 'gone' ? ['Noted', 'todo'] : ['Planned', 'todo'];
+  if (k === 'note') return v === 'done' ? ['Done', 'done'] : v === 'wont' ? ['Not changing', 'wont'] : v === 'talk' ? ['Being discussed', 'doing'] : v === 'gone' ? ['Noted', 'todo'] : ['Planned', 'todo'];
+  return ['Sent', 'new'];
+}
+const RV_VERD = {ok: 'Looks good', flag: 'Change this', approve: 'Approve', hold: 'Hold', pass: 'Pass'};
+
+// ---- producer side: the reviews of this project, with their reviewers and notes
+const RVP = {list: null, at: 0, busy: false, err: '', f: 'open', who: {}, open: {}};
+async function rvLoad(force){
+  if (!pcCloud() || RVP.busy) return; if (!force && RVP.list && Date.now() - RVP.at < 45000) return;
+  const l = clLink(); RVP.busy = true;
+  try{ RVP.list = await clApi(`reviews?project_id=eq.${l.id}&select=*,review_people(*),review_comments(*)&order=created_at.desc`) || []; RVP.pid = l.id; RVP.err = ''; RVP.at = Date.now(); rvSyncAppr(); }
+  catch(e){ RVP.err = e.message || String(e); if (/review/i.test(RVP.err) && /(exist|schema|relation|not find)/i.test(RVP.err)) RVP.err = 'The review setup hasn’t been run on the cloud yet. Run crafti-review-setup.sql in Supabase (SQL Editor), then reload.'; }
+  finally{ RVP.busy = false; }
+  if (S.mode === 'prev' || S.mode === 'pdash') renderProducer();
+}
+const rvList = () => (RVP.list && clLink() && RVP.pid === clLink().id) ? RVP.list : [];
+const rvNotes = r => (r.review_comments || []).slice().sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
+const rvNew = r => rvNotes(r).filter(c => !c.handled && c.body);
+const rvLive = r => !r.closed && new Date(r.expires_at) > new Date();
+// commercials: each review keeps a row on Producer › Approvals, answered as the reviewers answer
+function rvSyncAppr(){
+  if (typeof isAd !== 'function' || !isAd()) return; const A = adStore(); let ch = false;
+  rvList().forEach(r => { const a = A.appr.find(x => x.rv === r.id); if (!a) return; const ppl = (r.review_people || []).filter(p => !p.off);
+    const st = ppl.length && ppl.every(p => p.decision === 'approved') ? 'ok' : ppl.some(p => p.decision === 'changes') ? 'notes' : 'sent';
+    if (a.st !== st && !(a.st === 'okc' && st === 'ok')){ a.st = st; ch = true; } });
+  if (ch) changed();
+}
+function rvFlags(add){
+  if (!pcCloud()) return; rvLoad();
+  const n = rvList().reduce((a, r) => a + rvNew(r).length, 0); if (n) add('should', `${n} new note${n === 1 ? '' : 's'} from client reviews to go through`, {pm: 'prev'});
+  const late = rvList().filter(r => rvLive(r) && (new Date(r.expires_at) - Date.now()) < 2 * 864e5 && (r.review_people || []).some(p => !p.off && !p.decision));
+  if (late.length) add('should', `Review link${late.length === 1 ? '' : 's'} ending soon without an answer from everyone: ${late.slice(0, 3).map(r => r.title).join(', ')}`, {pm: 'prev'});
+}
+// who new tasks go to, guessed from the kind of review
+function rvDefaultWho(kind){
+  const crew = sched().crew || [], find = re => crew.find(m => re.test(m.position || ''));
+  const m = kind === 'cut' ? find(/editor/i) : kind === 'board' ? (find(/storyboard/i) || find(/^director$/i)) : (find(/casting/i) || find(/^producer$/i));
+  return m ? 'c:' + m.id : '';
+}
+function renderRv(){
+  if (!rvOn()) return '<p class="note">Client reviews need the cloud edition.</p>';
+  if (!pcCloud()) return `<div class="rvempty"><h3>Send cuts, storyboards and talent to clients</h3><p>Each reviewer gets a private link: no account, no app. They leave timecoded notes on a cut, flag storyboard frames, pick talent, and approve or ask for changes. Their notes come back here, and you choose which become tasks.</p><p class="note">Reviews work through Cloud sync. Save this project to the cloud first.</p><button class="btn primary" type="button" data-rvcloud>Cloud sync</button></div>`;
+  rvLoad();
+  if (RVP.err) return `<p class="rbanner">${esc(RVP.err)}</p>`;
+  if (!RVP.list) return '<p class="note">Loading reviews…</p>';
+  const L = rvList(), role = clRoleNow(), canEdit = !['viewer', 'reviewer'].includes(role);
+  const open = L.filter(rvLive), newN = L.reduce((a, r) => a + rvNew(r).length, 0), ppl = L.filter(rvLive).flatMap(r => (r.review_people || []).filter(p => !p.off));
+  const shown = L.filter(r => RVP.f === 'all' ? true : RVP.f === 'open' ? rvLive(r) : !rvLive(r));
+  return `<div class="tstats prtiles">
+      <div class="tstat main"><span>Open reviews</span><b>${open.length}</b><small style="color:var(--rvtile,#9CC3FF)">${L.length - open.length} closed or ended</small></div>
+      <div class="tstat ${newN ? 'over' : ''}"><span>New notes</span><b>${newN}</b><small>${newN ? 'waiting for you to sort' : 'all sorted'}</small></div>
+      <div class="tstat"><span>Approved</span><b>${ppl.filter(p => p.decision === 'approved').length}/${ppl.length}</b><small>${ppl.filter(p => p.decision === 'changes').length} asked for changes</small></div>
+      <div class="tstat"><span>Not opened yet</span><b>${ppl.filter(p => !p.opened_at).length}</b><small>on open reviews</small></div></div>
+    <div class="row" style="gap:8px;margin:0 0 10px;flex-wrap:wrap"><span class="pxfilt" role="group" aria-label="Show">${[['open', 'Open'], ['closed', 'Closed'], ['all', 'All']].map(([v, l]) => `<button type="button" data-rvf="${v}" aria-pressed="${RVP.f === v}">${l}</button>`).join('')}</span>
+      <button class="btn ghost" type="button" data-rvreload title="Check for new notes">Refresh</button>
+      ${canEdit ? '<button class="btn primary" type="button" data-rvnew="" style="margin-left:auto">+ New review</button>' : ''}</div>
+    ${shown.length ? shown.map(r => rvCard(r, canEdit)).join('') : `<div class="rvempty"><p>${L.length ? 'Nothing here with this filter.' : 'No reviews yet. Send a cut, a set of storyboards or talent choices to the people who sign off.'}</p></div>`}
+    <p class="note">Each reviewer’s link is private to them and shows only what you sent. Anyone they forward it to sees it as them, so ask for an email code on anything confidential. Turn a link off at any time; links stop working on their end date.</p>`;
+}
+function rvTally(r){
+  // the latest choice each reviewer made on each frame or person
+  const last = new Map(); rvNotes(r).filter(c => c.verdict && c.item).forEach(c => last.set(c.token + '|' + c.item, c));
+  const by = new Map(); [...last.values()].forEach(c => { const o = by.get(c.item) || {label: c.item_label || c.item, v: {}}; o.v[c.verdict] = (o.v[c.verdict] || 0) + 1; by.set(c.item, o); });
+  return [...by.values()];
+}
+function rvCard(r, canEdit){
+  const live = rvLive(r), people = r.review_people || [], notes = rvNotes(r), crew = sched().crew || [];
+  const who = RVP.who[r.id] != null ? RVP.who[r.id] : (RVP.who[r.id] = rvDefaultWho(r.kind));
+  const tally = rvTally(r), exp = new Date(r.expires_at), ended = exp < new Date();
+  const pRows = people.map(p => `<tr class="${p.off ? 'rvoff' : ''}"><td><b>${esc(p.name)}</b>${p.org ? `<br><small class="muted">${esc(p.org)}</small>` : ''}</td>
+      <td>${p.email ? esc(p.email) : '<small class="muted">no email</small>'}${p.need_code ? '<br><span class="pill">Email code</span>' : ''}</td>
+      <td>${p.off ? '<span class="pill">Link off</span>' : p.opened_at ? `<small>Opened ${esc(rvWhen(p.opened_at))}</small>` : '<small class="muted">Not opened</small>'}</td>
+      <td>${p.decision === 'approved' ? '<span class="pill ok">Approved</span>' : p.decision === 'changes' ? '<span class="pill warn">Changes</span>' : '<small class="muted">No answer yet</small>'}${p.decision_note ? `<br><small>${esc(p.decision_note)}</small>` : ''}</td>
+      <td class="nowrap">${canEdit && !p.off ? `<button class="btn ghost" type="button" data-rvcopy="${esc(p.token)}">Copy link</button><a class="btn ghost" href="${esc(rvMailto(r, p))}">Email</a>` : ''}${canEdit ? `<button class="btn ghost" type="button" data-rvpoff="${esc(p.token)}">${p.off ? 'Turn on' : 'Turn off'}</button>` : ''}</td></tr>`).join('');
+  const nRow = c => { const st = c.handled === 'task' ? (() => { const e = pcStore().events.find(x => x.id === c.link_id); return e ? `<span class="pill">Task · ${esc((PC_STATUS.find(s => s[0] === (e.status || 'todo')) || ['', ''])[1])}</span>` : '<span class="pill">Task removed</span>'; })()
+        : c.handled === 'note' ? (() => { const n = postStore().notes.find(x => x.id === c.link_id); return n ? `<span class="pill">Cut note · ${esc((NOTE_ST.find(s => s[0] === (n.st || 'open')) || ['', ''])[1])}</span>` : '<span class="pill">Cut note removed</span>'; })()
+        : c.handled === 'declined' ? '<span class="pill">Not changing</span>' : '<span class="pill warn">New</span>';
+    const where = [c.tc != null ? `<button type="button" class="pxmark rvtc" data-rvtcopen="${esc(r.id)}|${esc(c.tc)}">${esc(rvTc(c.tc))}</button>` : '', c.item_label ? `<span class="rvitem">${esc(c.item_label)}</span>` : '', c.verdict ? `<span class="rvv rvv-${esc(c.verdict)}">${esc(RV_VERD[c.verdict] || c.verdict)}</span>` : ''].filter(Boolean).join(' ');
+    return `<tr class="${c.handled ? 'rvdone' : ''}"><td class="nowrap"><b>${esc(c.name || 'Reviewer')}</b><br><small class="muted">${esc(rvWhen(c.created_at))}</small></td>
+      <td>${where}${c.body ? `<div class="rvbody">${esc(c.body)}</div>` : ''}${canEdit && c.body ? `<input class="txt rvreply" data-rvreply="${esc(c.id)}" value="${esc(c.reply || '')}" placeholder="Reply they’ll see (optional)" aria-label="Reply">` : c.reply ? `<div class="rvbody"><small>Reply: ${esc(c.reply)}</small></div>` : ''}</td>
+      <td class="nowrap">${st}</td>
+      <td class="nowrap">${!canEdit ? '' : c.handled ? `<button class="btn ghost" type="button" data-rvact="undo|${esc(r.id)}|${esc(c.id)}">Undo</button>` : c.body ? `<button class="btn" type="button" data-rvact="task|${esc(r.id)}|${esc(c.id)}">Make a task</button>${r.kind === 'cut' ? `<button class="btn" type="button" data-rvact="note|${esc(r.id)}|${esc(c.id)}">Add to cut notes</button>` : ''}<button class="btn ghost" type="button" data-rvact="decline|${esc(r.id)}|${esc(c.id)}">Not changing</button>` : ''}</td></tr>`; };
+  const shownNotes = notes.filter(c => c.body);
+  return `<section class="bsec rvcard${live ? '' : ' rvclosed'}"><div class="sect-h"><h3><span class="rvkind">${esc(rvKindName(r.kind))}</span> ${esc(r.title)}${r.round > 1 ? ` <small class="muted">round ${r.round}</small>` : ''}</h3>
+      <span class="muted">Sent ${esc(rvDay(r.created_at))} · ${r.closed ? 'closed' : ended ? 'ended ' + esc(rvDay(r.expires_at)) : 'link works until ' + esc(rvDay(r.expires_at))}</span>
+      <span class="rvtools">${canEdit ? `${live ? `<button class="btn ghost" type="button" data-rvaddp="${esc(r.id)}">+ Reviewer</button>` : ''}<button class="btn ghost" type="button" data-rvround="${esc(r.id)}">Next round</button><button class="btn ghost" type="button" data-rvext="${esc(r.id)}">${ended ? 'Reopen for 2 weeks' : 'Extend 2 weeks'}</button><button class="btn ghost" type="button" data-rvclose="${esc(r.id)}">${r.closed ? 'Reopen' : 'Close'}</button>` : ''}<button class="btn ghost" type="button" data-rvdoc="${esc(r.id)}">Approval record (.docx)</button>${canEdit ? `<button type="button" class="x" data-rvdel="${esc(r.id)}" aria-label="Delete review">×</button>` : ''}</span></div>
+    ${r.message ? `<p class="rvmsg">${esc(r.message)}</p>` : ''}
+    <div class="hscroll"><table class="crew btab rvppl"><thead><tr><th>Reviewer</th><th>Email</th><th>Link</th><th>Answer</th><th></th></tr></thead><tbody>${pRows || '<tr><td colspan="5" class="muted">No reviewers.</td></tr>'}</tbody></table></div>
+    ${tally.length ? `<div class="rvtally"><b>${r.kind === 'talent' ? 'Talent picks' : 'Frame by frame'}</b>${tally.map(t => `<span class="rvtl">${esc(t.label)}: ${Object.entries(t.v).map(([k, n]) => `<span class="rvv rvv-${esc(k)}">${esc(RV_VERD[k] || k)} ${n}</span>`).join(' ')}</span>`).join('')}</div>` : ''}
+    <div class="sect-h" style="margin-top:12px"><h3 style="font-size:14px">Notes</h3><span class="muted">${shownNotes.length ? `${rvNew(r).length} new of ${shownNotes.length}` : 'none yet'}</span>
+      ${canEdit && shownNotes.length ? `<label class="fld rvwho"><span>New tasks go to</span><select class="bsel" data-rvwho="${esc(r.id)}"><option value="">Nobody yet</option>${crew.map(m => `<option value="c:${esc(m.id)}"${who === 'c:' + m.id ? ' selected' : ''}>${esc(m.name + (m.position ? ' · ' + m.position : ''))}</option>`).join('')}</select></label>` : ''}</div>
+    ${shownNotes.length ? `<div class="hscroll"><table class="crew btab rvnotes"><tbody>${shownNotes.map(nRow).join('')}</tbody></table></div>` : ''}
+  </section>`;
+}
+function rvMailto(r, p){
+  const co = (sched().settings || {}).company || '', sub = `${r.title}: for your review`;
+  const body = `Hi ${String(p.name || '').split(' ')[0]},\n\nHere is ${r.kind === 'cut' ? 'the latest cut' : r.kind === 'board' ? 'the storyboards' : 'the talent we’d like you to look at'} for ${titleOf()}. Your private link (no account needed):\n\n${rvUrl(p.token)}\n\nYou can leave notes right on it${r.kind === 'cut' ? ', at any point in the cut' : ''}, then approve or ask for changes.${p.need_code ? ' You’ll be asked to confirm a code we send to this email.' : ''} The link works until ${rvDay(r.expires_at)}.\n\nThanks,\n${co || ''}`;
+  return `mailto:${encodeURIComponent(p.email || '')}?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+}
+
+// ---- turning a reviewer's note into work
+async function rvHandle(act, rid, cid){
+  const r = rvList().find(x => x.id === rid), c = r && (r.review_comments || []).find(x => x.id === cid); if (!c) return;
+  const tcs = c.tc != null ? ` at ${rvTc(c.tc)}` : '', where = c.item_label ? ` (${c.item_label})` : '';
+  let patch = null;
+  if (act === 'task'){
+    const who = RVP.who[rid] || '', e = {id: uid(), name: `${r.kind === 'cut' ? 'Cut note' : r.kind === 'board' ? 'Board note' : 'Talent note'}${tcs}: ${String(c.body).slice(0, 70)}${String(c.body).length > 70 ? '…' : ''}`,
+      kind: 'task', stage: r.kind === 'cut' ? 'Post-production' : 'Pre-production', start: pcFirstWork(pcStore(), pcToday()), dur: 2, color: 'orange', status: 'todo', who: who ? [who] : [], deps: [], due: '',
+      notes: `${c.name || 'Reviewer'} on “${r.title}”${tcs}${where}: ${c.body}\n(From the client review, ${rvWhen(c.created_at)})`};
+    pcChange(P => P.events.push(e)); patch = {handled: 'task', link_id: e.id};
+    toast('Added to Producer › Calendar as a task' + (who ? ', assigned' : '') + '.');
+  } else if (act === 'note'){
+    const n = {id: uid(), cut: r.item || '', st: 'open', tc: c.tc != null ? rvTc(c.tc) : '', who: c.name || 'Client', note: c.body, src: 'review'};
+    snapshot(); postStore().notes.push(n); changed(); patch = {handled: 'note', link_id: n.id};
+    toast('Added to Post › Cuts notes.');
+  } else if (act === 'decline') patch = {handled: 'declined', link_id: null};
+  else if (act === 'undo') patch = {handled: null, link_id: null};
+  if (!patch) return;
+  try{ await clApi(`review_comments?id=eq.${cid}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify(patch)}); Object.assign(c, patch); renderProducer(); clSync({force: true}); }
+  catch(er){ toast('Couldn’t save that: ' + er.message, 4500); }
+}
+
+// ---- the new review dialog
+const RVD = {kind: 'cut', item: '', scenes: null, roles: null, title: '', msg: '', days: 14, shared: true, people: [], made: null, round: 1, from: null};
+function rvBoardScenes(){
+  const D = schedData(), sd = sched(), out = [];
+  D.infos.forEach(i => { const sus = (S.setups || []).filter(su => su.scene === i.num).sort(bySetup); let n = 0; const fr = [];
+    sus.forEach(su => framesFor(su).forEach((f, k, all) => { if (!f.virtual && f.img){ n++; fr.push({f, su, label: labelOf(su) + (all.length > 1 ? ' · ' + (k + 1) : '')}); } }));
+    if (n) out.push({num: i.num, head: (i.ie ? i.ie + '. ' : '') + (i.set || ''), syn: i.syn || '', frames: fr}); });
+  return out;
+}
+function rvTalentRoles(){
+  const C = castStore(), D = schedData(), names = new Map((D.cast || []).map(c => [c.key, c.name]));
+  const roles = new Map(); C.people.filter(p => p.name && p.status !== 'pass').forEach(p => { if (!roles.has(p.role)) roles.set(p.role, []); roles.get(p.role).push(p); });
+  return [...roles.entries()].map(([key, people]) => ({key, name: names.get(key) || key || 'Role', desc: ((C.roles || {})[key] || {}).desc || '', people}));
+}
+function rvDialog(kind, from){
+  const m0 = $('#rvDlg'); let m = m0; if (!m){ m = document.createElement('div'); m.id = 'rvDlg'; m.className = 'modal'; document.body.append(m); }
+  const cuts = postStore().cuts;
+  Object.assign(RVD, {kind: kind || (cuts.length ? 'cut' : 'board'), item: cuts.length ? cuts[cuts.length - 1].id : '', scenes: null, roles: null, title: '', msg: '', days: 14, shared: true, people: [{name: '', org: '', email: '', code: false}], made: null, round: 1, from: null});
+  if (from){ RVD.kind = from.kind; RVD.title = from.kind === 'cut' ? '' : from.title.replace(/\s*\(round \d+\)$/, '') + ` (round ${from.round + 1})`; RVD.msg = from.message || ''; RVD.shared = from.shared; RVD.round = from.round + 1; RVD.from = from.id;
+    RVD.people = (from.review_people || []).filter(p => !p.off).map(p => ({name: p.name, org: p.org || '', email: p.email || '', code: p.need_code})); if (!RVD.people.length) RVD.people = [{name: '', org: '', email: '', code: false}];
+    if (from.kind === 'board') RVD.scenes = new Set(((from.content || {}).scenes || []).map(s => s.num)); if (from.kind === 'talent') RVD.roles = new Set(((from.content || {}).roles || []).map(x => x.key)); }
+  m.hidden = false; rvDialogRender();
+}
+function rvDialogRender(){
+  const m = $('#rvDlg'); if (!m || m.hidden) return;
+  if (RVD.made){
+    const r = RVD.made;
+    m.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="Review links" style="width:min(720px,100%)"><div class="sheet-h"><h2>Links ready</h2><button class="btn ghost" type="button" data-rvdclose>Done</button></div><div class="clbody">
+      <p class="note" style="margin:0">Send each person their own link. It opens “${esc(r.title)}” and nothing else, and works until ${esc(rvDay(r.expires_at))}.</p>
+      ${(r.review_people || []).map(p => `<div class="rvlink"><div><b>${esc(p.name)}</b>${p.org ? ` <small class="muted">${esc(p.org)}</small>` : ''}${p.need_code ? ' <span class="pill">Email code</span>' : ''}</div><input class="txt" readonly value="${esc(rvUrl(p.token))}" onclick="this.select()"><button class="btn" type="button" data-rvcopy="${esc(p.token)}">Copy</button>${p.email ? `<a class="btn" href="${esc(rvMailto(r, p))}">Email</a>` : ''}</div>`).join('')}
+      <div class="row"><button class="btn ghost" type="button" data-rvcopyall="${esc(r.id)}">Copy all links</button></div>
+      ${!/^https:/.test(location.protocol) || /claude\.ai$/.test(location.hostname) ? '<p class="note" style="margin:0">These links work where the tool kit is on a website (such as its GitHub Pages address); this preview can’t be opened by others.</p>' : ''}</div></div>`;
+    return;
+  }
+  const cuts = postStore().cuts, cut = cuts.find(c => c.id === RVD.item), vid = cut ? rvVideo(cut.link) : null;
+  let pick = '';
+  if (RVD.kind === 'cut'){
+    pick = cuts.length ? `<label class="fld"><span>Cut</span><select class="bsel" data-rvd="item">${cuts.map(c => `<option value="${esc(c.id)}"${c.id === RVD.item ? ' selected' : ''}>${esc((c.name || 'Untitled cut') + (c.len ? ' · ' + c.len : ''))}</option>`).join('')}</select></label>
+      <p class="note" style="margin:0">${!vid ? '⚠ This cut has no review link. Add its Vimeo link in Post › Cuts first.' : vid.kind === 'link' ? 'This link opens on its own site, so reviewers type the time for each note. A Vimeo or YouTube link plays inside the review and stamps every note with the timecode.' : `Plays inside the review from ${vid.kind === 'vimeo' ? 'Vimeo' : 'YouTube'}; every note is stamped with its timecode. Keep the video private or unlisted, and allow embedding.`}</p>`
+      : '<p class="note">Log a cut with its Vimeo link in Post › Cuts first.</p>';
+  } else if (RVD.kind === 'board'){
+    const sc = rvBoardScenes(); if (!RVD.scenes) RVD.scenes = new Set(sc.map(s => s.num));
+    pick = sc.length ? `<div class="rvpick">${sc.map(s => `<label class="tog"><input type="checkbox" data-rvsc="${esc(s.num)}"${RVD.scenes.has(s.num) ? ' checked' : ''}> Sc ${esc(s.num)} · ${esc(s.head)} <small class="muted">${s.frames.length} frame${s.frames.length === 1 ? '' : 's'}</small></label>`).join('')}</div>`
+      : '<p class="note">No storyboard frames with pictures yet. Draw or add frames in Pre-production › Storyboards.</p>';
+  } else {
+    const rl = rvTalentRoles(); if (!RVD.roles) RVD.roles = new Set(rl.map(x => x.key));
+    pick = rl.length ? `<div class="rvpick">${rl.map(x => `<label class="tog"><input type="checkbox" data-rvrole="${esc(x.key)}"${RVD.roles.has(x.key) ? ' checked' : ''}> ${esc(x.name)} <small class="muted">${x.people.length} ${x.people.length === 1 ? 'person' : 'people'}</small></label>`).join('')}</div><p class="note" style="margin:0">Each person shows with their headshot and self-tape links from Casting. Passed people are left out; rates, contact details and your notes never are shown.</p>`
+      : '<p class="note">Add people with headshot and self-tape links in Pre-production › People › Casting first.</p>';
+  }
+  const defTitle = RVD.kind === 'cut' ? `${titleOf()}: ${cut ? cut.name || 'cut' : 'cut'}` : RVD.kind === 'board' ? `${titleOf()}: storyboards` : `${titleOf()}: talent`;
+  m.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="New review" style="width:min(760px,100%)"><div class="sheet-h"><h2>${RVD.round > 1 ? 'Next round' : 'New review'}</h2><button class="btn ghost" type="button" data-rvdclose>Cancel</button></div><div class="clbody">
+    <span class="pxfilt" role="group" aria-label="What to review">${RV_KINDS.map(([k, l]) => `<button type="button" data-rvdk="${k}" aria-pressed="${RVD.kind === k}">${l}</button>`).join('')}</span>
+    ${pick}
+    <label class="fld"><span>Title they see</span><input class="txt" data-rvd="title" value="${esc(RVD.title || defTitle)}" maxlength="200"></label>
+    <label class="fld"><span>Message (optional)</span><textarea class="txt" data-rvd="msg" rows="2" placeholder="What you’d like them to look at, and when you need their answer">${esc(RVD.msg)}</textarea></label>
+    <div class="row" style="gap:14px;flex-wrap:wrap"><label class="fld"><span>Links work for</span><select class="bsel" data-rvd="days">${RV_DAYS.map(([d, l]) => `<option value="${d}"${+RVD.days === d ? ' selected' : ''}>${l}</option>`).join('')}</select></label>
+      <label class="tog" style="align-self:flex-end"><input type="checkbox" data-rvd="shared"${RVD.shared ? ' checked' : ''}> Reviewers see each other’s notes and answers</label></div>
+    <h3 style="margin:6px 0 0;font-size:14px">Reviewers</h3>
+    <div class="rvpeople">${RVD.people.map((p, k) => `<div class="rvprow"><input class="txt" data-rvp="${k}|name" value="${esc(p.name)}" placeholder="Name" aria-label="Name"><input class="txt" data-rvp="${k}|org" value="${esc(p.org)}" placeholder="Company (agency, network…)" aria-label="Company"><input class="txt" type="email" data-rvp="${k}|email" value="${esc(p.email)}" placeholder="Email" aria-label="Email"><label class="tog" title="They confirm a code sent to this email before the review opens"><input type="checkbox" data-rvp="${k}|code"${p.code ? ' checked' : ''}> Email code</label><button type="button" class="x" data-rvpdel="${k}" aria-label="Remove">×</button></div>`).join('')}</div>
+    <div class="row"><button class="btn ghost" type="button" data-rvpadd>+ Add reviewer</button></div>
+    <p class="note" style="margin:0">Everyone gets their own private link, so you know who said what. Tick Email code for anything confidential: they confirm a code sent to their email before it opens. ${RVD.round > 1 ? 'The previous round closes when this one is made; its notes stay here.' : ''}</p>
+    <div class="row" style="justify-content:flex-end"><button class="btn primary" type="button" data-rvmake>Make the links</button></div></div></div>`;
+}
+async function rvSign(paths, secs){
+  if (!paths.length) return {};
+  const r = await clStore(`object/sign/${CL_BUCKET}`, {method: 'POST', body: JSON.stringify({expiresIn: Math.round(secs), paths})}) || [];
+  const out = {}; r.forEach(x => { if (x && x.signedURL && !x.error) out[x.path] = CLOUD.url + '/storage/v1' + (x.signedURL.startsWith('/') ? '' : '/') + x.signedURL; }); return out;
+}
+async function rvContent(kind, item, scenes, roles, secs){
+  const l = clLink();
+  if (kind === 'cut'){ const c = postStore().cuts.find(x => x.id === item); if (!c) throw new Error('Pick a cut.'); const v = rvVideo(c.link); if (!v) throw new Error('Add the cut’s Vimeo link in Post › Cuts first.');
+    return {cut: {name: c.name || 'Cut', len: c.len || '', date: c.date || ''}, video: v}; }
+  if (kind === 'board'){
+    const sc = rvBoardScenes().filter(s => scenes.has(s.num)); if (!sc.length) throw new Error('Pick at least one scene.');
+    const paths = []; sc.forEach(s => s.frames.forEach(x => { x.path = `${l.id}/${(l.img || {})[x.f.id] || clImgName(x.f.id, x.f.v)}`; paths.push(x.path); }));
+    const urls = await rvSign(paths, secs); let miss = 0;
+    const out = sc.map(s => ({num: s.num, head: s.head, syn: s.syn, frames: s.frames.map(x => { if (!urls[x.path]) miss++; return {id: x.f.id, label: x.label, caption: x.f.caption || '', path: x.path, url: urls[x.path] || ''}; }).filter(f => f.url)}));
+    if (miss) toast(`${miss} frame${miss === 1 ? ' hasn’t' : 's haven’t'} reached the cloud yet and ${miss === 1 ? 'was' : 'were'} left out. Sync, then send the next round.`, 5000);
+    return {scenes: out.filter(s => s.frames.length)};
+  }
+  const rl = rvTalentRoles().filter(x => roles.has(x.key)); if (!rl.length) throw new Error('Pick at least one role.');
+  return {roles: rl.map(x => ({key: x.key, name: x.name, desc: x.desc, people: x.people.map(p => ({id: p.id, name: p.name, headshot: p.link || '', tape: p.tape || ''}))}))};
+}
+async function rvMake(){
+  const role = clRoleNow(); if (['viewer', 'reviewer'].includes(role)){ toast('Only the owner and editors can send reviews.'); return; }
+  const ppl = RVD.people.map(p => ({name: p.name.trim(), org: p.org.trim(), email: p.email.trim().toLowerCase(), code: !!p.code})).filter(p => p.name || p.email);
+  if (!ppl.length){ toast('Add at least one reviewer.'); return; }
+  const bad = ppl.find(p => !p.name); if (bad){ toast('Give every reviewer a name, so you know whose notes are whose.'); return; }
+  const badE = ppl.find(p => (p.code || p.email) && p.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.email)); if (badE){ toast(`Check ${badE.name}’s email.`); return; }
+  const noE = ppl.find(p => p.code && !p.email); if (noE){ toast(`${noE.name} needs an email for the code.`); return; }
+  const btn = $('#rvDlg [data-rvmake]'); if (btn){ btn.disabled = true; btn.textContent = 'Making the links…'; }
+  try{
+    await clSync({force: true});
+    const l = clLink(), secs = (+RVD.days + 7) * 86400, exp = new Date(Date.now() + RVD.days * 864e5).toISOString();
+    const content = await rvContent(RVD.kind, RVD.item, RVD.scenes || new Set(), RVD.roles || new Set(), secs);
+    const title = String(RVD.title || '').trim() || ($('#rvDlg [data-rvd="title"]') || {}).value || rvKindName(RVD.kind);
+    const [rv] = await clApi('reviews', {method: 'POST', headers: {Prefer: 'return=representation'}, body: JSON.stringify({project_id: l.id, kind: RVD.kind, title: title.slice(0, 200), message: RVD.msg.trim() || null, item: RVD.kind === 'cut' ? RVD.item : null, round: RVD.round, content, shared: RVD.shared, expires_at: exp})});
+    const people = await clApi('review_people', {method: 'POST', headers: {Prefer: 'return=representation'}, body: JSON.stringify(ppl.map(p => ({token: rvToken(), review_id: rv.id, name: p.name.slice(0, 120), org: p.org || null, email: p.email || null, need_code: p.code})))});
+    if (RVD.from) try{ await clApi(`reviews?id=eq.${RVD.from}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({closed: true})}); }catch(e){}
+    if (typeof isAd === 'function' && isAd()){ snapshot(); adStore().appr.push({id: uid(), what: title, round: RVD.round, who: ppl.map(p => p.name).join(', '), sent: pcToday(), st: 'sent', rv: rv.id, notes: 'Sent as a review link'}); changed(); }
+    rv.review_people = people || []; rv.review_comments = []; RVD.made = rv; rvDialogRender(); rvLoad(true);
+  }catch(er){ toast('Couldn’t make the review: ' + er.message, 6000); if (btn){ btn.disabled = false; btn.textContent = 'Make the links'; } }
+}
+async function rvAddPerson(rid){
+  const r = rvList().find(x => x.id === rid); if (!r) return;
+  const name = (prompt('Reviewer’s name') || '').trim(); if (!name) return;
+  const email = (prompt(`${name}’s email (optional, needed for an email code)`) || '').trim().toLowerCase();
+  const code = !!email && confirm(`Ask ${name} to confirm a code sent to ${email} before the review opens?`);
+  try{ const [p] = await clApi('review_people', {method: 'POST', headers: {Prefer: 'return=representation'}, body: JSON.stringify({token: rvToken(), review_id: rid, name: name.slice(0, 120), email: email || null, need_code: code})});
+    (r.review_people = r.review_people || []).push(p); renderProducer(); rvCopy(p.token); }
+  catch(er){ toast('Couldn’t add them: ' + er.message, 4500); }
+}
+function rvCopy(tok){ navigator.clipboard.writeText(rvUrl(tok)).then(() => toast('Link copied. Send it to just this person.'), () => toast('Copy was blocked here; open the review’s Email button instead.')); }
+async function rvPatch(rid, patch, msg){
+  try{ await clApi(`reviews?id=eq.${rid}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify(patch)}); const r = rvList().find(x => x.id === rid); if (r) Object.assign(r, patch); renderProducer(); if (msg) toast(msg); }
+  catch(er){ toast('Couldn’t change the review: ' + er.message, 4500); }
+}
+async function rvExtend(rid){
+  const r = rvList().find(x => x.id === rid); if (!r) return;
+  const base = Math.max(Date.now(), new Date(r.expires_at).getTime()), exp = new Date(base + 14 * 864e5);
+  const patch = {expires_at: exp.toISOString()};
+  if (r.kind === 'board' && r.content && r.content.scenes){
+    try{ const paths = r.content.scenes.flatMap(s => s.frames.map(f => f.path)).filter(Boolean), urls = await rvSign(paths, (exp - Date.now()) / 1000 + 7 * 86400);
+      patch.content = Object.assign({}, r.content, {scenes: r.content.scenes.map(s => Object.assign({}, s, {frames: s.frames.map(f => Object.assign({}, f, {url: urls[f.path] || f.url}))}))}); }catch(e){}
+  }
+  if (new Date(r.expires_at) < new Date()) patch.closed = false;
+  rvPatch(rid, patch, `Links now work until ${rvDay(exp.toISOString())}.`);
+}
+async function exportRvDocx(rid){
+  const r = rvList().find(x => x.id === rid); if (!r) return;
+  let body = brandLine() + wp(wr(titleOf(), {b: true, sz: 18, font: COURIER}), {after: 40}) + wp(wr('REVIEW AND APPROVAL RECORD', {b: true, sz: 10, color: '1D4ED8'}), {after: 40});
+  body += wp(wr(`${rvKindName(r.kind)}: ${r.title}${r.round > 1 ? ` (round ${r.round})` : ''}`, {b: true, sz: 11}), {after: 40}) + wp(wr(`Sent ${rvDay(r.created_at)} · ${r.closed ? 'closed' : 'link works until ' + rvDay(r.expires_at)}`, {sz: 9.5}), {after: 160});
+  if (r.kind === 'cut' && r.content && r.content.cut) body += wp(wr(`Cut: ${r.content.cut.name}${r.content.cut.len ? ' · ' + r.content.cut.len : ''}`, {sz: 10}), {after: 120});
+  body += wp(wr('ANSWERS', {b: true, sz: 10.5}), {after: 60}) + wtable([2600, 2400, 1700, 2200, 1800], (r.review_people || []).map(p => ({cells: [p.name + (p.org ? ' (' + p.org + ')' : ''), p.email || '', p.decision === 'approved' ? 'Approved' : p.decision === 'changes' ? 'Changes requested' : 'No answer', p.decided_at ? rvWhen(p.decided_at) : '', p.decision_note || ''], runs: [{b: true}]})), {head: ['Reviewer', 'Email', 'Answer', 'When', 'Their note']});
+  const t = rvTally(r); if (t.length) body += wp(wr(r.kind === 'talent' ? 'TALENT PICKS' : 'FRAMES', {b: true, sz: 10.5}), {before: 160, after: 60}) + wtable([4000, 6700], t.map(x => ({cells: [x.label, Object.entries(x.v).map(([k, n]) => `${RV_VERD[k] || k}: ${n}`).join(' · ')]})), {head: ['', 'Choices']});
+  const ns = rvNotes(r).filter(c => c.body);
+  if (ns.length) body += wp(wr('NOTES', {b: true, sz: 10.5}), {before: 160, after: 60}) + wtable([1800, 1500, 1600, 4000, 1800], ns.map(c => ({cells: [c.name || '', rvWhen(c.created_at), [c.tc != null ? rvTc(c.tc) : '', c.item_label || ''].filter(Boolean).join(' · '), c.body + (c.reply ? `\nReply: ${c.reply}` : ''), c.handled === 'task' ? 'Made a task' : c.handled === 'note' ? 'Cut note' : c.handled === 'declined' ? 'Not changing' : 'Open']})), {head: ['From', 'When', 'Where', 'Note', 'What we did']});
+  await saveFile(`${baseName()} - review record - ${r.title.replace(/[\\/:*?"<>|]+/g, '').slice(0, 60)}.docx`, await buildDocx(body, true));
+}
+
+document.addEventListener('click', async e => {
+  const t = e.target; if (!t.closest) return;
+  const dlg = t.closest('#rvDlg');
+  if (t.closest('[data-rvnew]')){ if (!rvOn()) return; if (!pcCloud()){ toast('Save the project to the cloud first (Cloud sync), then send reviews.', 4500); return; } rvDialog(t.closest('[data-rvnew]').dataset.rvnew || ''); return; }
+  if (dlg){
+    if (t.closest('[data-rvdclose]') || t === dlg){ dlg.hidden = true; if (RVD.made) renderProducer(); return; }
+    const k = t.closest('[data-rvdk]'); if (k){ RVD.kind = k.dataset.rvdk; RVD.title = ''; rvDialogRender(); return; }
+    if (t.closest('[data-rvpadd]')){ RVD.people.push({name: '', org: '', email: '', code: false}); rvDialogRender(); const ins = dlg.querySelectorAll('[data-rvp$="|name"]'); if (ins.length) ins[ins.length - 1].focus(); return; }
+    const pd = t.closest('[data-rvpdel]'); if (pd){ RVD.people.splice(+pd.dataset.rvpdel, 1); if (!RVD.people.length) RVD.people.push({name: '', org: '', email: '', code: false}); rvDialogRender(); return; }
+    if (t.closest('[data-rvmake]')){ rvMake(); return; }
+    const ca = t.closest('[data-rvcopyall]'); if (ca){ const r = RVD.made; navigator.clipboard.writeText((r.review_people || []).map(p => `${p.name}: ${rvUrl(p.token)}`).join('\n')).then(() => toast('All links copied, one per line with each name.'), () => toast('Copy was blocked here.')); return; }
+    const cp = t.closest('[data-rvcopy]'); if (cp){ rvCopy(cp.dataset.rvcopy); return; }
+    return;
+  }
+  if (!t.closest('#producer')) return;
+  if (t.closest('[data-rvcloud]')){ clOpenModal(); return; }
+  const f = t.closest('[data-rvf]'); if (f){ RVP.f = f.dataset.rvf; renderProducer(); return; }
+  if (t.closest('[data-rvreload]')){ rvLoad(true); return; }
+  const cp = t.closest('[data-rvcopy]'); if (cp){ rvCopy(cp.dataset.rvcopy); return; }
+  const ac = t.closest('[data-rvact]'); if (ac){ const [a, rid, cid] = ac.dataset.rvact.split('|'); ac.disabled = true; await rvHandle(a, rid, cid); return; }
+  const ap = t.closest('[data-rvaddp]'); if (ap){ rvAddPerson(ap.dataset.rvaddp); return; }
+  const po = t.closest('[data-rvpoff]'); if (po){ const tok = po.dataset.rvpoff, r = rvList().find(x => (x.review_people || []).some(p => p.token === tok)), p = r && r.review_people.find(q => q.token === tok); if (!p) return;
+    if (!p.off && !armed(po, 'rvpoff' + tok, 'Click again to turn this link off')) return;
+    try{ await clApi(`review_people?token=eq.${tok}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({off: !p.off})}); p.off = !p.off; renderProducer(); toast(p.off ? `${p.name}’s link is off.` : `${p.name}’s link works again.`); }catch(er){ toast('Couldn’t change the link: ' + er.message, 4500); } return; }
+  const rd = t.closest('[data-rvround]'); if (rd){ const r = rvList().find(x => x.id === rd.dataset.rvround); if (r) rvDialog(r.kind, r); return; }
+  const ex = t.closest('[data-rvext]'); if (ex){ rvExtend(ex.dataset.rvext); return; }
+  const cl = t.closest('[data-rvclose]'); if (cl){ const r = rvList().find(x => x.id === cl.dataset.rvclose); if (r) rvPatch(r.id, {closed: !r.closed}, r.closed ? 'Reopened: reviewers can leave notes again.' : 'Closed: reviewers can still open it, but can’t add notes.'); return; }
+  const dc = t.closest('[data-rvdoc]'); if (dc){ exportRvDocx(dc.dataset.rvdoc).catch(er => toast('Couldn’t build the record: ' + er.message)); return; }
+  const dl = t.closest('[data-rvdel]'); if (dl){ if (!armed(dl, 'rvdel' + dl.dataset.rvdel, 'Click again to delete this review, its links and its notes')) return;
+    try{ await clApi(`reviews?id=eq.${dl.dataset.rvdel}`, {method: 'DELETE'}); RVP.list = rvList().filter(x => x.id !== dl.dataset.rvdel); renderProducer(); toast('Review deleted. Its links no longer open.'); }catch(er){ toast('Couldn’t delete it: ' + er.message, 4500); } return; }
+  const tc = t.closest('[data-rvtcopen]'); if (tc){ const [rid, s] = tc.dataset.rvtcopen.split('|'), r = rvList().find(x => x.id === rid), v = r && r.content && r.content.video;
+    if (v && v.kind === 'vimeo') window.open(`https://vimeo.com/${v.id}${v.h ? '/' + v.h : ''}#t=${Math.floor(+s)}s`, '_blank', 'noopener'); else if (v && v.kind === 'youtube') window.open(`https://youtu.be/${v.id}?t=${Math.floor(+s)}`, '_blank', 'noopener'); return; }
+});
+document.addEventListener('input', e => {
+  const t = e.target; if (!t.closest || !t.closest('#rvDlg')) return;
+  if (t.dataset.rvd){ const k = t.dataset.rvd; if (k === 'shared') RVD.shared = t.checked; else if (k === 'item'){ RVD.item = t.value; RVD.title = ''; rvDialogRender(); } else RVD[k === 'msg' ? 'msg' : k] = t.value; return; }
+  if (t.dataset.rvp){ const [k, f] = t.dataset.rvp.split('|'); const p = RVD.people[+k]; if (p) p[f] = f === 'code' ? t.checked : t.value; return; }
+  if (t.dataset.rvsc){ RVD.scenes[t.checked ? 'add' : 'delete'](t.dataset.rvsc); return; }
+  if (t.dataset.rvrole){ RVD.roles[t.checked ? 'add' : 'delete'](t.dataset.rvrole); }
+});
+document.addEventListener('change', async e => {
+  const t = e.target; if (!t.closest || !t.closest('#producer')) return;
+  if (t.dataset.rvwho != null){ RVP.who[t.dataset.rvwho] = t.value; return; }
+  if (t.dataset.rvreply){ const id = t.dataset.rvreply, v = t.value.trim().slice(0, 2000) || null;
+    try{ await clApi(`review_comments?id=eq.${id}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({reply: v})}); rvList().forEach(r => (r.review_comments || []).forEach(c => { if (c.id === id) c.reply = v; })); toast(v ? 'Reply saved. They’ll see it under their note.' : 'Reply removed.'); }
+    catch(er){ toast('Couldn’t save the reply: ' + er.message, 4500); } }
+});
+
+/* ---------- the review link page: what a client sees ---------- */
+const RV = {tok: '', d: null, sess: null, player: null, ptype: '', t: 0, poll: 0, open: {}, busy: false};
+async function rvFetch(path, opts = {}, withSess = true){
+  const h = Object.assign({apikey: CLOUD.key, 'Content-Type': 'application/json'}, opts.headers || {});
+  if (withSess && RV.sess){
+    if (RV.sess.expires_at - 60 < Date.now() / 1000){ try{ rvSaveSess(await rvFetch('/auth/v1/token?grant_type=refresh_token', {method: 'POST', body: JSON.stringify({refresh_token: RV.sess.refresh_token})}, false)); }catch(e){ RV.sess = null; ls.set('filmtk:rvsess', null); } }
+    if (RV.sess) h.Authorization = 'Bearer ' + RV.sess.access_token;
+  }
+  let r; try{ r = await fetch(CLOUD.url + path, Object.assign({}, opts, {headers: h})); }catch(e){ throw new Error(navigator.onLine === false ? 'You’re offline. Reconnect and try again.' : 'Can’t reach the review right now. Try again in a moment.'); }
+  const txt = await r.text(); let j = null; try{ j = txt ? JSON.parse(txt) : null; }catch(e){}
+  if (!r.ok) throw new Error(String((j && (j.msg || j.message || j.error_description || j.error)) || ('error ' + r.status)));
+  return j;
+}
+function rvSaveSess(j){ if (!j || !j.access_token) return; RV.sess = {access_token: j.access_token, refresh_token: j.refresh_token, expires_at: Date.now() / 1000 + (j.expires_in || 3600), email: (j.user && j.user.email) || ''}; ls.set('filmtk:rvsess', RV.sess); }
+const rvRpc = (fn, args) => rvFetch('/rest/v1/rpc/' + fn, {method: 'POST', body: JSON.stringify(args)});
+async function rvShared(tok){
+  document.body.classList.add('rvshared'); RV.tok = tok; RV.sess = ls.get('filmtk:rvsess') || null;
+  let ov = document.createElement('div'); ov.id = 'rvPage'; ov.innerHTML = '<p class="note" style="padding:24px">Opening the review…</p>'; document.body.append(ov);
+  await rvRefresh(true);
+  RV.poll = setInterval(() => { if (!document.hidden && RV.d && RV.d.state === 'ok' && !rvTypingHere()) rvRefresh(false); }, 60000);
+}
+const rvTypingHere = () => { const a = document.activeElement; return !!a && a.closest && a.closest('#rvPage') && a.matches('textarea,input'); };
+async function rvRefresh(full){
+  const ov = $('#rvPage'); let d;
+  try{ d = await rvRpc('review_open', {tok: RV.tok}); }catch(e){ if (full) ov.innerHTML = `<div class="rvp-h"><b>Review</b></div><p class="note" style="padding:24px">${esc(e.message)}</p>`; return; }
+  const first = !RV.d || RV.d.state !== d.state || full; RV.d = d;
+  if (first) rvPageRender(); else rvPartsRender();
+}
+function rvHead(d, sub){ return `<div class="rvp-h"><div><b>${esc(d.title || (d.review && d.review.title) || 'Review')}</b><small>${esc([d.company, d.project].filter(Boolean).join(' · '))}${sub ? ' · ' + esc(sub) : ''}</small></div></div>`; }
+function rvPageRender(){
+  const ov = $('#rvPage'), d = RV.d; RV.player = null;
+  if (!d || d.state === 'off'){ ov.innerHTML = `<div class="rvp-h"><div><b>Review</b></div></div><div class="rvp-msg"><h2>This link isn’t working</h2><p>It may have been turned off or replaced. Ask the person who sent it for a new one.</p></div>`; return; }
+  if (d.state === 'expired'){ ov.innerHTML = rvHead(d) + `<div class="rvp-msg"><h2>This review has ended</h2><p>The link was set to stop working. If you still need it, ask the person who sent it to extend it.</p></div>`; return; }
+  if (d.state === 'code'){
+    ov.innerHTML = rvHead(d) + `<div class="rvp-msg rvp-code"><h2>Confirm it’s you, ${esc(String(d.name || '').split(' ')[0])}</h2><p>This review is private. Enter the email it was sent to${d.hint ? ` (${esc(d.hint)})` : ''} and we’ll send you a code.</p>
+      <div class="rvp-row"><input class="txt" type="email" id="rvEmail" placeholder="you@company.com" autocomplete="email" value="${esc((RV.sess && RV.sess.email) || '')}"><button class="btn primary" type="button" data-rvsend>Email me a code</button></div>
+      <div class="rvp-row" id="rvCodeRow" hidden><input class="txt" id="rvCode" inputmode="numeric" autocomplete="one-time-code" placeholder="Code from the email" maxlength="10"><button class="btn primary" type="button" data-rvverify>Open the review</button></div>
+      <p class="note" id="rvCodeMsg"></p></div>`;
+    return;
+  }
+  const R = d.review, C = R.content || {}, ro = d.state === 'closed';
+  const exp = rvDay(R.expires_at);
+  let main = '';
+  if (R.kind === 'cut'){
+    const v = C.video || {}, cut = C.cut || {};
+    const frame = v.kind === 'vimeo' ? `<iframe id="rvPlayer" src="https://player.vimeo.com/video/${esc(v.id)}?${v.h ? 'h=' + esc(v.h) + '&' : ''}title=0&byline=0&portrait=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="${esc(cut.name || 'Cut')}"></iframe>`
+      : v.kind === 'youtube' ? `<div id="rvPlayer"></div>` : `<div class="rvp-ext"><p>This cut opens on its own site.</p><a class="btn primary" href="${esc(v.url || '#')}" target="_blank" rel="noopener">Open the cut ↗</a><p class="note">Type the time with each note so the editor can find it.</p></div>`;
+    main = `<div class="rvp-cut"><div class="rvp-video"><div class="rvp-frame">${frame}</div>
+        <div class="rvp-cutinfo"><b>${esc(cut.name || 'Cut')}</b>${cut.len ? ` <span class="muted">· ${esc(cut.len)}</span>` : ''}</div>
+        ${ro ? '' : `<div class="rvp-compose"><div class="rvp-row"><span class="rvp-at">${v.kind === 'link' ? `<input class="txt" id="rvTcIn" placeholder="m:ss" style="width:72px" aria-label="Time">` : `Note at <b id="rvNow">0:00</b>`}</span><textarea class="txt" id="rvNote" rows="2" placeholder="${v.kind === 'link' ? 'Your note' : 'Pause anywhere and type your note'}" aria-label="Your note"></textarea></div><div class="rvp-row" style="justify-content:flex-end"><button class="btn primary" type="button" data-rvadd="cut">Add note</button></div></div>`}</div>
+      <div class="rvp-side"><h3>Notes</h3><div id="rvNotesList"></div></div></div>`;
+  } else if (R.kind === 'board'){
+    main = (C.scenes || []).map(s => `<section class="rvp-sec"><h3>Sc ${esc(s.num)} · ${esc(s.head)}</h3>${s.syn ? `<p class="muted">${esc(s.syn)}</p>` : ''}
+      <div class="rvp-grid">${s.frames.map(f => `<div class="rvp-card" data-rvitem="${esc(f.id)}"><img src="${esc(f.url)}" alt="${esc(f.label)}" loading="lazy"><div class="rvp-cap"><b>${esc(f.label)}</b>${f.caption ? ` ${esc(f.caption)}` : ''}</div>
+        <div class="rvp-acts" data-rvlabel="${esc('Sc ' + s.num + ' · ' + f.label)}">${ro ? '' : `<button type="button" class="rvchip" data-rvv="ok">✓ Looks good</button><button type="button" class="rvchip" data-rvv="flag">⚑ Change this</button><button type="button" class="rvchip ghost" data-rvopen>Note</button>`}</div>
+        <div class="rvp-itemnotes"></div></div>`).join('')}</div></section>`).join('');
+  } else {
+    main = (C.roles || []).map(x => `<section class="rvp-sec"><h3>${esc(x.name)}</h3>${x.desc ? `<p class="muted">${esc(x.desc)}</p>` : ''}
+      <div class="rvp-grid tal">${x.people.map(p => `<div class="rvp-card" data-rvitem="${esc(x.key + '|' + p.id)}">${p.headshot && rvImgUrl(p.headshot) ? `<img src="${esc(p.headshot)}" alt="${esc(p.name)}" loading="lazy" referrerpolicy="no-referrer">` : `<div class="rvp-nohs">${esc(String(p.name || '?').split(' ').map(w => w[0]).join('').slice(0, 2))}</div>`}
+        <div class="rvp-cap"><b>${esc(p.name)}</b> <span class="muted">as ${esc(x.name)}</span></div>
+        <div class="rvp-links">${p.headshot && !rvImgUrl(p.headshot) && /^https?:/i.test(p.headshot) ? `<a href="${esc(p.headshot)}" target="_blank" rel="noopener">Headshot ↗</a>` : ''}${String(p.tape || '').split(/\s+/).filter(u => /^https?:\/\//i.test(u)).map((u, k) => `<a href="${esc(u)}" target="_blank" rel="noopener">Self-tape${k ? ' ' + (k + 1) : ''} ↗</a>`).join('')}</div>
+        <div class="rvp-acts" data-rvlabel="${esc(p.name + ' · ' + x.name)}">${ro ? '' : `<button type="button" class="rvchip" data-rvv="approve">Approve</button><button type="button" class="rvchip" data-rvv="hold">Hold</button><button type="button" class="rvchip" data-rvv="pass">Pass</button><button type="button" class="rvchip ghost" data-rvopen>Note</button>`}</div>
+        <div class="rvp-itemnotes"></div></div>`).join('')}</div></section>`).join('');
+  }
+  ov.innerHTML = rvHead(d, `${rvKindName(R.kind)}${R.round > 1 ? ' · round ' + R.round : ''}`) + `<div class="rvp-body">
+    <div class="rvp-intro"><span class="rvp-for">For ${esc(d.me.name)}${d.me.org ? ` · ${esc(d.me.org)}` : ''}</span>${R.message ? `<p>${esc(R.message)}</p>` : ''}<p class="note">${ro ? 'This review is closed. You can still read it, but not add notes.' : `${R.kind === 'cut' ? 'Leave notes anywhere in the cut' : R.kind === 'board' ? 'Mark each frame, and leave a note on anything you’d change' : 'Pick Approve, Hold or Pass for each person, with a note if you like'}, then give your answer at the bottom. Open until ${esc(exp)}.`}</p></div>
+    ${main}
+    ${R.kind !== 'cut' ? `<section class="rvp-sec"><h3>Notes on the whole thing</h3>${ro ? '' : `<div class="rvp-row"><textarea class="txt" id="rvNote" rows="2" placeholder="Anything that isn’t about one ${R.kind === 'board' ? 'frame' : 'person'}"></textarea><button class="btn" type="button" data-rvadd="gen">Add note</button></div>`}<div id="rvNotesList"></div></section>` : ''}
+    <section class="rvp-sec rvp-decide" id="rvDecide"></section>
+    <p class="rvp-foot">Private to ${esc(d.me.name)}. Please don’t forward this link; ask for one for anyone else who should see it.</p></div>`;
+  rvPartsRender();
+  if (R.kind === 'cut') rvPlayerInit((R.content || {}).video || {});
+}
+function rvPartsRender(){
+  const d = RV.d; if (!d || !d.review) return; const R = d.review, ro = d.state === 'closed', cm = d.comments || [];
+  const one = c => { const [sl, sk] = rvStatus(c.status);
+    return `<div class="rvp-note${c.mine ? ' mine' : ''}">${c.tc != null ? `<button type="button" class="rvp-tc" data-rvseek="${esc(c.tc)}">${esc(rvTc(c.tc))}</button>` : ''}<div class="rvp-nb"><div class="rvp-nh"><b>${esc(c.mine ? 'You' : c.name || 'Reviewer')}</b>${c.item_label && !c.item ? ` · ${esc(c.item_label)}` : ''}${c.verdict ? ` <span class="rvv rvv-${esc(c.verdict)}">${esc(RV_VERD[c.verdict] || c.verdict)}</span>` : ''}<span class="rvp-st st-${sk}">${esc(sl)}</span>${c.mine && c.status === 'new' && !ro ? `<button type="button" class="x" data-rvundo="${esc(c.id)}" aria-label="Delete this note">×</button>` : ''}</div>${c.body ? `<div>${esc(c.body)}</div>` : ''}${c.reply ? `<div class="rvp-reply">Reply: ${esc(c.reply)}</div>` : ''}</div></div>`; };
+  const list = $('#rvNotesList');
+  if (list){ const gen = cm.filter(c => !c.item && (c.body || c.verdict)).sort((a, b) => R.kind === 'cut' ? (+(a.tc ?? 1e9) - +(b.tc ?? 1e9)) || String(a.at).localeCompare(String(b.at)) : String(a.at).localeCompare(String(b.at)));
+    list.innerHTML = gen.length ? gen.map(one).join('') : `<p class="note">${R.kind === 'cut' ? 'No notes yet. Play the cut, pause where you have a thought, and type it.' : 'No notes yet.'}</p>`; }
+  document.querySelectorAll('#rvPage [data-rvitem]').forEach(card => { const id = card.dataset.rvitem, mine = cm.filter(c => c.item === id), my = mine.filter(c => c.mine && c.verdict).pop();
+    card.querySelectorAll('[data-rvv]').forEach(b => b.setAttribute('aria-pressed', String(!!my && my.verdict === b.dataset.rvv)));
+    const others = R.shared ? mine.filter(c => !c.mine && c.verdict) : [], last = new Map(); others.forEach(c => last.set(c.name, c.verdict));
+    const box = card.querySelector('.rvp-itemnotes');
+    box.innerHTML = (last.size ? `<div class="rvp-others">${[...last.entries()].map(([n, v]) => `<span class="rvv rvv-${esc(v)}">${esc(n)}: ${esc(RV_VERD[v] || v)}</span>`).join(' ')}</div>` : '')
+      + mine.filter(c => c.body).map(one).join('')
+      + (RV.open[id] && !ro ? `<div class="rvp-row"><textarea class="txt" rows="2" data-rvitemnote placeholder="Your note"></textarea><button class="btn" type="button" data-rvadd="item">Add</button></div>` : ''); });
+  const dec = $('#rvDecide'); if (dec){ const me = d.me || {}, ppl = (d.people || []).filter(p => !p.me);
+    dec.innerHTML = `<h3>Your answer</h3>${me.decision ? `<p class="rvp-ans ${me.decision}">${me.decision === 'approved' ? '✓ You approved this' : 'You asked for changes'}${me.at ? ` · ${esc(rvWhen(me.at))}` : ''}</p>${me.note && ro ? `<p>${esc(me.note)}</p>` : ''}` : '<p class="muted">Not answered yet.</p>'}
+      ${ro ? '' : `<textarea class="txt" id="rvDecNote" rows="2" placeholder="A note with your answer (optional)">${esc(me.note || '')}</textarea><div class="rvp-row"><button class="btn primary" type="button" data-rvdecide="approved">Approve</button><button class="btn" type="button" data-rvdecide="changes">Request changes</button>${me.decision ? '<button class="btn ghost" type="button" data-rvdecide="">Take back my answer</button>' : ''}</div>`}
+      ${ppl.length ? `<p class="muted" style="margin-top:8px">${ppl.map(p => `${esc(p.name)}: ${p.decision === 'approved' ? 'approved' : p.decision === 'changes' ? 'asked for changes' : 'no answer yet'}`).join(' · ')}</p>` : ''}`; }
+}
+// the players: Vimeo and YouTube both tell us where the viewer is, so a note carries its timecode
+function rvScript(src, ready){ return new Promise((res, rej) => { if (ready()) return res(); const s = document.createElement('script'); s.src = src; s.onload = () => res(); s.onerror = () => rej(new Error('player')); document.head.append(s); }); }
+async function rvPlayerInit(v){
+  RV.ptype = v.kind || '';
+  try{
+    if (v.kind === 'vimeo'){ await rvScript('https://player.vimeo.com/api/player.js', () => !!window.Vimeo); RV.player = new window.Vimeo.Player($('#rvPlayer')); RV.player.on('timeupdate', x => { RV.t = x.seconds; const n = $('#rvNow'); if (n) n.textContent = rvTc(RV.t); }); }
+    else if (v.kind === 'youtube'){
+      await new Promise((res, rej) => { if (window.YT && window.YT.Player) return res(); const prev = window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady = () => { if (prev) prev(); res(); }; const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; s.onerror = () => rej(new Error('player')); document.head.append(s); });
+      RV.player = new window.YT.Player('rvPlayer', {videoId: v.id, playerVars: {rel: 0, playsinline: 1, modestbranding: 1}});
+      clearInterval(RV.yt); RV.yt = setInterval(() => { try{ if (RV.player && RV.player.getCurrentTime){ RV.t = RV.player.getCurrentTime(); const n = $('#rvNow'); if (n) n.textContent = rvTc(RV.t); } }catch(e){} }, 400);
+    }
+  }catch(e){ const n = $('#rvNow'); if (n) n.closest('.rvp-at').innerHTML = '<input class="txt" id="rvTcIn" placeholder="m:ss" style="width:72px" aria-label="Time">'; }
+}
+const rvPause = () => { try{ if (!RV.player) return; if (RV.ptype === 'vimeo') RV.player.pause(); else if (RV.player.pauseVideo) RV.player.pauseVideo(); }catch(e){} };
+const rvSeek = s => { try{ if (!RV.player) return; if (RV.ptype === 'vimeo'){ RV.player.setCurrentTime(+s); } else if (RV.player.seekTo){ RV.player.seekTo(+s, true); } }catch(e){} };
+async function rvAct(fn, args, okMsg){
+  if (RV.busy) return false; RV.busy = true;
+  try{ await rvRpc(fn, Object.assign({tok: RV.tok}, args)); await rvRefresh(false); if (okMsg) toast(okMsg); return true; }
+  catch(e){ toast(e.message, 5000); return false; } finally{ RV.busy = false; }
+}
+document.addEventListener('click', async e => {
+  const t = e.target; if (!t.closest || !t.closest('#rvPage')) return;
+  if (t.closest('[data-rvsend]')){ const em = ($('#rvEmail').value || '').trim().toLowerCase(), msg = $('#rvCodeMsg'); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ msg.textContent = 'Enter your email.'; return; }
+    try{ await rvFetch('/auth/v1/otp', {method: 'POST', body: JSON.stringify({email: em, create_user: true})}, false); RV.email = em; $('#rvCodeRow').hidden = false; $('#rvCode').focus(); msg.textContent = `We sent a code to ${em}. It can take a minute; check spam too.`; }
+    catch(er){ msg.textContent = /access list|not allowed|signups/i.test(er.message) ? 'That email isn’t the one this review was sent to.' : er.message; } return; }
+  if (t.closest('[data-rvverify]')){ const code = ($('#rvCode').value || '').replace(/\s/g, ''), msg = $('#rvCodeMsg'); if (!code){ msg.textContent = 'Enter the code from the email.'; return; }
+    let ok = false; for (const type of ['email', 'magiclink', 'signup']){ try{ rvSaveSess(await rvFetch('/auth/v1/verify', {method: 'POST', body: JSON.stringify({type, email: RV.email, token: code})}, false)); ok = true; break; }catch(er){} }
+    if (!ok){ msg.textContent = 'That code didn’t work. Check it, or send a new one.'; return; }
+    await rvRefresh(true); if (RV.d && RV.d.state === 'code') $('#rvCodeMsg').textContent = 'You’re signed in, but this review was sent to a different email.'; return; }
+  const sk = t.closest('[data-rvseek]'); if (sk){ rvSeek(sk.dataset.rvseek); return; }
+  const ad = t.closest('[data-rvadd]');
+  if (ad){ const k = ad.dataset.rvadd;
+    if (k === 'cut'){ const ta = $('#rvNote'), body = ta.value.trim(); if (!body){ ta.focus(); return; } const tin = $('#rvTcIn'); const tc = tin ? rvTcIn(tin.value) : RV.t;
+      if (await rvAct('review_comment', {item: null, item_label: null, tc: tc == null ? null : Math.round(tc * 10) / 10, verdict: null, body}, 'Note added.')){ ta.value = ''; if (tin) tin.value = ''; } return; }
+    if (k === 'gen'){ const ta = $('#rvNote'), body = ta.value.trim(); if (!body){ ta.focus(); return; } if (await rvAct('review_comment', {item: null, item_label: null, tc: null, verdict: null, body}, 'Note added.')) ta.value = ''; return; }
+    if (k === 'item'){ const card = ad.closest('[data-rvitem]'), ta = card.querySelector('[data-rvitemnote]'), body = ta.value.trim(); if (!body){ ta.focus(); return; }
+      const label = card.querySelector('[data-rvlabel]').dataset.rvlabel; RV.open[card.dataset.rvitem] = false;
+      await rvAct('review_comment', {item: card.dataset.rvitem, item_label: label, tc: null, verdict: null, body}, 'Note added.'); return; }
+  }
+  const vv = t.closest('[data-rvv]'); if (vv){ const card = vv.closest('[data-rvitem]'), label = card.querySelector('[data-rvlabel]').dataset.rvlabel;
+    await rvAct('review_comment', {item: card.dataset.rvitem, item_label: label, tc: null, verdict: vv.dataset.rvv, body: null}); if (vv.dataset.rvv === 'flag' || vv.dataset.rvv === 'hold'){ RV.open[card.dataset.rvitem] = true; rvPartsRender(); const ta = card.querySelector('[data-rvitemnote]'); if (ta) ta.focus(); } return; }
+  const op = t.closest('[data-rvopen]'); if (op){ const card = op.closest('[data-rvitem]'); RV.open[card.dataset.rvitem] = !RV.open[card.dataset.rvitem]; rvPartsRender(); const ta = card.querySelector('[data-rvitemnote]'); if (ta) ta.focus(); return; }
+  const un = t.closest('[data-rvundo]'); if (un){ await rvAct('review_uncomment', {cid: un.dataset.rvundo}); return; }
+  const dc = t.closest('[data-rvdecide]'); if (dc){ const v = dc.dataset.rvdecide || null, note = ($('#rvDecNote') || {}).value || '';
+    await rvAct('review_decide', {decision: v, note}, v === 'approved' ? 'Thanks: your approval is in.' : v === 'changes' ? 'Thanks: they’ll see you asked for changes.' : 'Answer taken back.'); }
+});
+document.addEventListener('focusin', e => { if (e.target && e.target.id === 'rvNote' && RV.d && RV.d.review && RV.d.review.kind === 'cut') rvPause(); });
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && e.target && e.target.closest && e.target.closest('#rvPage')){ const row = e.target.closest('.rvp-compose, .rvp-row, .rvp-card'); const b = row && row.querySelector('[data-rvadd]'); if (b){ e.preventDefault(); b.click(); } } });
+if (typeof CLOUD !== 'undefined' && CLOUD && /^#rv=[0-9a-f]{32,64}$/.test(location.hash)) setTimeout(() => rvShared(location.hash.slice(4)), 0);
+
 document.addEventListener('input', e => { const t = e.target; if (t && t.dataset && t.dataset.pcf === 'q'){ PCU.f.q = t.value; clearTimeout(pcRedraw.t); pcRedraw.t = setTimeout(() => { pcRedraw(); const i = document.querySelector('[data-pcf="q"]'); if (i){ i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 250); }
   if (t && t.hasAttribute && t.hasAttribute('data-pcdq')){ const m = $('#pcalModal'); m.dataset.dq = t.value; pcEditorRender(); const i = $('#pcalModal [data-pcdq]'); if (i){ i.focus(); i.setSelectionRange(i.value.length, i.value.length); } } });
 document.addEventListener('change', e => {
@@ -19543,7 +20106,7 @@ const PHASES = [
   {id: 'prod', name: 'Production', secs: [{id: 'anshots', name: 'Shots', mode: 'anshots', only: 'anim'}, {id: 'anprog', name: 'Progress', mode: 'anprog', only: 'anim'}, {id: 'prod', name: 'Production', docName: 'Production', mode: 'prod', only: '!anim-2d !anim-cg'}]},
   {id: 'post', name: 'Post', secs: [{id: 'post', name: 'Post', mode: 'post'}]},
   {id: 'release', name: 'Release', secs: [{id: 'release', name: 'Release', mode: 'release', only: '!ad'}]},
-  {id: 'producer', name: 'Producer', secs: [{id: 'pdash', name: 'Dashboard', mode: 'pdash'}, {id: 'adbrief', name: 'Brief', mode: 'adbrief', only: 'ad'}, {id: 'adspots', name: 'Spots', mode: 'adspots', only: 'ad'}, {id: 'adbid', name: 'Bid', mode: 'adbid', only: 'ad'}, {id: 'adappr', name: 'Approvals', mode: 'adappr', only: 'ad'}, {id: 'aduse', name: 'Usage', mode: 'aduse', only: 'ad'}, {id: 'pfin', name: 'Financing', mode: 'pfin', only: '!ad'}, {id: 'pcon', name: 'Contracts', mode: 'pcon'}, {id: 'pcal', name: 'Calendar', mode: 'pcal'}]}
+  {id: 'producer', name: 'Producer', secs: [{id: 'pdash', name: 'Dashboard', mode: 'pdash'}, {id: 'adbrief', name: 'Brief', mode: 'adbrief', only: 'ad'}, {id: 'adspots', name: 'Spots', mode: 'adspots', only: 'ad'}, {id: 'adbid', name: 'Bid', mode: 'adbid', only: 'ad'}, {id: 'adappr', name: 'Approvals', mode: 'adappr', only: 'ad'}, {id: 'aduse', name: 'Usage', mode: 'aduse', only: 'ad'}, {id: 'pfin', name: 'Financing', mode: 'pfin', only: '!ad'}, {id: 'pcon', name: 'Contracts', mode: 'pcon'}, {id: 'pcal', name: 'Calendar', mode: 'pcal'}, ...(typeof CLOUD !== 'undefined' && CLOUD ? [{id: 'prev', name: 'Reviews', mode: 'prev'}] : [])]}
 ];
 S.navMem = (() => { try{ return JSON.parse(ls.get('filmtk:nav') || '{}') || {}; }catch(e){ return {}; } })();
 S.navMem.sec = S.navMem.sec || {}; S.navMem.stab = S.navMem.stab || {};
