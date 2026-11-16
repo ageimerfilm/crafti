@@ -1222,7 +1222,11 @@ table.prcash tr.prshoot td{background:#FFF8EC}table.prcon td{vertical-align:top}
 .cloudst{font-family:var(--f-ui);letter-spacing:0}.cloudst.warn{color:#B42318;font-weight:600}
 .cloudbar{position:fixed;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top,0px));z-index:55;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;max-width:min(860px,calc(100vw - 24px));background:#FFFFFF;color:var(--ink);border:1px solid var(--rule);border-left:5px solid var(--brand);border-radius:10px;padding:10px 14px;box-shadow:var(--shadow);font-size:13.5px}
 .cloudwho .clwho{display:inline-block;margin-left:4px;padding:0 7px;border-radius:999px;background:var(--accent-soft);color:var(--ink);font-size:11px;line-height:17px}.cloudwho .clwho i{font-style:normal;color:var(--muted)}.cloudwho .clwho.same{background:#FFF1E0;outline:1px solid #E8A55A}
-.clinv{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.clinv input.txt{flex:1 1 220px;width:auto;min-width:0}.clinv select.txt,.cllist select.txt{flex:0 0 auto;width:auto}.cllist li>div b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.clinvok{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;border:1px solid var(--rule);border-left:4px solid var(--brand);border-radius:8px;padding:8px 10px}.clinvok span{flex:1 1 260px}
+.clinv{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.permbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:54;display:flex;flex-wrap:wrap;gap:2px 10px;align-items:center;justify-content:center;max-width:min(760px,calc(100vw - 24px));background:var(--ink);color:#fff;border-radius:999px;padding:8px 18px;box-shadow:var(--shadow);font-size:13px;pointer-events:none;text-align:center}.permbar span{opacity:.82}
+body.permro .work input:not([type=search]),body.permro .work textarea,body.permro .work [contenteditable="true"]{cursor:not-allowed}
+.permbox{display:flex;flex-direction:column;gap:10px;border:1px solid var(--rule);border-radius:10px;padding:12px;margin-top:2px}.permgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}.permgrid fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;min-width:0}.permgrid legend{font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px;padding:0}.permgrid label{display:flex;gap:6px;align-items:flex-start;font-size:13px;line-height:1.3;cursor:pointer}.permgrid input{margin:2px 0 0;accent-color:var(--brand)}.permmoney{font-style:normal;font-weight:700;color:var(--brand)}.cltabs{display:block;font-size:12px}.cllist li.permli{display:block}
+.clinv input.txt{flex:1 1 220px;width:auto;min-width:0}.clinv select.txt,.cllist select.txt{flex:0 0 auto;width:auto}.cllist li>div b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.clinvok{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;border:1px solid var(--rule);border-left:4px solid var(--brand);border-radius:8px;padding:8px 10px}.clinvok span{flex:1 1 260px}
 .acpage{display:grid;gap:10px}.acpage h3{margin:8px 0 0;font-size:14px}.acadd{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px 10px;align-items:end;border:1px solid var(--rule);border-radius:10px;padding:10px 12px}.acadd .acwide{grid-column:1/-1}.acadd textarea{min-height:64px;resize:vertical}.acwrap{overflow:auto;border:1px solid var(--rule);border-radius:10px;max-width:100%}
 table.actbl{border-collapse:collapse;width:100%;font-size:12.5px}table.actbl th{position:sticky;top:0;background:var(--accent-soft);text-align:left;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:6px 8px;white-space:nowrap}table.actbl td{border-top:1px solid var(--rule);padding:5px 8px;vertical-align:middle}table.actbl .txt{min-width:0;padding:4px 6px;font-size:12.5px}table.actbl input[type=date]{width:136px}table.actbl input[data-acf=name]{width:130px}table.actbl select[data-acf=role]{width:100px}table.actbl select[data-acf=reviewer]{width:130px}table.actbl td.acem{white-space:nowrap}.acsoon{margin:0;padding-left:18px;display:grid;gap:3px}
 .accbar{top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));border-left-color:#C2410C}
@@ -1481,7 +1485,21 @@ details.adsec{border:1px solid var(--rule);border-radius:var(--rad,8px);padding:
 .pcard-g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .pflags{display:flex;flex-wrap:wrap;gap:4px 14px}.pflag{font-size:12.5px}
 .pcard-f{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.typepop{min-width:300px}.tphead{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:6px 10px 4px}.typepop label{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:13px}.typepop label:hover{background:var(--panel)}.typepop label:has(input:checked){background:var(--panel);box-shadow:inset 3px 0 0 var(--accent)}.typepop input{margin:3px 0 0;accent-color:var(--accent)}.typepop span{display:grid;gap:1px}.typepop small{color:var(--muted);font-size:11.5px;line-height:1.3}
+.typepop{min-width:300px}.tphead{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:6px 10px 4px}.typepop label{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border-radius:5px;cursor:pointer;font-size:13px}.typepop label:hover{background:var(--panel)}.typepop label:has(input:checked){background:var(--panel);box-shadow:inset 3px 0 0 var(--accent)}.typepop input{margin:3px 0 0;accent-color:var(--accent)}
+.npsheet .nptypes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.npsheet .nptype{position:relative;display:grid;gap:3px;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;cursor:pointer;background:var(--paper,#fff)}
+.npsheet .nptype:hover{background:var(--panel)}
+.npsheet .nptype input{position:absolute;opacity:0;pointer-events:none}
+.npsheet .nptype b{font-size:13.5px}
+.npsheet .nptype small{font-size:11.5px;color:var(--muted);line-height:1.35}
+.npsheet .nptype:has(input:checked){border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--panel)}
+.npsheet .nptype:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.npsheet .npsrc{display:grid;gap:6px}
+.npsheet .npsrc label{display:flex;gap:8px;align-items:flex-start;font-size:13px;cursor:pointer}
+.npsheet .npsrc input{margin:2px 0 0;accent-color:var(--accent)}
+.npsheet .npfile{display:flex;gap:8px;align-items:center;margin-left:24px}
+.npsheet .nph{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0}
+.typepop span{display:grid;gap:1px}.typepop small{color:var(--muted);font-size:11.5px;line-height:1.3}
 .docpick{display:flex;gap:4px;padding:8px 10px;border-top:1px solid var(--rule);margin-top:4px;font-size:13px;align-items:center;flex-wrap:wrap}.docpick label{display:flex;gap:5px;align-items:center;padding:2px 6px}
 .pxsug{border:1px dashed var(--rule);border-radius:8px;padding:10px 12px;margin:0 0 12px;max-width:1180px;background:var(--raised)}
 .pxsug ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:4px}
@@ -1586,6 +1604,7 @@ body.pcshared #pcShare{position:fixed;inset:0;z-index:200;background:var(--bg,#F
     <details class="menu" id="projMenu">
       <summary class="btn" role="button">Project ▾</summary>
       <div class="menu-pop">
+        <button type="button" id="newProj">New project…<small>Pick the type and start a blank project</small></button>
         <button type="button" id="saveProj">Save project file<small>Lines, tags and schedule as .json</small></button>
         <button type="button" id="loadProj">Load project file<small>Restore lines onto the open PDF</small></button>
         <button type="button" id="revLoad" data-only="narr">Load revised draft<small>Carry lines, tags and schedule onto a new PDF</small></button>
@@ -1605,7 +1624,7 @@ body.pcshared #pcShare{position:fixed;inset:0;z-index:200;background:var(--bg,#F
   <div class="banner" id="sampleBanner" hidden>
     <span><strong>Sample script.</strong> The lines, tags and schedule here are examples. Open your own screenplay PDF to start.</span>
     <button class="btn primary" type="button" id="bannerOpen">Open script PDF</button>
-    <button class="btn" type="button" id="bannerDoc">Start a documentary</button>
+    <button class="btn" type="button" id="bannerDoc">Start a new project</button>
   </div>
 
   <div class="work">
@@ -12541,10 +12560,10 @@ const PT_TAGS = {narr: ['narr', 'film', 'short'], feature: ['narr', 'feature'], 
 const onlyOk = o => { if (!o) return true; const tg = PT_TAGS[ptKind()], ts = String(o).split(/\s+/); if (ts.some(t => t[0] === '!' && tg.includes(t.slice(1)))) return false; const pos = ts.filter(t => t[0] !== '!'); return !pos.length || pos.some(t => tg.includes(t)); };
 const PT_NAME = {narr: 'short film', feature: 'feature film', doc: 'documentary', pilot: 'TV pilot', micro: 'vertical series', ad: 'commercial', anim: 'animation'};
 function applyPtype(){ ['doc', 'pilot', 'micro', 'feature', 'ad', 'anim'].forEach(k => document.body.classList.toggle('ptype-' + k, ptKind() === k)); ['2d', 'cg', 'stop'].forEach(k => document.body.classList.toggle('anim-' + k, ptKind() === 'anim' && anTech() === k)); PV_KIND[0][1] = isDoc() ? 'Sizzle reel' : 'Storyboard animatic'; PV_KIND[1][1] = isDoc() ? 'Teaser or trailer' : 'Pre-viz edit'; PI_KIND.forEach(k => { const L = {treat: ['Feature treatment', 'Series bible'], outline: ['Feature outline or beat sheet', 'Season outline or episode guide'], budget: ['Feature budget top sheet', 'Season budget']}[k[0]]; if (L) k[1] = L[isSeries() ? 1 : 0]; }); const r = document.querySelectorAll('[data-ptype]'); r.forEach(x => { x.checked = x.value === ptKind(); }); const tl = document.getElementById('typeLab'); if (tl){ const n = PT_NAME[ptKind()] || 'short film'; tl.textContent = n === 'TV pilot' ? n : n[0].toUpperCase() + n.slice(1); } }
-const tabOk = b => !b || onlyOk(b.dataset.only);
+const tabOk = b => !b || (onlyOk(b.dataset.only) && !permHideBtn(b));
 // keep a tab the current project type can show, or move to the first one it can
 function fixTab(attr, cur){ const b = document.querySelector(`[data-${attr}="${cur}"]`); if (b && tabOk(b)) return cur; const v = [...document.querySelectorAll(`[data-${attr}]`)].find(tabOk); return v ? v.dataset[attr] : cur; }
-const secOk = s => onlyOk(s.only);
+const secOk = s => onlyOk(s.only) && !permHideSec(s.id);
 const secTabs = s => { const t = isDoc() && s.dtabs ? s.dtabs : s.tabs; return t && isAnimFlat() ? t.filter(x => !['locs', 'gear', 'calls', 'cater', 'crafty'].includes(x)) : t; };
 const secName = s => isDoc() && s.docName ? s.docName : s.name;
 // a documentary has no screenplay, so its project opens on a generated cover page instead of a script PDF
@@ -12578,6 +12597,93 @@ async function docCreate(){
   if (log){ const g = gstore().info; if (!g.logline) g.logline = log; }
   persist(); applyPtype(); goSec('people'); S.stab = 'parts'; setMode('schedule');
   toast('Documentary project started. Add the people in your film first.', 4500);
+}
+/* ---------- New project: pick the type, and start a blank project set to it ---------- */
+const NP_LINE = {narr: 'A short film', feature: 'A feature film', doc: 'A documentary', pilot: 'A TV pilot', micro: 'A vertical series', ad: 'A commercial', anim: 'An animated film'};
+const NP = {t: '', tech: '2d', src: 'none', pdf: null};
+const npTypes = () => [...document.querySelectorAll('#typeMenu [data-ptype]')].map(r => { const l = r.closest('label'); return [r.value, (l.querySelector('b') || {}).textContent || PT_NAME[r.value], (l.querySelector('small') || {}).textContent || '']; });
+function npDialog(pre){
+  let m = $('#npDlg');
+  if (!m){ m = document.createElement('div'); m.id = 'npDlg'; m.className = 'modal'; m.hidden = true; document.body.append(m);
+    m.addEventListener('click', e => {
+      if (e.target === m || e.target.closest('[data-npclose]')){ m.hidden = true; return; }
+      if (e.target.closest('[data-nppick]')){ $('#npPdf').click(); return; }
+      if (e.target.closest('[data-npgo]')) npCreate().catch(err => { console.error(err); toast('Could not start the project: ' + (err.message || err)); });
+    });
+    m.addEventListener('change', e => {
+      const r = e.target;
+      if (r.name === 'npType'){ NP.t = r.value; npShow(); }
+      else if (r.name === 'npTech') NP.tech = r.value;
+      else if (r.name === 'npSrc'){ NP.src = r.value; npShow(); }
+      else if (r.id === 'npPdf'){ const f = r.files && r.files[0]; r.value = '';
+        if (f && !/pdf$/i.test(f.type) && !/\.pdf$/i.test(f.name)){ toast('That file is not a PDF. Export your screenplay to PDF and pick it here.'); return; }
+        NP.pdf = f || NP.pdf; NP.src = 'pdf'; const s = m.querySelector('input[name=npSrc][value=pdf]'); if (s) s.checked = true; npShow(); }
+    });
+    m.addEventListener('keydown', e => { if (e.key === 'Escape') m.hidden = true; if (e.key === 'Enter' && e.target.matches('input.txt')) npCreate().catch(err => toast('Could not start the project: ' + (err.message || err))); }); }
+  Object.assign(NP, {t: pre || '', tech: '2d', src: 'none', pdf: null});
+  const types = npTypes(), techs = typeof AN_TECH !== 'undefined' ? AN_TECH : [['2d', '2D'], ['cg', 'CG (3D)'], ['stop', 'Stop-motion']];
+  m.innerHTML = `<div class="sheet npsheet" role="dialog" aria-modal="true" aria-labelledby="npH" style="width:min(720px,100%)"><div class="sheet-h"><h2 id="npH">New project</h2><button class="btn ghost" type="button" data-npclose>Cancel</button></div>
+    <div style="padding:16px;display:grid;gap:14px">
+      <p class="nph" id="npTypeH">What are you making?</p>
+      <div class="nptypes" role="radiogroup" aria-labelledby="npTypeH">${types.map(([v, n, d]) => `<label class="nptype"><input type="radio" name="npType" value="${esc(v)}" ${NP.t === v ? 'checked' : ''}><b>${esc(n)}</b><small>${esc(d)}</small></label>`).join('')}</div>
+      <div id="npTechRow" hidden><p class="nph" id="npTechH" style="margin-bottom:6px">Technique</p><div class="seg" role="radiogroup" aria-labelledby="npTechH">${techs.map(([v, l]) => `<label class="tog"><input type="radio" name="npTech" value="${esc(v)}" ${NP.tech === v ? 'checked' : ''}> ${esc(l)}</label>`).join(' ')}</div><p class="note" style="margin:6px 0 0">It sets the pipeline for every shot and asset. You can change it later.</p></div>
+      <label class="fld"><span>Working title</span><input class="txt" id="npTitle" placeholder="Untitled project"></label>
+      <div class="row" style="gap:12px;flex-wrap:wrap"><label class="fld" style="flex:1;min-width:200px"><span id="npWhoL">Director</span><input class="txt" id="npWho" placeholder="Your name"></label>
+        <label class="fld" style="flex:2;min-width:260px"><span>In a sentence, what is it about? (optional)</span><input class="txt" id="npLog" placeholder="Who wants what, and what stands in the way"></label></div>
+      <div id="npSrcRow" class="npsrc" hidden><p class="nph">The script</p>
+        <label><input type="radio" name="npSrc" value="none" checked><span>Start without a script<br><small class="muted">Write it in Script › Drafts, or bring in your PDF later with Project › Load revised draft.</small></span></label>
+        <label><input type="radio" name="npSrc" value="pdf"><span>Use my screenplay PDF</span></label>
+        <div class="npfile"><button class="btn" type="button" data-nppick>Choose PDF…</button><small class="muted" id="npPdfName">No file chosen</small></div>
+        <input type="file" id="npPdf" accept="application/pdf,.pdf" hidden></div>
+      <p class="note" style="margin:0">${S.isSample || !S.pages || !S.pages.length ? 'The sample stays as it is.' : `“${esc(S.name || 'This project')}” stays saved in this browser${typeof clLink === 'function' && clLink() ? ' and in the cloud' : ''}. Open its script PDF again to go back to it.`}</p>
+      <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn" type="button" data-npclose>Cancel</button><button class="btn primary" type="button" data-npgo>Create project</button></div></div></div>`;
+  m.hidden = false; npShow();
+  (m.querySelector('input[name=npType]:checked') ? m.querySelector('#npTitle') : m.querySelector('input[name=npType]')).focus();
+}
+function npShow(){
+  const m = $('#npDlg'); if (!m) return;
+  m.querySelector('#npTechRow').hidden = NP.t !== 'anim';
+  m.querySelector('#npSrcRow').hidden = !NP.t || NP.t === 'doc';
+  m.querySelector('#npWhoL').textContent = NP.t === 'ad' || NP.t === 'pilot' || NP.t === 'micro' || NP.t === 'anim' ? 'Producer' : 'Director';
+  m.querySelector('#npPdfName').textContent = NP.pdf ? NP.pdf.name : 'No file chosen';
+  m.querySelector('#npLog').placeholder = NP.t === 'doc' ? 'A night-shift nurse in a rural ER, through one winter' : NP.t === 'ad' ? 'The one thing the spot has to say' : NP.t === 'pilot' || NP.t === 'micro' ? 'The series in a sentence: who, what they want, what’s in the way' : 'Who wants what, and what stands in the way';
+}
+async function npTitlePdf(title, t, who, log){
+  const {PDFDocument, StandardFonts, rgb} = PDFLib, pdf = await PDFDocument.create(), F = await pdf.embedFont(StandardFonts.Courier), FB = await pdf.embedFont(StandardFonts.CourierBold);
+  pdf.setTitle(title); pdf.setCreator(typeof EDITION !== 'undefined' && EDITION === 'thesis' ? 'Thesis Tool Kit' : 'Crafti');
+  const pg = pdf.addPage([612, 792]), ctr = (s, y, f, sz) => { const x = String(s).replace(/[^\x20-\x7E]/g, '-'); pg.drawText(x, {x: (612 - f.widthOfTextAtSize(x, sz)) / 2, y, size: sz, font: f, color: rgb(.07, .07, .07)}); };
+  ctr(title.toUpperCase(), 470, FB, 18); ctr(NP_LINE[t] || 'A film', 440, F, 12); if (who) ctr('by ' + who, 422, F, 12);
+  if (log){ let line = '', y = 360; for (const w of log.split(/\s+/)){ if (F.widthOfTextAtSize(line + ' ' + w, 11) > 420){ ctr(line.trim(), y, F, 11); y -= 15; line = ''; } line += ' ' + w; } if (line.trim()) ctr(line.trim(), y, F, 11); }
+  ctr(`${(PT_NAME[t] || 'Film')[0].toUpperCase() + (PT_NAME[t] || 'film').slice(1)} project · ` + new Date().toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'}), 120, F, 9);
+  return new Uint8Array(await pdf.save());
+}
+async function npCreate(){
+  const m = $('#npDlg'), t = NP.t;
+  if (!t){ toast('Pick what you’re making.'); const r = m.querySelector('input[name=npType]'); if (r) r.focus(); return; }
+  const title = (m.querySelector('#npTitle').value || '').trim() || 'Untitled ' + PT_NAME[t], who = (m.querySelector('#npWho').value || '').trim(), log = (m.querySelector('#npLog').value || '').trim();
+  const usePdf = t !== 'doc' && NP.src === 'pdf';
+  if (usePdf && !NP.pdf){ toast('Choose your screenplay PDF, or start without a script.'); return; }
+  const go = m.querySelector('[data-npgo]'); go.disabled = true; go.textContent = 'Starting…';
+  try{
+    const bytes = usePdf ? new Uint8Array(await NP.pdf.arrayBuffer()) : await npTitlePdf(title, t, who, log);
+    const name = usePdf ? NP.pdf.name : `${title.replace(/[\\/:*?"<>|]+/g, '-')} - ${PT_NAME[t]}.pdf`;
+    const {doc, pages} = await readPdf(bytes), dk = docKey(doc, name);
+    const L = typeof clLinks === 'function' ? clLinks() : {}, key = (keyHas(dk) || L[dk]) ? dk + '~' + uid() : dk;
+    await wsClear(key);
+    installDoc(doc, bytes, name, pages, {key, data: {setups: [], strokes: [], tags: [], sched: null}});
+    m.hidden = true;
+    const sd = sched(); sd.settings.ptype = t; sd.settings.title = title;
+    if (t === 'micro') planStore().aspect = '9:16';
+    if (t === 'anim') anStore().tech = NP.tech;
+    if (who){ const pos = t === 'ad' || t === 'pilot' || t === 'micro' || t === 'anim' ? 'Producer' : 'Director', dept = pos === 'Producer' ? 'Production' : 'Direction', c = sd.crew.find(x => (x.position || '').toLowerCase() === pos.toLowerCase());
+      if (c){ if (!c.name) c.name = who; } else sd.crew.push({id: uid(), position: pos, name: who, dept}); }
+    if (log){ const g = gstore().info; if (!g.logline) g.logline = log; }
+    if (t === 'pilot' || t === 'micro'){ const b = srStore().bible; if (!b.title) b.title = title; if (log && !b.logline) b.logline = log; }
+    persist(); applyPtype(); changed();
+    const first = t === 'doc' ? 'people' : t === 'ad' ? 'adbrief' : t === 'anim' ? 'anassets' : t === 'pilot' || t === 'micro' ? 'series' : usePdf ? 'lining' : 'write';
+    goSec(first); if (t === 'doc'){ S.stab = 'parts'; setMode('schedule'); }
+    toast(`New ${t === 'anim' ? (NP.tech === 'stop' ? 'stop-motion' : NP.tech === 'cg' ? 'CG' : '2D') + ' ' : ''}${PT_NAME[t]} project started${usePdf ? ` on “${name}”` : ''}.`, 4500);
+  } finally { go.disabled = false; go.textContent = 'Create project'; }
 }
 function setPtype(t){
   const sd = sched(); if ((sd.settings.ptype || 'narr') === t) return;
@@ -14354,6 +14460,8 @@ document.addEventListener('keydown', e => {
 const EDITION = 'pro';
 /* version number and what's new; newest first */
 const APP_LOG = EDITION === 'pro' ? [
+  ['6.25', 'November 16, 2026', ['New: crew tabs for cloud sync. Add someone as Crew, pick their position (2nd AC, sound mixer, script supervisor and more) and tick the tabs they can change; every other tab opens view only for them', 'Money stays private: Budget, Costs, Financing, Contracts, Bid and Usage are hidden from crew unless you tick them', 'The cloud checks it too, so a crew member’s changes only ever reach the tabs you gave them. Run the new Crew tabs setup script in Supabase once', 'Projects now sync each tab’s data on its own, so two people on different tabs never hold each other up']],
+  ['6.24', 'November 16, 2026', ['New: Project › New project…: pick what you are making (short film, feature, documentary, TV pilot, vertical series, commercial or animation, with the technique for animation), give it a title, and start a blank project already set to that type', 'Start without a script and write it in Script › Drafts, or pick your screenplay PDF in the same step; the project you had open stays saved', 'The sample banner now offers Start a new project']],
   ['6.23', 'November 15, 2026', ['New Producer › Reviews: send a cut, storyboards or talent options to clients and execs as private links, one per person, with no account or app', 'Cuts on Vimeo or YouTube play inside the review, and every note is stamped with its timecode; storyboard frames get Looks good or Change this; talent gets Approve, Hold or Pass', 'Ask for an email code on confidential reviews; turn any link off, extend it, close it, or send the next round', 'Their notes arrive on the Reviews page: make a calendar task (assigned to the right person), add it to the cut notes, or mark it Not changing; reviewers see each note move from Planned to Done', 'Download an approval record (.docx) of who approved what, and when. Commercials also log each review on Producer › Approvals. Needs the review setup script run once on Supabase']],
   ['6.22', 'November 15, 2026', ['New Production › Walkies tab: sign walkie-talkies out and back in each shoot day, with a Now button for the time, the accessory that went with each radio, and its condition when it came back', 'Keep the radio kit (numbers, serials, make and model, where each one came from) and the channel list; the tab shows which radios are out and flags any still out from an earlier day or after wrap', 'Same as yesterday lines up each person with the radio they had the day before; Sign all back in at wrap', 'Download a printable sign-out sheet for the walkie table (.docx), with channels, signature lines and blank rows, or the log of every day (CSV)']],
   ['6.21', 'November 13, 2026', ['Budget › Catering now shows meals and craft service day by day (and each Crafty shopping run), with links to edit them on the Catering and Crafty tabs; both tabs link back to the budget']],
@@ -14409,6 +14517,7 @@ const APP_LOG = EDITION === 'pro' ? [
   ['1.1', 'October 2026', ['Storyboard template images that follow each shot’s size, framing and angle, including vehicles, buildings, landscapes and car interiors', 'Reverse over-the-shoulder frames, per-frame size and framing on extra frames, composition guides, character colors and paste or drop to add pictures', 'Animatic player with video export, and a link from storyboards to blocking']],
   ['1.0', 'October 2026', ['Crafti: the professional edition, from script lining through release, with a full user guide']]
 ] : [
+  ['8.23', 'November 16, 2026', ['New: Project › New project…: pick what you are making (short film, feature, documentary, TV pilot, vertical series, commercial or animation, with the technique for animation), give it a title, and start a blank project already set to that type', 'Start without a script and write it in Script › Drafts, or pick your screenplay PDF in the same step; the project you had open stays saved', 'The sample banner now offers Start a new project']],
   ['8.22', 'November 15, 2026', ['New Production › Walkies tab: sign walkie-talkies out and back in each shoot day, with a Now button for the time, the accessory that went with each radio, and its condition when it came back', 'Keep the radio kit (numbers, serials, make and model, where each one came from) and the channel list; the tab shows which radios are out and flags any still out from an earlier day or after wrap', 'Same as yesterday lines up each person with the radio they had the day before; Sign all back in at wrap', 'Download a printable sign-out sheet for the walkie table (.docx), with channels, signature lines and blank rows, or the log of every day (CSV)']],
   ['8.21', 'November 13, 2026', ['Budget › Catering now shows meals and craft service day by day (and each Crafty shopping run), with links to edit them on the Catering and Crafty tabs; both tabs link back to the budget']],
   ['8.20', 'November 13, 2026', ['Number boxes in Safari: the numbers sit clear of Safari’s controls, and the Crafty and Catering boxes have no controls at all (they still bring up the number keypad on phones)']],
@@ -15586,6 +15695,169 @@ const clBy = () => `${clName() || clMe()} · ${clDevice()}`;
 const clTitle = () => (S.sched && S.sched.settings && S.sched.settings.title) || baseName();
 const ROLE_NAME = {owner: 'Owner', editor: 'Editor', viewer: 'Viewer', reviewer: 'Reviewer'};
 const ROLE_SAYS = {reviewer: 'You can open and export this project as a reviewer, but can’t change it.', owner: 'Can change everything, invite and remove crew, and delete the project.', editor: 'Can change anything in the project.', viewer: 'Can look at and export everything, but can’t change the shared project.'};
+ROLE_NAME.crew = 'Crew'; ROLE_SAYS.crew = 'Can change only the tabs the owner picked; everything else is view only.'; CL.permSel = {}; CL.permPos = {}; CL.permEdit = null;
+
+// ---- crew tab permissions: a "crew" member changes only the tabs the owner ticks; the rest is view only, and money stays hidden unless ticked
+// each tab lists where it shows ('section' or 'section:tabset=tab') and the saved parts it writes (the database checks the parts)
+var PERM_ON = false;
+const PERM = [
+  {id: 'script', n: 'Drafts & notes', g: 'Script', at: ['write', 'snotes', 'revs'], parts: ['scriptRecord', 'sched.revisions', 'sched.treat']},
+  {id: 'dlg', n: 'Dialogue', g: 'Script', at: ['sdlg'], parts: ['sched.dlgAct']},
+  {id: 'series', n: 'Series bible', g: 'Script', at: ['series'], parts: ['sched.series']},
+  {id: 'pitch', n: 'Pitch & feature concept', g: 'Script', at: ['spitch', 'release:rtab=pitch', 'release:rtab=concept', 'release:rtab=fbud'], parts: ['sched.pitch', 'sched.feat', 'sched.treat']},
+  {id: 'lining', n: 'Lining', g: 'Script', at: ['lining'], parts: ['setups', 'strokes']},
+  {id: 'bd', n: 'Breakdown', g: 'Script', at: ['breakdown'], parts: ['tags', 'sched.changes', 'sched.changeDesc', 'sched.props']},
+  {id: 'board', n: 'Stripboard & schedule', g: 'Pre-production', at: ['schedule:stab=board', 'schedule:stab=daily', 'schedule:stab=dood', 'schedule:stab=dcal'], parts: ['sched.days', 'sched.dcal', 'sched.dood', 'sched.settings']},
+  {id: 'shots', n: 'Shot list', g: 'Pre-production', at: ['schedule:stab=shots'], parts: ['sched.days']},
+  {id: 'calls', n: 'Call sheets', g: 'Pre-production', at: ['schedule:stab=calls'], parts: ['sched.days']},
+  {id: 'cast', n: 'Casting', g: 'Pre-production', at: ['people:stab=casting', 'people:stab=parts'], parts: ['sched.casting', 'sched.castInfo', 'sched.castOrder', 'sched.parts']},
+  {id: 'crew', n: 'Crew list', g: 'Pre-production', at: ['people:stab=crew'], parts: ['sched.crew']},
+  {id: 'locs', n: 'Locations', g: 'Pre-production', at: ['people:stab=locs'], parts: ['sched.locInfo', 'sched.settings/coords']},
+  {id: 'gear', n: 'Gear', g: 'Pre-production', at: ['people:stab=gear'], parts: ['sched.gear']},
+  {id: 'cater', n: 'Catering & craft services', g: 'Pre-production', at: ['people:stab=cater', 'people:stab=crafty'], parts: ['sched.cater', 'sched.budget/settings']},
+  {id: 'sboard', n: 'Storyboard', g: 'Pre-production', at: ['plan:ptab=board'], parts: ['sched.frames', 'sched.aspect']},
+  {id: 'mood', n: 'Mood board', g: 'Pre-production', at: ['plan:ptab=mood'], parts: ['sched.mood']},
+  {id: 'blocking', n: 'Blocking', g: 'Pre-production', at: ['plan:ptab=blocking'], parts: ['sched.blocking']},
+  {id: 'previz', n: 'Previz', g: 'Pre-production', at: ['plan:ptab=previz'], parts: ['sched.previz']},
+  {id: 'creative', n: 'Characters, continuity & timing', g: 'Pre-production', at: ['plan:ptab=chars', 'plan:ptab=cont', 'plan:ptab=timing', 'plan:ptab=vis'], parts: ['sched.meta', 'sched.timing', 'sched.vis', 'sched.settings/sidesLayout']},
+  {id: 'anim', n: 'Animation pipeline', g: 'Pre-production', at: ['anassets', 'animatic', 'anvoice', 'anshots', 'anprog'], parts: ['sched.anim']},
+  {id: 'budget', n: 'Budget', g: 'Pre-production', at: ['budget'], parts: ['sched.budget'], money: true},
+  {id: 'green', n: 'Greenlight', g: 'Pre-production', at: ['green:gtab=ready', 'green:gtab=rel', 'green:gtab=safety', 'green:gtab=tl', 'green:gtab=pkg'], parts: ['sched.green', 'sched.forms/comp', 'sched.settings/company', 'sched.settings/title', 'sched.settings/director', 'sched.settings/producer']},
+  {id: 'ethics', n: 'Ethics & care', g: 'Pre-production', at: ['green:gtab=ethics'], parts: ['sched.ethics']},
+  {id: 'legal', n: 'Legal review', g: 'Pre-production', at: ['green:gtab=legal'], parts: ['sched.legal']},
+  {id: 'today', n: 'Today', g: 'Production', at: ['prod:ztab=today'], parts: ['sched.prod/days']},
+  {id: 'setlog', n: 'Set log', g: 'Production', at: ['prod:ztab=log'], parts: ['sched.log', 'sched.prod/shot', 'sched.prod/skip', 'sched.prod/scDone', 'sched.prod/scStat']},
+  {id: 'slog', n: 'Shoot log', g: 'Production', at: ['prod:ztab=slog'], parts: ['sched.slog', 'sched.slogDay']},
+  {id: 'cam', n: 'Camera report', g: 'Production', at: ['prod:ztab=cam'], parts: ['sched.prod/camRolls', 'sched.prod/camDef', 'sched.prod/rtakes/cam', 'sched.log/takes']},
+  {id: 'snd', n: 'Sound report', g: 'Production', at: ['prod:ztab=snd'], parts: ['sched.prod/sndRolls', 'sched.prod/sndDef', 'sched.prod/rtakes/snd', 'sched.prod/wild', 'sched.log/takes']},
+  {id: 'dpr', n: 'Production report', g: 'Production', at: ['prod:ztab=dpr'], parts: ['sched.prod/days']},
+  {id: 'ts', n: 'Time sheets', g: 'Production', at: ['prod:ztab=ts'], parts: ['sched.prod/ts', 'sched.prod/days']},
+  {id: 'ptr', n: 'Performer times', g: 'Production', at: ['prod:ztab=ptr'], parts: ['sched.prod/perf', 'sched.prod/days']},
+  {id: 'bg', n: 'Background', g: 'Production', at: ['prod:ztab=bg'], parts: ['sched.forms/bg']},
+  {id: 'wk', n: 'Walkies', g: 'Production', at: ['prod:ztab=wk'], parts: ['sched.forms/wk']},
+  {id: 'inc', n: 'Incidents', g: 'Production', at: ['prod:ztab=inc'], parts: ['sched.forms/inc']},
+  {id: 'data', n: 'Footage and data', g: 'Production', at: ['prod:ztab=data'], parts: ['sched.prod/cards', 'sched.prod/copyNames']},
+  {id: 'dly', n: 'Dailies', g: 'Production', at: ['prod:ztab=dly'], parts: ['sched.prod/dailies']},
+  {id: 'cost', n: 'Costs', g: 'Production', at: ['prod:ztab=cost'], parts: ['sched.prod/expenses', 'sched.prod/floats', 'sched.forms/po'], money: true},
+  {id: 'photo', n: 'Continuity photos', g: 'Production', at: ['prod:ztab=photo'], parts: ['sched.prod/photos']},
+  {id: 'prog', n: 'Progress and pickups', g: 'Production', at: ['prod:ztab=prog'], parts: ['sched.prod/pickups', 'sched.prod/pkDay', 'sched.prod/shot', 'sched.prod/skip', 'sched.prod/scDone', 'sched.prod/scStat']},
+  {id: 'psched', n: 'Post schedule', g: 'Post', at: ['post:xtab=sched'], parts: ['sched.post/items', 'sched.post/custom', 'sched.post/dismiss']},
+  {id: 'cuts', n: 'Cuts, notes & scenes', g: 'Post', at: ['post:xtab=cuts', 'post:xtab=scenes', 'post:xtab=dlg'], parts: ['sched.post/cuts', 'sched.post/notes', 'sched.post/recs', 'sched.post/recSave', 'sched.post/course', 'sched.post/scn']},
+  {id: 'paper', n: 'Paper edit, transcripts & archival', g: 'Post', at: ['post:xtab=paper', 'post:xtab=trans', 'post:xtab=arch'], parts: ['sched.paper', 'sched.trans', 'sched.arch', 'sched.settings/peTarget']},
+  {id: 'psound', n: 'Sound (post)', g: 'Post', at: ['post:xtab=sound'], parts: ['sched.post/adr', 'sched.post/spot']},
+  {id: 'music', n: 'Music', g: 'Post', at: ['post:xtab=music'], parts: ['sched.post/cues']},
+  {id: 'vfx', n: 'VFX & titles', g: 'Post', at: ['post:xtab=vfx'], parts: ['sched.post/vfx']},
+  {id: 'turn', n: 'Turnover & color', g: 'Post', at: ['post:xtab=turn'], parts: ['sched.forms/turn', 'sched.forms/grade']},
+  {id: 'finish', n: 'Finishing', g: 'Post', at: ['post:xtab=finish'], parts: ['sched.post/qc', 'sched.post/specs']},
+  {id: 'deliv', n: 'Deliverables', g: 'Post', at: ['post:xtab=deliv'], parts: ['sched.post/deliv', 'sched.post/dcustom']},
+  {id: 'credits', n: 'Credits', g: 'Post', at: ['post:xtab=credits'], parts: ['sched.credits']},
+  {id: 'fest', n: 'Festivals', g: 'Release', at: ['release:rtab=fest'], parts: ['sched.post/fests']},
+  {id: 'kit', n: 'Press kit', g: 'Release', at: ['release:rtab=kit'], parts: ['sched.release/kit', 'sched.release/castBio', 'sched.release/quotes', 'sched.release/stills', 'sched.green/info']},
+  {id: 'bb', n: 'Billing block', g: 'Release', at: ['release:rtab=bb'], parts: ['sched.release/bb']},
+  {id: 'rplan', n: 'Release plan & screenings', g: 'Release', at: ['release:rtab=plan', 'release:rtab=scr', 'release:rtab=season'], parts: ['sched.release/windows', 'sched.release/scr', 'sched.release/season']},
+  {id: 'mkt', n: 'Marketing', g: 'Release', at: ['release:rtab=mkt'], parts: ['sched.release/mkt', 'sched.release/launch']},
+  {id: 'prev', n: 'Participant preview', g: 'Release', at: ['release:rtab=prev'], parts: ['sched.preview']},
+  {id: 'impact', n: 'Impact & outreach', g: 'Release', at: ['release:rtab=impact'], parts: ['sched.impact']},
+  {id: 'adbrief', n: 'Brief', g: 'Producer', at: ['adbrief'], parts: ['sched.ad/brief', 'sched.ad/contacts']},
+  {id: 'adspots', n: 'Spots', g: 'Producer', at: ['adspots'], parts: ['sched.ad/spots', 'sched.ad/vers']},
+  {id: 'adbid', n: 'Bid', g: 'Producer', at: ['adbid'], parts: ['sched.ad/bids', 'sched.ad/cur'], money: true},
+  {id: 'adappr', n: 'Approvals', g: 'Producer', at: ['adappr'], parts: ['sched.ad/appr']},
+  {id: 'aduse', n: 'Usage', g: 'Producer', at: ['aduse'], parts: ['sched.ad/use', 'sched.ad/pay'], money: true},
+  {id: 'fin', n: 'Financing & dashboard', g: 'Producer', at: ['pfin', 'pdash'], parts: ['sched.producer'], money: true},
+  {id: 'con', n: 'Contracts', g: 'Producer', at: ['pcon'], parts: ['sched.producer/cons', 'sched.producer/con', 'sched.green/rel'], money: true},
+  {id: 'pcal', n: 'Calendar', g: 'Producer', at: ['pcal'], parts: ['sched.pcal']}
+];
+const PERM_BY = Object.fromEntries(PERM.map(u => [u.id, u]));
+// starting points by position; the owner can tick and untick from there
+const PERM_POS = [
+  ['1st AD', ['board', 'shots', 'calls', 'today', 'dpr', 'ts', 'ptr', 'bg', 'wk', 'inc', 'prog']], ['2nd AD', ['calls', 'today', 'ts', 'ptr', 'bg', 'wk']],
+  ['Production coordinator', ['crew', 'gear', 'calls', 'wk', 'inc', 'cater']], ['Script supervisor', ['setlog', 'slog', 'prog', 'lining', 'creative']],
+  ['Director of photography', ['shots', 'sboard', 'gear', 'cam']], ['1st AC', ['cam', 'gear']], ['2nd AC', ['cam']], ['DIT or data wrangler', ['data', 'dly']],
+  ['Gaffer or key grip', ['gear']], ['Sound mixer', ['snd']], ['Boom operator', ['snd']],
+  ['Production designer', ['mood', 'bd', 'sboard']], ['Costume designer', ['bd', 'creative', 'photo']], ['Hair and makeup', ['creative', 'photo']],
+  ['Location manager', ['locs']], ['Casting director', ['cast']], ['Craft services and catering', ['cater']], ['Accountant', ['budget', 'cost', 'fin', 'con', 'adbid', 'aduse']],
+  ['Writer', ['script', 'dlg', 'series', 'pitch']], ['Storyboard artist', ['sboard']], ['Animation lead', ['anim']],
+  ['Editor', ['cuts', 'paper', 'psched', 'dly']], ['Post supervisor', ['psched', 'cuts', 'turn', 'finish', 'deliv', 'credits']], ['Sound designer', ['psound']], ['Composer', ['music']],
+  ['VFX supervisor', ['vfx']], ['Colorist', ['turn', 'finish']], ['Publicist', ['kit', 'bb', 'mkt', 'fest', 'rplan']]
+];
+const permParts = ids => [...new Set(ids.flatMap(i => (PERM_BY[i] || {parts: []}).parts))].sort();
+const permAt = a => { const [sec, rest] = a.split(':'), [attr, val] = rest ? rest.split('=') : []; return {sec, attr, val}; };
+function permAtOk(a){
+  const {sec, attr, val} = permAt(a), s = PHASES.flatMap(p => p.secs).find(x => x.id === sec); if (!s || !onlyOk(s.only)) return false;
+  if (!attr) return true; if (attr === 'stab') return (secTabs(s) || []).includes(val);
+  const b = document.querySelector(`[data-${attr}="${val}"]`); return !b || onlyOk(b.dataset.only);
+}
+const permShown = u => u.at.some(permAtOk);
+const SEC_ATTR = {schedule: 'stab', people: 'stab', plan: 'ptab', budget: 'btab', green: 'gtab', prod: 'ztab', post: 'xtab', release: 'rtab'};
+function permHere(){
+  let s; try{ s = curSec(); }catch(e){ return null; } if (!s) return null;
+  const attr = SEC_ATTR[s.id], here = attr ? `${s.id}:${attr}=${S[attr]}` : s.id;
+  return PERM.find(u => u.at.includes(here)) || PERM.find(u => u.at.includes(s.id)) || null;
+}
+// this person's tabs, when they're crew on the project open now
+function clCrewMe(){
+  if (!PERM_ON || typeof CLOUD === 'undefined' || !CLOUD || !CL.sess) return null;
+  const l = clLink(); if (!l || clRoleNow() !== 'crew') return null; const c = CL.roles[l.id] || {};
+  return {tabs: c.tabs || l.tabs || [], parts: c.parts || l.parts || []};
+}
+const clPartOk = (p, parts) => (parts || []).some(a => p === a || p.startsWith(a + '/'));
+function permHideSec(id){ const me = clCrewMe(); if (!me) return false; const u = PERM.find(x => x.money && x.at.includes(id)); return !!u && !me.tabs.includes(u.id); }
+function permHideBtn(b){
+  const me = clCrewMe(); if (!me || !b || !b.dataset) return false;
+  return PERM.some(u => u.money && !me.tabs.includes(u.id) && u.at.some(a => { const {attr, val} = permAt(a); return attr && attr !== 'stab' && b.dataset[attr] === val; }));
+}
+function permApply(){
+  if (!PERM_ON) return; const me = clCrewMe();
+  document.querySelectorAll('[data-permhid]').forEach(b => { b.hidden = false; delete b.dataset.permhid; });
+  if (me) PERM.filter(u => u.money && !me.tabs.includes(u.id)).forEach(u => u.at.forEach(a => { const {attr, val} = permAt(a); if (attr && attr !== 'stab') document.querySelectorAll(`[data-${attr}="${val}"]`).forEach(b => { if (!b.hidden){ b.hidden = true; b.dataset.permhid = '1'; } }); }));
+  let s = null; try{ s = curSec(); }catch(e){}
+  if (me && s && permHideSec(s.id) && !PERM.__going){ PERM.__going = true; setTimeout(() => { PERM.__going = false; const u = PERM.find(x => me.tabs.includes(x.id) && permShown(x)); goSec(u ? permAt(u.at.find(permAtOk)).sec : (isDoc() ? 'snotes' : 'lining')); }, 0); return; }
+  const u = me ? permHere() : null, lock = !!me && !(u && me.tabs.includes(u.id));
+  document.body.classList.toggle('permro', lock);
+  let bar = $('#permBar'); if (!lock){ if (bar) bar.remove(); return; }
+  if (!bar){ bar = document.createElement('div'); bar.id = 'permBar'; bar.className = 'permbar'; bar.setAttribute('role', 'status'); document.body.append(bar); }
+  const mine = me.tabs.map(i => PERM_BY[i]).filter(x => x && permShown(x)).map(x => x.n);
+  const html = `<b>View only.</b> Ask the producer to change this.${mine.length ? ` <span>You can change: ${esc(mine.join(', '))}.</span>` : ''}`;
+  if (bar.innerHTML !== html) bar.innerHTML = html;
+}
+// on a view-only tab, editing is switched off; looking, switching tabs, picking a day and exporting still work
+const PERM_SAFE = '.daypick,[data-ztab],[data-stab],[data-ptab],[data-rtab],[data-gtab],[data-xtab],[data-btab],[data-sec],[data-phase],[data-mode],[data-export],[data-zoom],[id^="dl"],summary,.tabs,[data-permok]';
+const permSafe = el => !!el.closest(PERM_SAFE) || (el.matches('input[type=search]')) || (el.matches('button,a') && /\.docx|\bpdf\b|\bcsv\b|print|export|download|copy|zoom|previous|next/i.test(`${el.textContent} ${el.title || ''} ${el.getAttribute('aria-label') || ''}`));
+function permNudge(){ const now = Date.now(); if (now - (PERM.__t || 0) < 2500) return; PERM.__t = now; toast('View only. Ask the producer to change this.'); }
+function permBlock(e){
+  if (!document.body.classList.contains('permro')) return;
+  const t = e.target; if (!t || !t.closest || t.closest('.modal,#cloudModal,#permBar,.cloudbar')) return;
+  if (e.type === 'keydown'){
+    const ed = t.closest('input,textarea,select,[contenteditable="true"]'), inWork = t === document.body || !!t.closest('.work');
+    if (!inWork) return;
+    if (ed && permSafe(ed)) return;
+    const nav = ['Tab', 'Escape', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown', 'Home', 'End', 'Shift', 'Control', 'Alt', 'Meta'].includes(e.key);
+    const copy = (e.ctrlKey || e.metaKey) && ['c', 'a', 'f', 'p'].includes((e.key || '').toLowerCase());
+    if (nav || copy) return;
+    if (!ed && !['Delete', 'Backspace'].includes(e.key) && !(e.ctrlKey || e.metaKey)) return;
+    e.preventDefault(); e.stopPropagation(); permNudge(); return;
+  }
+  if (!t.closest('.work')) return;
+  const ctl = t.closest('button,a,input,select,textarea,label,[contenteditable="true"],[draggable="true"]');
+  if (ctl && permSafe(ctl)) return;
+  if (!ctl && (e.type === 'click' || e.type === 'input' || e.type === 'change')) return;
+  e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+  if (e.type === 'click' || e.type === 'pointerdown' || e.type === 'focusin') permNudge();
+  if (e.type === 'focusin' && ctl && ctl.blur) ctl.blur();
+}
+['pointerdown', 'mousedown', 'touchstart', 'click', 'dblclick', 'dragstart', 'drop', 'paste', 'input', 'change', 'keydown', 'focusin', 'contextmenu'].forEach(ev => document.addEventListener(ev, permBlock, {capture: true, passive: false}));
+document.addEventListener('click', e => { if (e.target && e.target.closest && e.target.closest('[data-ztab],[data-stab],[data-ptab],[data-rtab],[data-gtab],[data-xtab],[data-btab],[data-sec],[data-phase]')) setTimeout(permApply, 0); });
+// the tab checklist the owner ticks, by phase
+function permPicker(key){
+  const sel = CL.permSel[key] || new Set(), pos = CL.permPos[key] || '', units = PERM.filter(permShown), groups = [...new Set(units.map(u => u.g))];
+  return `<div class="permbox"><div class="row" style="gap:8px;flex-wrap:wrap;align-items:flex-end"><label class="fld" style="flex:1 1 220px;margin:0"><span>Position</span><select class="txt" data-permpos="${esc(key)}"><option value="">Choose a position to start from…</option>${PERM_POS.map(([n]) => `<option${n === pos ? ' selected' : ''}>${esc(n)}</option>`).join('')}</select></label>
+    <button class="btn ghost" type="button" data-permall="${esc(key)}|none">Clear</button></div>
+    <p class="note" style="margin:0">Tick the tabs they can change. They can look at everything else but not change it. Money tabs (marked $) stay hidden from them unless you tick them.</p>
+    <div class="permgrid">${groups.map(g => `<fieldset><legend>${esc(g)}</legend>${units.filter(u => u.g === g).map(u => `<label><input type="checkbox" data-permchk="${esc(key)}" value="${u.id}"${sel.has(u.id) ? ' checked' : ''}> ${esc(u.n)}${u.money ? ' <i class="permmoney" title="Money">$</i>' : ''}</label>`).join('')}</fieldset>`).join('')}</div>
+    ${key === 'inv' ? '' : `<div class="row" style="gap:8px"><button class="btn primary" type="button" data-clact="permsave" data-permkey="${esc(key)}">Save tabs</button><button class="btn ghost" type="button" data-clact="permcancel">Cancel</button></div>`}</div>`;
+}
+const permNames = tabs => (tabs || []).map(i => PERM_BY[i]).filter(Boolean).map(u => u.n);
+setTimeout(() => { PERM_ON = true; try{ permApply(); }catch(e){} }, 0);
 class CloudErr extends Error { constructor(msg, code){ super(msg); this.code = code; } }
 async function clRaw(path, opts = {}, auth = true){
   const h = Object.assign({apikey: CLOUD.key, 'Content-Type': 'application/json'}, opts.headers || {});
@@ -15635,7 +15907,9 @@ const clCanon = v => v === undefined ? 'null' : JSON.stringify(v, (k, x) => x &&
 function clHash(s){ let a = 0x811c9dc5, b = 0; for (let i = 0; i < s.length; i++){ const c = s.charCodeAt(i); a = Math.imul(a ^ c, 16777619); b = (Math.imul(b, 31) + c) | 0; } return (a >>> 0).toString(36) + (b >>> 0).toString(36) + s.length.toString(36); }
 async function clLocal(){
   const o = {setups: S.setups || [], strokes: S.strokes || [], tags: S.tags || []};
-  Object.entries(S.sched || {}).forEach(([k, v]) => { if (v !== undefined) o['sched.' + k] = v; });
+  Object.entries(S.sched || {}).forEach(([k, v]) => { if (v === undefined) return; const sp = CL_SPLIT[k];
+    if (sp && clPlain(v)) Object.entries(v).forEach(([sk, sv]) => { if (sv === undefined) return; if (sp[sk] && clPlain(sv)) Object.entries(sv).forEach(([x, xv]) => { if (xv !== undefined) o[`sched.${k}/${sk}/${x}`] = xv; }); else o[`sched.${k}/${sk}`] = sv; });
+    else o['sched.' + k] = v; });
   try{ const sr = await sfPack({}, false); if (sr) o.scriptRecord = sr; }catch(e){}
   return o;
 }
@@ -15644,7 +15918,25 @@ async function clApply(part, data){
   if (part === 'setups'){ S.setups = fixSizes(data || []); S.sel = {setup: null, stroke: null}; }
   else if (part === 'strokes'){ S.strokes = (data || []).filter(s => s.page < S.pages.length); S.sel = {setup: null, stroke: null}; }
   else if (part === 'tags'){ S.tags = (data || []).filter(t => t.manual || t.page < S.pages.length); S.selTag = null; }
-  else if (part.startsWith('sched.')){ S.sched = S.sched || {}; S.sched[part.slice(6)] = data; }
+  else if (part.startsWith('sched.')){ S.sched = S.sched || {}; const [k, sk, x] = part.slice(6).split('/');
+    if (sk === undefined) S.sched[k] = data;
+    else { if (!clPlain(S.sched[k])) S.sched[k] = {}; const o = S.sched[k]; if (x === undefined) o[sk] = data; else { if (!clPlain(o[sk])) o[sk] = {}; o[sk][x] = data; } } }
+}
+// a project saved before crew tabs kept these areas each in one piece; now each tab's data is its own piece, so the database can check who changes what
+const CL_SPLIT = {prod: {rtakes: 1}, log: {}, post: {}, release: {}, producer: {}, forms: {}, budget: {}, green: {}, settings: {}, ad: {}, cater: {}};
+const clPlain = v => !!v && typeof v === 'object' && !Array.isArray(v);
+const clLegacy = p => /^sched\.[^/]+$/.test(p) && !!CL_SPLIT[p.slice(6)];
+function clSplitInit(link, L0, H0){
+  Object.keys(CL_SPLIT).forEach(k => { const p = 'sched.' + k, v = (S.sched || {})[k];
+    if (link.h[p] == null || !clPlain(v) || Object.keys(link.h).some(q => q.startsWith(p + '/'))) return;
+    if (clHash(clCanon(v)) === link.h[p]) Object.keys(L0).forEach(q => { if (q.startsWith(p + '/')) link.h[q] = H0[q]; }); });
+}
+async function clLegacyIn(link, r, R, canEdit, pulled){
+  const p = r.part, k = p.slice(6); link.rev[p] = r.rev;
+  if (Object.keys(R).some(q => q.startsWith(p + '/'))) return;   // its pieces are in the cloud now, so this older copy is out of date
+  const cur = (S.sched || {})[k], dirty = cur !== undefined && link.h[p] != null && clHash(clCanon(cur)) !== link.h[p];
+  if (dirty && canEdit) return;   // changed here too: the pieces from this device go up and replace it
+  await clApply(p, r.data); pulled.push(p); link.h[p] = clHash(clCanon(r.data));
 }
 function clRefresh(){ CL.quiet = true; try{ changed(); }finally{ CL.quiet = false; } saveNow(); }
 const clTyping = () => { const a = document.activeElement; return !!a && a !== document.body && (a.matches('input,textarea,select') || a.isContentEditable) && !a.closest('#cloudModal'); };
@@ -15661,9 +15953,10 @@ const clImgPath = (pid, n) => `${CL_BUCKET}/${pid}/${encodeURIComponent(n)}`;
 
 // ---- the role this person has on a project (asked every couple of minutes, so a change reaches them)
 async function clRoleOf(id, fresh){
-  const c = CL.roles[id]; if (c && !fresh && Date.now() - c.t < 120000) return c.role;
+  const c = CL.roles[id]; if (c && !fresh && Date.now() - c.t < 120000 && (c.role !== 'crew' || c.tabs)) return c.role;
   const role = await clApi('rpc/project_role', {method: 'POST', body: JSON.stringify({pid: id})});
-  CL.roles[id] = {role: role || null, t: Date.now()}; return role || null;
+  let mine = {}; if (role === 'crew'){ const m = await clApi(`project_members?project_id=eq.${id}&email=eq.${encodeURIComponent(clMe())}&select=tabs,parts`).catch(() => null); mine = (m && m[0]) || {}; }
+  CL.roles[id] = Object.assign({role: role || null, t: Date.now()}, role === 'crew' ? {tabs: mine.tabs || [], parts: mine.parts || []} : {}); return role || null;
 }
 const clRoleNow = () => { const l = clLink(); return l && CL.roles[l.id] ? CL.roles[l.id].role : (l && l.role) || null; };
 
@@ -15678,12 +15971,17 @@ async function clSync(opts = {}){
     link.rev = link.rev || {}; link.h = link.h || {}; link.img = link.img || {};
     const role = await clRoleOf(link.id, opts.fresh);
     if (!role){ clSetLink(null, key); CL.conflicts = []; clBanner(); toast('This project is no longer shared with you. Your copy stays on this device.', 4200); clStatus(''); return; }
-    link.role = role; const canEdit = !clRO(role);
+    link.role = role; const canEdit = !clRO(role), full = role === 'owner' || role === 'editor', rc = CL.roles[link.id] || {};
+    if (role === 'crew'){ link.tabs = rc.tabs || link.tabs || []; link.parts = rc.parts || link.parts || []; } else { delete link.tabs; delete link.parts; }
+    const mayWrite = p => full || (role === 'crew' && clPartOk(p, link.parts));
     const remote = await clApi(`project_parts?project_id=eq.${link.id}&select=part,rev,updated_at,updated_by`) || [];
     const R = Object.fromEntries(remote.map(r => [r.part, r]));
     const L0 = await clLocal(), H0 = {}; for (const [p, v] of Object.entries(L0)) H0[p] = clHash(clCanon(v));
+    clSplitInit(link, L0, H0);
     const refs0 = clImgRefs();
-    const fresh = Object.keys(R).filter(p => R[p].rev !== link.rev[p]);
+    // crew: a change made here on a tab they can't change goes back to the shared version
+    const back = new Set(role === 'crew' ? Object.keys(R).filter(p => p !== 'scriptRecord' && R[p].rev === link.rev[p] && !mayWrite(p) && H0[p] != null && link.h[p] != null && H0[p] !== link.h[p]) : []);
+    const fresh = Object.keys(R).filter(p => R[p].rev !== link.rev[p] || back.has(p));
     const hold = clTyping() && !opts.force;   // never swap things under someone who is typing; the next pass brings them in
     let have = null; const listed = async () => have || (have = await clImgList(link.id));
     // 1. photos added here go up first, so the crew never sees a frame before its picture
@@ -15698,10 +15996,12 @@ async function clSync(opts = {}){
     const pulled = [], conflicts = [];
     if (fresh.length && !hold){
       const rows = await clApi(`project_parts?project_id=eq.${link.id}&part=in.(${fresh.map(p => encodeURIComponent('"' + p + '"')).join(',')})&select=part,rev,data,updated_at,updated_by`) || [];
+      rows.sort((a, b) => a.part < b.part ? -1 : a.part > b.part ? 1 : 0);
       for (const r of rows){
+        if (clLegacy(r.part)){ await clLegacyIn(link, r, R, canEdit, pulled); continue; }
         const p = r.part, rh = clHash(clCanon(r.data)), dirty = H0[p] != null && H0[p] !== link.h[p];
         if (rh === H0[p]){ link.rev[p] = r.rev; link.h[p] = rh; continue; }
-        if (!dirty || !canEdit || p === 'scriptRecord'){ await clApply(p, r.data); pulled.push(p); link.rev[p] = r.rev; link.h[p] = p === 'scriptRecord' ? rh : null; }
+        if (!dirty || !mayWrite(p) || p === 'scriptRecord'){ await clApply(p, r.data); pulled.push(p); link.rev[p] = r.rev; link.h[p] = p === 'scriptRecord' ? rh : null; }
         else conflicts.push({part: p, r});
       }
     }
@@ -15713,12 +16013,18 @@ async function clSync(opts = {}){
     (CL.ckey === key ? CL.conflicts : []).forEach(c => waiting.add(c.part));
     let raced = false;
     if (canEdit) for (const p of Object.keys(L1)){
-      if (waiting.has(p) || H1[p] === link.h[p]) continue;
+      if (waiting.has(p) || !mayWrite(p) || (H1[p] === link.h[p] && link.rev[p] != null)) continue;
       const body = {data: L1[p], updated_by: clBy()}; let out;
       if (link.rev[p] != null) out = await clApi(`project_parts?project_id=eq.${link.id}&part=eq.${encodeURIComponent(p)}&rev=eq.${link.rev[p]}&select=rev`, {method: 'PATCH', headers: {Prefer: 'return=representation'}, body: JSON.stringify(body)});
       else out = await clApi(`project_parts?on_conflict=project_id,part&select=rev`, {method: 'POST', headers: {Prefer: 'return=representation,resolution=ignore-duplicates'}, body: JSON.stringify(Object.assign({project_id: link.id, part: p}, body))});
       const r = Array.isArray(out) ? out[0] : out;
       if (r && r.rev != null){ link.rev[p] = r.rev; link.h[p] = H1[p]; } else raced = true;   // someone saved it a moment earlier: the next pass sorts it out
+    }
+    // older all-in-one copies go once every piece from this device is in the cloud
+    if (full && !raced && !hold) for (const p of Object.keys(R)){
+      if (!clLegacy(p) || link.rev[p] !== R[p].rev || !clPlain((S.sched || {})[p.slice(6)])) continue;
+      const mine = Object.keys(L1).filter(q => q.startsWith(p + '/')); if (!mine.length || mine.some(q => waiting.has(q) || link.rev[q] == null)) continue;
+      await clApi(`project_parts?project_id=eq.${link.id}&part=eq.${encodeURIComponent(p)}`, {method: 'DELETE'}); delete link.rev[p]; delete link.h[p];
     }
     // 4. photos the crew added
     let got = 0;
@@ -15728,17 +16034,17 @@ async function clSync(opts = {}){
       try{ const b = await clStore('object/authenticated/' + clImgPath(link.id, n), {blob: true}); if (b && b.size){ await idbSetK('img:' + id, b); if (IMG.has(id)){ URL.revokeObjectURL(IMG.get(id)); IMG.delete(id); } link.img[id] = n; got++; } }catch(e){}
     }
     // a project saved before crew sharing kept everything in one copy; once every area is saved on its own, clear that copy out
-    if (canEdit && !link.clean && !conflicts.length && !raced && !hold){ await clApi(`projects?id=eq.${link.id}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({data: {v: 2}, images: null})}); link.clean = true; }
+    if (full && !link.clean && !conflicts.length && !raced && !hold){ await clApi(`projects?id=eq.${link.id}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({data: {v: 2}, images: null})}); link.clean = true; }
     link.t = Date.now(); clSetLink(link, key);
     if (pulled.length || got) clRefresh();
     if (conflicts.length){ const m = new Map((CL.ckey === key ? CL.conflicts : []).map(c => [c.part, c])); conflicts.forEach(c => m.set(c.part, c)); CL.conflicts = [...m.values()]; CL.ckey = key; }
     clBanner();
-    if (pulled.length && !opts.quietPull){ const names = [...new Set(pulled.filter(p => p !== 'scriptRecord').map(clArea))]; if (names.length) toast(`Updated from the crew: ${names.slice(0, 4).join(', ')}${names.length > 4 ? '…' : ''}.`); }
+    if (pulled.length && !opts.quietPull){ const names = [...new Set(pulled.filter(p => p !== 'scriptRecord' && !back.has(p)).map(clArea))]; if (names.length) toast(`Updated from the crew: ${names.slice(0, 4).join(', ')}${names.length > 4 ? '…' : ''}.`); }
     clStatus(CL.ckey === key && CL.conflicts.length ? 'conflict' : 'ok');
     clPresence(link).catch(() => {});
     if (raced || hold) CL.again = true;
   }catch(e){ CL.err = e.message; clStatus(e.code === 'net' ? 'offline' : 'error'); if (e.code !== 'net') console.warn('Cloud sync:', e); }
-  finally{ CL.busy = false; clRender(); if (CL.again){ CL.again = false; clearTimeout(CL.t); CL.t = setTimeout(() => clSync(), 2500); } }
+  finally{ CL.busy = false; clRender(); permApply(); if (CL.again){ CL.again = false; clearTimeout(CL.t); CL.t = setTimeout(() => clSync(), 2500); } }
 }
 const clCheck = () => clSync({quietPull: false});
 // after any change, sync a few seconds later
@@ -15797,7 +16103,7 @@ async function clList(){
   let M; if (roles) M = Object.fromEntries(roles.map(x => [x.project_id, x.role]));
   else { const mem = await clApi(`project_members?email=eq.${encodeURIComponent(clMe())}&select=project_id,role`).catch(() => []); M = Object.fromEntries((mem || []).map(m => [m.project_id, m.role])); }
   CL.list = (rows || []).map(r => Object.assign(r, {mine: !!(CL.sess.uid && r.owner === CL.sess.uid), role: M[r.id] || (CL.sess.uid && r.owner === CL.sess.uid ? 'owner' : 'viewer')}));
-  CL.list.forEach(r => { CL.roles[r.id] = {role: r.role, t: Date.now()}; });
+  CL.list.forEach(r => { const o = CL.roles[r.id]; CL.roles[r.id] = o && o.role === r.role ? o : {role: r.role, t: Date.now()}; });
   return CL.list;
 }
 async function clOpen(id){
@@ -15819,8 +16125,9 @@ async function clOpen(id){
     const role = await clRoleOf(id, true), link = {id, v2: true, rev: {}, h: {}, img: {}, auto: true, role};
     if (!parts.length && r.data && Array.isArray(r.data.setups)){ await applyProjectData(Object.assign({}, r.data, {images: r.images || {}, audio: {}})); link.clean = false; }
     else {
+      parts.sort((a, b) => a.part < b.part ? -1 : a.part > b.part ? 1 : 0);
       snapshot(); for (const p of parts) await clApply(p.part, p.data); S.schedSel = null; clRefresh();
-      const loc = await clLocal(); parts.forEach(p => { link.rev[p.part] = p.rev; link.h[p.part] = p.part === 'scriptRecord' ? clHash(clCanon(p.data)) : clHash(clCanon(loc[p.part])); }); link.clean = true;
+      const loc = await clLocal(); parts.forEach(p => { link.rev[p.part] = p.rev; link.h[p.part] = p.part === 'scriptRecord' ? clHash(clCanon(p.data)) : clLegacy(p.part) ? clHash(clCanon((S.sched || {})[p.part.slice(6)])) : clHash(clCanon(loc[p.part])); }); link.clean = true;
     }
     saveNow(); clSetLink(link);
     CL.conflicts = []; CL.ckey = S.key; clBanner(); toast(`Opened “${r.name || r.pdf_name}” from the cloud${role && role !== 'owner' ? ' (' + ROLE_NAME[role].toLowerCase() + ')' : ''}.`);
@@ -15962,7 +16269,7 @@ document.addEventListener('change', async e => {
 async function clCrewLoad(force){
   const l = clLink(); if (!l || !CL.sess){ CL.crew = null; return; }
   if (!force && CL.crewFor === l.id && CL.crew) return;
-  CL.crew = await clApi(`project_members?project_id=eq.${l.id}&select=email,role,invited_by,created_at&order=created_at`) || []; CL.crewFor = l.id;
+  CL.crew = await clApi(`project_members?project_id=eq.${l.id}&select=email,role,invited_by,created_at,tabs,parts,position&order=created_at`) || []; CL.crewFor = l.id;
 }
 function clInviteText(email){
   const app = 'Crafti', where = /^https:/.test(location.protocol) && !/claude\.ai$/.test(location.hostname) ? location.origin + location.pathname : '';
@@ -16010,15 +16317,16 @@ function clRender0(){
   const here = !S.key ? '' : l ? `<div class="clhere"><div><b>This project is in the cloud</b><small>${role === 'owner' ? 'You own it' : 'Shared with you · ' + ROLE_NAME[role]}${l.t ? ' · last synced ' + esc(clWhen(new Date(l.t).toISOString())) : ''}</small></div>
       ${clRO(role) ? '' : `<label class="tog"><input type="checkbox" data-clact="auto" ${l.auto !== false ? 'checked' : ''}> Sync changes automatically</label>`}
       <button class="btn" type="button" data-clact="push">Sync now</button><button class="btn ghost" type="button" data-clact="unlink" title="Stop syncing this project on this device; the cloud copy stays">Stop syncing here</button></div>
+      ${role === 'crew' ? `<p class="note" style="margin:0">You’re on the crew. You can change: <b>${esc(permNames((clCrewMe() || {}).tabs).join(', ') || 'no tabs yet')}</b>. Everything else is view only; ask the producer to change this.</p>` : ''}
       ${clRO(role) ? `<p class="note" style="margin:0">${role === 'reviewer' ? 'You’re reviewing this project: you can read and export it but not change it.' : 'You can view this project.'} Changes you make stay on this device and are replaced when the project is updated.</p>` : ''}`
     : `<div class="clhere"><div><b>${esc(baseName())}</b><small>On this device only</small></div><button class="btn primary" type="button" data-clact="push">Save this project to the cloud</button></div>`;
   const crewList = CL.crew && CL.crewFor === (l && l.id) ? CL.crew : null;
   const crew = !l ? '' : `<h3 style="margin:6px 0 0;font-size:14px">Crew</h3>
-    ${role === 'owner' ? `<p class="note" style="margin:0">Add people by the email they’ll sign in with. <b>Editors</b> can change anything; <b>viewers</b> can look and export but not change the shared project.</p>
-      <div class="clinv"><input class="txt" id="clInvEmail" type="email" placeholder="crew@example.com" aria-label="Crew member’s email"><select class="txt" id="clInvRole" aria-label="Role"><option value="editor">Editor</option><option value="viewer">Viewer</option></select><button class="btn primary" type="button" data-clact="invite">Add to crew</button></div>
+    ${role === 'owner' ? `<p class="note" style="margin:0">Add people by the email they’ll sign in with. <b>Editors</b> can change anything; <b>crew</b> can change only the tabs you tick; <b>viewers</b> can look and export but not change the shared project.</p>
+      <div class="clinv"><input class="txt" id="clInvEmail" type="email" placeholder="crew@example.com" aria-label="Crew member’s email"><select class="txt" id="clInvRole" aria-label="Role"><option value="editor">Editor</option><option value="crew">Crew: chosen tabs</option><option value="viewer">Viewer</option></select><button class="btn primary" type="button" data-clact="invite">Add to crew</button></div>${CLF.clInvRole === 'crew' ? permPicker('inv') : ''}
       ${CL.invite ? `<div class="clinvok"><span>Added <b>${esc(CL.invite)}</b>. They’ll see the project when they sign in. Send them a note so they know:</span><button class="btn" type="button" data-clact="copyinv">Copy invite message</button>${navigator.share ? '<button class="btn ghost" type="button" data-clact="shareinv">Share…</button>' : ''}</div>` : ''}` : `<p class="note" style="margin:0">${esc(ROLE_SAYS[role] || '')}</p>`}
     ${crewList ? `<ul class="cllist">${`<li><div><b>${role === 'owner' ? esc(clName() || clMe()) + ' (you)' : 'The owner'}</b><small>${role === 'owner' ? esc(clMe()) : 'Shared this project'}</small></div><span class="pill">Owner</span></li>`}${crewList.map(c => { const me = c.email === clMe(), on = CL.here.find(h => h.email === c.email);
-      return `<li><div><b>${esc(c.email)}${me ? ' (you)' : ''}</b><small>${on ? 'Here now' + (on.area ? ' · in ' + esc(on.area) : '') : 'Added ' + esc(clWhen(c.created_at))}</small></div>${role === 'owner' ? `<select class="txt" data-clrole="${esc(c.email)}" aria-label="Role for ${esc(c.email)}"><option value="editor"${c.role === 'editor' ? ' selected' : ''}>Editor</option><option value="viewer"${c.role === 'viewer' ? ' selected' : ''}>Viewer</option></select><button class="btn ghost" type="button" data-clrm="${esc(c.email)}">Remove</button>` : `<span class="pill">${ROLE_NAME[c.role] || c.role}</span>`}</li>`; }).join('')}</ul>
+      return `<li><div><b>${esc(c.email)}${me ? ' (you)' : ''}</b><small>${on ? 'Here now' + (on.area ? ' · in ' + esc(on.area) : '') : 'Added ' + esc(clWhen(c.created_at))}${c.role === 'crew' ? `<span class="cltabs">${c.position ? esc(c.position) + ' · ' : ''}Can change: ${esc(permNames(c.tabs).join(', ') || 'nothing yet')}</span>` : ''}</small></div>${role === 'owner' ? `<select class="txt" data-clrole="${esc(c.email)}" aria-label="Role for ${esc(c.email)}"><option value="editor"${c.role === 'editor' ? ' selected' : ''}>Editor</option><option value="crew"${c.role === 'crew' ? ' selected' : ''}>Crew</option><option value="viewer"${c.role === 'viewer' ? ' selected' : ''}>Viewer</option></select>${c.role === 'crew' ? `<button class="btn" type="button" data-clact="permedit" data-email="${esc(c.email)}">Tabs…</button>` : ''}<button class="btn ghost" type="button" data-clrm="${esc(c.email)}">Remove</button>` : `<span class="pill">${ROLE_NAME[c.role] || c.role}</span>`}</li>${role === 'owner' && CL.permEdit === c.email ? `<li class="permli">${permPicker(c.email)}</li>` : ''}`; }).join('')}</ul>
       ${!crewList.length && role === 'owner' ? '<p class="note" style="margin:0">No one else yet.</p>' : ''}` : '<p class="note" style="margin:0">Loading the crew…</p>'}
     ${role !== 'owner' && role !== 'reviewer' && (CL.crew || []).some(c => c.email === clMe()) ? '<div class="row"><button class="btn ghost" type="button" data-clact="leave">Leave this project</button></div>' : ''}`;
   const acc = CL.access, isAdmin = acc && acc.role === 'admin', revList = (CL.list || []).filter(r => r.role === 'reviewer'), myList = CL.list ? CL.list.filter(r => r.role !== 'reviewer') : null;
@@ -16037,6 +16345,7 @@ document.addEventListener('click', async e => {
   const o = e.target.closest('[data-clopen]'); if (o){ $('#cloudModal').hidden = true; await clOpen(o.dataset.clopen); return; }
   const dl = e.target.closest('[data-cldel]'); if (dl){ if (!armed(dl, 'cldel' + dl.dataset.cldel, 'Click again: delete for everyone')) return; try{ await clDeleteProject(dl.dataset.cldel); const l = clLink(); if (l && l.id === dl.dataset.cldel) clSetLink(null); await clList(); toast('Deleted the cloud copy.'); }catch(er){ CL.err = er.message; } clRender(); clStatus(CL.state); return; }
   const rm = e.target.closest('[data-clrm]'); if (rm){ if (!armed(rm, 'clrm' + rm.dataset.clrm, 'Click again to remove')) return; const l = clLink(); try{ await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(rm.dataset.clrm)}`, {method: 'DELETE'}); await clCrewLoad(true); toast('Removed from the crew.'); }catch(er){ CL.err = er.message; } clRender(); return; }
+  const pa = e.target.closest('[data-permall]'); if (pa){ const k = pa.dataset.permall.split('|')[0]; CL.permSel[k] = new Set(); CL.permPos[k] = ''; clRender(); return; }
   const a = e.target.closest('[data-clact]'); if (!a) return; const act = a.dataset.clact; CL.err = '';
   if (act === 'close' || (e.target.id === 'cloudModal')){ $('#cloudModal').hidden = true; return; }
   if (act === 'dlproj'){ const sp = $('#saveProj'); if (sp) sp.click(); return; }
@@ -16065,13 +16374,19 @@ document.addEventListener('click', async e => {
     if (act === 'unlink'){ if (!armed(a, 'clunlink', 'Click again to stop syncing')) return; clSetLink(null); CL.conflicts = []; clBanner(); CL.here = []; await clList(); clRender(); clStatus(''); return; }
     if (act === 'takecloud'){ await clResolve(false); return; }
     if (act === 'keepmine'){ await clResolve(true); return; }
+    if (act === 'permedit'){ const em = a.dataset.email, c = (CL.crew || []).find(x => x.email === em) || {}; CL.permEdit = em; CL.permSel[em] = new Set(c.tabs || []); CL.permPos[em] = c.position || ''; clRender(); return; }
+    if (act === 'permcancel'){ CL.permEdit = null; clRender(); return; }
+    if (act === 'permsave'){ const em = a.dataset.permkey, tabs = [...(CL.permSel[em] || [])], l = clLink(); a.disabled = true;
+      await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(em)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({role: 'crew', tabs, parts: permParts(tabs), position: CL.permPos[em] || null})});
+      CL.permEdit = null; await clCrewLoad(true); clRender(); toast('Tabs saved. It reaches them within a couple of minutes.'); return; }
     if (act === 'invite'){
-      const l = clLink(), em = ($('#clInvEmail').value || '').trim().toLowerCase(), role = $('#clInvRole').value;
+      const l = clLink(), em = ($('#clInvEmail').value || '').trim().toLowerCase(), role = $('#clInvRole').value, tabs = [...(CL.permSel.inv || [])];
+      if (role === 'crew' && !tabs.length){ CL.err = 'Tick at least one tab they can change.'; clRender(); return; }
       if (!/^\S+@\S+\.\S+$/.test(em)){ CL.err = 'Enter the crew member’s email address.'; clRender(); return; }
       if (em === clMe()){ CL.err = 'That’s you: you already own this project.'; clRender(); return; }
       a.disabled = true;
-      await clApi('project_members?on_conflict=project_id,email', {method: 'POST', headers: {Prefer: 'resolution=merge-duplicates,return=minimal'}, body: JSON.stringify({project_id: l.id, email: em, role, invited_by: clMe()})});
-      delete CLF.clInvEmail; CL.invite = em; await clCrewLoad(true); clRender(); return;
+      await clApi('project_members?on_conflict=project_id,email', {method: 'POST', headers: {Prefer: 'resolution=merge-duplicates,return=minimal'}, body: JSON.stringify(Object.assign({project_id: l.id, email: em, role, invited_by: clMe()}, role === 'crew' ? {tabs, parts: permParts(tabs), position: CL.permPos.inv || null} : {tabs: null, parts: null, position: null}))});
+      delete CLF.clInvEmail; delete CLF.clInvRole; CL.permSel.inv = new Set(); CL.permPos.inv = ''; CL.invite = em; await clCrewLoad(true); clRender(); return;
     }
     if (act === 'copyinv'){ const t = clInviteText(CL.invite); navigator.clipboard.writeText(t).then(() => toast('Invite message copied. Paste it into a text or email.'), () => toast('Copy was blocked here.')); return; }
     if (act === 'shareinv'){ try{ await navigator.share({text: clInviteText(CL.invite)}); }catch(er){} return; }
@@ -16082,7 +16397,10 @@ document.addEventListener('change', async e => {
   const t = e.target; if (!t || !t.closest || !t.closest('#cloudModal')) return;
   if (t.dataset.clact === 'auto'){ const l = clLink(); if (l){ l.auto = t.checked; clSetLink(l); } return; }
   if (t.id === 'clName'){ ls.set('filmtk:cloudname', t.value.trim() || null); return; }
-  if (t.dataset.clrole){ const l = clLink(); try{ await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(t.dataset.clrole)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({role: t.value})}); await clCrewLoad(true); toast('Role changed.'); }catch(er){ CL.err = er.message; } clRender(); }
+  if (t.dataset.permchk){ const k = t.dataset.permchk, set = CL.permSel[k] = CL.permSel[k] || new Set(); if (t.checked) set.add(t.value); else set.delete(t.value); return; }
+  if (t.dataset.permpos){ const k = t.dataset.permpos, p = PERM_POS.find(x => x[0] === t.value); CL.permPos[k] = t.value; CL.permSel[k] = new Set(p ? p[1].filter(i => PERM_BY[i] && permShown(PERM_BY[i])) : []); clRender(); return; }
+  if (t.id === 'clInvRole'){ clRender(); return; }
+  if (t.dataset.clrole){ const l = clLink(), em = t.dataset.clrole, crew = t.value === 'crew'; try{ await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(em)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify(Object.assign({role: t.value}, crew ? {tabs: [], parts: []} : {tabs: null, parts: null, position: null}))}); await clCrewLoad(true); if (crew){ CL.permEdit = em; CL.permSel[em] = new Set(); CL.permPos[em] = ''; toast('Now tick the tabs they can change.'); } else toast('Role changed.'); }catch(er){ CL.err = er.message; } clRender(); }
 });
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target && ['clEmail', 'clCode', 'clInvEmail'].includes(e.target.id)){ e.preventDefault(); const b = $('#cloudModal [data-clact="' + ({clEmail: 'send', clCode: 'verify', clInvEmail: 'invite'})[e.target.id] + '"]'); if (b) b.click(); } if (e.key === 'Escape' && $('#cloudModal') && !$('#cloudModal').hidden) $('#cloudModal').hidden = true; });
 window.addEventListener('online', () => { if (CL.state === 'offline') clSync(); });
@@ -20132,6 +20450,7 @@ function syncNav(){
   }
   // the Schedule and People & places sections share one screen; show only their own tabs
   if (sec.tabs) document.querySelectorAll('#sched [data-stab]').forEach(b => { b.hidden = !secTabs(sec).includes(b.dataset.stab); });
+  permApply();
 }
 function goSec(id){
   const sec = PHASES.flatMap(p => p.secs).find(s => s.id === id); if (!sec) return;
@@ -20172,8 +20491,10 @@ $('#undoBtn').addEventListener('click', undo);
 const pickPdf = () => $('#pdfInput').click();
 $('#openBtn').addEventListener('click', pickPdf);
 $('#bannerOpen').addEventListener('click', pickPdf);
-$('#bannerDoc').addEventListener('click', () => docNewDialog());
-document.querySelectorAll('[data-ptype]').forEach(r => r.addEventListener('change', () => { if (!r.checked) return; closeMenu(); if (r.value === 'doc' && S.isSample){ applyPtype(); docNewDialog(); return; } setPtype(r.value); }));
+$('#bannerDoc').addEventListener('click', () => npDialog());
+$('#newProj').addEventListener('click', () => { closeMenu(); npDialog(); });
+
+document.querySelectorAll('[data-ptype]').forEach(r => r.addEventListener('change', () => { if (!r.checked) return; closeMenu(); if (r.value === 'doc' && S.isSample){ applyPtype(); npDialog('doc'); return; } setPtype(r.value); }));
 $('#pdfInput').addEventListener('change', e => { openFile(e.target.files[0]); e.target.value = ''; });
 $('#shotBtn').addEventListener('click', () => { $('#listMenu').removeAttribute('open'); renderShotList(); $('#shotModal').hidden = false; $('#closeShot').focus(); });
 $('#propBtn').addEventListener('click', () => { $('#listMenu').removeAttribute('open'); openPropList(); });
