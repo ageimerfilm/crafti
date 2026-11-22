@@ -905,6 +905,37 @@ input.tlen{font-variant-numeric:tabular-nums}
 .sugb{display:flex;gap:4px;margin-top:4px}
 .sugb .btn{height:26px;font-size:12px;padding:0 10px}
 table.btab.gear tr.out td{background:var(--accent-soft)}
+table.btab.gear tr.gacc td{border-top:0;padding-top:2px;padding-bottom:2px}
+table.btab.gear tr.gacc td:first-child{padding-left:22px}
+.gaccname{display:flex;align-items:center;gap:6px}.gaccmark{color:var(--muted);font-size:13px}
+table.btab.gear tr.gacc input:not([type=checkbox]){font-size:12.5px}
+table.btab.gear tr.gmissrow td{background:color-mix(in srgb,#D33 9%,var(--raised))}
+.gaccof{font-size:12px;white-space:nowrap}
+.gaccadd{border:0;background:none;color:var(--accent-strong,var(--accent));font-size:12px;font-weight:600;padding:3px 0 0;cursor:pointer;display:inline-block}
+.gmiss{display:block;color:#B42318;font-size:11.5px;font-weight:600}
+.gtick{display:inline-flex;align-items:center;gap:5px}.gcount{font-size:11px;color:var(--muted)}.gcount.all{color:var(--ok,#1E7B45);font-weight:600}
+tr.gaccsug td{padding:4px 8px 8px 22px;font-size:12px;border-top:0}
+.gchip{border:1px dashed var(--rule);background:var(--raised);border-radius:999px;padding:2px 9px;margin:2px 3px 2px 0;font-size:12px;cursor:pointer}
+.gchip.all{border-style:solid;font-weight:600}.gchip.ghost{border:0;background:none;color:var(--muted)}
+.gearbar{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+table.btab tr.gkit td,table.btab tr.gkit td:first-child{text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:500;font-family:var(--f-ui)}
+.gkitname input{font-family:var(--f-data)}
+table.btab.gear td:first-child{min-width:320px}
+table.btab.gear td:nth-child(7) input{width:150px;min-width:0}
+.gaccname input:not(.sub){flex:1;min-width:0}
+.gaccname input.sub{width:96px;flex:none}
+.gkithead{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;max-width:1080px;position:sticky;left:8px}
+.gkitrow{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;width:100%}
+.gkithead label{display:inline-flex;gap:5px;align-items:center;font-weight:500}
+.gkitname input{font-weight:700;font-size:14px;width:220px}
+.gkitprog{display:inline-flex;gap:8px;align-items:center}.gkitbtns{margin-left:auto;display:inline-flex;gap:6px;align-items:center}
+.gkithead input[type=checkbox]{width:18px;height:18px;accent-color:var(--brand)}
+.glib{border:1px solid var(--rule);border-radius:8px;padding:10px 12px;margin:0 0 12px;background:var(--raised)}
+.glibh{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}.glibio{margin-left:auto;display:inline-flex;gap:6px}
+.gliblist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;margin-top:8px}
+.glibk{border:1px solid var(--rule);border-radius:7px;padding:8px 10px;display:grid;gap:3px;font-size:13px}.gliba{display:flex;gap:6px;margin-top:4px}
+@media print{.gaccadd,tr.gaccsug,.glib,.gearbar{display:none!important}}
+
 table.btab.gear{overflow:visible}
 .afmt{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden;margin-bottom:4px}
 .afmt button{border:0;background:var(--raised);height:24px;padding:0 9px;font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap}
@@ -3792,6 +3823,8 @@ function setField(spec, value){
   if (p[0] === 'su'){ const su = S.setups.find(x => x.id === p[1]); if (su) su[p[2]] = value; return; }
   if (p[0] === 'gg'){ gearStore()[p[1]] = value; return; }
   if (p[0] === 'gi'){ const it = gearStore().items.find(x => x.id === p[1]); if (it) it[p[2]] = value; return; }
+  if (p[0] === 'ga'){ const it = gearStore().items.find(x => x.id === p[1]), a = it && (it.acc || []).find(x => x.id === p[2]); if (a) a[p[3]] = value; return; }
+  if (p[0] === 'gk'){ const k = gearKits().find(x => x.id === p[1]); if (k) k[p[2]] = value; return; }
   if (p[0] === 'tla'){ tlStore().anchor = value; return; }
   if (p[0] === 'tl'){ const t = tlStore(); t.items[p[1]] = t.items[p[1]] || {}; if (p[2] === 'date' && !value) delete t.items[p[1]].date; else t.items[p[1]][p[2]] = value; return; }
   if (p[0] === 'tlc'){ const c = tlStore().custom.find(x => x.id === p[1]); if (c) c[p[2]] = value; return; }
@@ -4564,7 +4597,7 @@ function onFieldChange(e){
   if (spec.startsWith('locname:')){ snapshot(); setField(spec, e.target.value); }
   else setField(spec, e.target.type === 'checkbox' ? e.target.checked : e.target.value);
   persist();
-  const layout = /^(scene|locname|chg|b|bl|bs):|^set:(pagesPerDay|setupsPerDay|firstSetupMin|setupMin|moveMin|mealMin|wrapMin|dayHours)$|^dd:[^:]+:dur:|^gr:.*:status$|^gi:[^:]+:(cat|cost|qty|src)$|^gg:|^tl:[^:]+:date$|^tlc:[^:]+:date$|^tla$|^cr:|:coords$|^set:coords$|^lt:.*:(status|n|len)$|^crew:[^:]+:dept$|^day:[^:]+:(date|crew)$|^su:[^:]+:facing$|^cp:[^:]+:(status|name)$|^tm:|^tms:|^pss:|^(ps|pc):[^:]+:date$|^(pd|dc):[^:]+:st$|^pf:[^:]+:(status|deadline|fee|runtime|notify|award)$|^rb:|^rl:|^rw:[^:]+:(type|status|start|end|territory|partner)$|^rm:[^:]+:(date|status)$|^rsc:[^:]+:(date|cap|type)$|^rg:.*:(rsvp|plus)$|^pt:|^pct:|^(crd|srd):|^pcw:|^pts:|^ppf:|^pps:|^pex:[^:]+:(acct|amount|pay|date)$|^pfl:[^:]+:amount$|^pph:[^:]+:(scene|cast|cat)$|^pdl:.*:min$|^pdc:[^:]+:(gb|day|type|name)$|^rt:[^:]+:[^:]+:(n|status|len)$|^pdn:|^pkd:|^ppk:[^:]+:day$|^px:|^pxs:|^pxp:|^pv:|^pi:|^ft:|^ftc:|^ftb:|^pp:[^:]+:(acc|role|name)$|^dk:[^:]+:(date|start|kind|part|st|loc)$|^sl:[^:]+:part$|^pe:[^:]+:dur$|^set:peTarget$|^tr:[^:]+:(name|part)$|^ar:items:[^:]+:(st|cost|what)$|^ar:facts:[^:]+:st$|^ar:fair:[^:]+:item$|^dt:(notes|vers):[^:]+:(st|ver|name)$|^dx:legal:[^:]+:st$|^dx:preview:[^:]+:(part|date)$|^dx:impact:[^:]+:st$|^dx:ethics:by$|^sr:seg:[^:]+:(start|target|st)$|^sr:b:(runtime|eplen)$|^sn:(factor|cont)$|^sn:out:[^:]+:st$/.test(spec);
+  const layout = /^(scene|locname|chg|b|bl|bs):|^set:(pagesPerDay|setupsPerDay|firstSetupMin|setupMin|moveMin|mealMin|wrapMin|dayHours)$|^dd:[^:]+:dur:|^gr:.*:status$|^gi:[^:]+:(cat|cost|qty|src|kit|name)$|^gk:|^ga:[^:]+:[^:]+:name$|^gg:|^tl:[^:]+:date$|^tlc:[^:]+:date$|^tla$|^cr:|:coords$|^set:coords$|^lt:.*:(status|n|len)$|^crew:[^:]+:dept$|^day:[^:]+:(date|crew)$|^su:[^:]+:facing$|^cp:[^:]+:(status|name)$|^tm:|^tms:|^pss:|^(ps|pc):[^:]+:date$|^(pd|dc):[^:]+:st$|^pf:[^:]+:(status|deadline|fee|runtime|notify|award)$|^rb:|^rl:|^rw:[^:]+:(type|status|start|end|territory|partner)$|^rm:[^:]+:(date|status)$|^rsc:[^:]+:(date|cap|type)$|^rg:.*:(rsvp|plus)$|^pt:|^pct:|^(crd|srd):|^pcw:|^pts:|^ppf:|^pps:|^pex:[^:]+:(acct|amount|pay|date)$|^pfl:[^:]+:amount$|^pph:[^:]+:(scene|cast|cat)$|^pdl:.*:min$|^pdc:[^:]+:(gb|day|type|name)$|^rt:[^:]+:[^:]+:(n|status|len)$|^pdn:|^pkd:|^ppk:[^:]+:day$|^px:|^pxs:|^pxp:|^pv:|^pi:|^ft:|^ftc:|^ftb:|^pp:[^:]+:(acc|role|name)$|^dk:[^:]+:(date|start|kind|part|st|loc)$|^sl:[^:]+:part$|^pe:[^:]+:dur$|^set:peTarget$|^tr:[^:]+:(name|part)$|^ar:items:[^:]+:(st|cost|what)$|^ar:facts:[^:]+:st$|^ar:fair:[^:]+:item$|^dt:(notes|vers):[^:]+:(st|ver|name)$|^dx:legal:[^:]+:st$|^dx:preview:[^:]+:(part|date)$|^dx:impact:[^:]+:st$|^dx:ethics:by$|^sr:seg:[^:]+:(start|target|st)$|^sr:b:(runtime|eplen)$|^sn:(factor|cont)$|^sn:out:[^:]+:st$/.test(spec);
   if (!layout && !(e.target.hasAttribute && e.target.hasAttribute('data-rr'))) return;
   // re-render after focus has moved, then put focus back where the person went
   setTimeout(() => {
@@ -6787,6 +6820,7 @@ function budgetCalc(){
   else if (crafty) items.push({acct: '3200', src: 'meal', key: 'crafty', label: 'Craft service', sub: `${heads} person-days`, days: heads, rate: crafty, per: 'person-day', total: crafty * heads});
   // gear rentals from the Gear tab
   ((sd.gear && sd.gear.items) || []).forEach(gi => { const c = num(gi.cost); if (c) items.push({acct: GEAR_ACCT[gi.cat] || '3300', src: 'gear', key: gi.id, label: gi.name || 'Gear', sub: (GEAR_SRC.find(s => s[0] === (gi.src || 'owned')) || [, ''])[1], qty: 1, rate: c, per: 'flat', total: c}); });
+  ((sd.gear && sd.gear.kits) || []).forEach(k => { const c = num(k.cost); if (!c) return; const n = {}; sd.gear.items.filter(i => i.kit === k.id).forEach(i => { const a = GEAR_ACCT[i.cat] || '3300'; n[a] = (n[a] || 0) + 1; }); const acct = Object.keys(n).sort((x, y) => n[y] - n[x])[0] || '3300'; items.push({acct, src: 'gear', key: 'kit:' + k.id, label: 'Kit: ' + (k.name || 'Untitled kit'), sub: (GEAR_SRC.find(s => s[0] === (k.src || 'rental')) || [, ''])[1], qty: 1, rate: c, per: 'flat', total: c}); });
   // documentary: archival and stock licences from Post → Archival & facts
   if (isDoc()) arStore().items.forEach(x => { const c = num(String(x.cost || '').replace(/[^0-9.]/g, '')); if (c && x.st !== 'denied') items.push({acct: '1100', src: 'arch', key: x.id, label: x.what || 'Archival item', sub: pxOpt(AR_ST, x.st || 'none'), qty: 1, rate: c, per: 'flat', total: c}); });
   unionItems(items);
@@ -8110,6 +8144,176 @@ function gearDates(){
   const shift = (d, n) => { const x = new Date(d + 'T12:00:00'); x.setDate(x.getDate() + n); return x.toISOString().slice(0, 10); };
   return {pickup: g.pickup || (ds[0] ? shift(ds[0], -1) : ''), ret: g.ret || (ds.length ? shift(ds[ds.length - 1], 1) : '')};
 }
+/* ---------- gear kits and accessories ---------- */
+// a kit groups gear the way it was rented or checked out; an item's accessories (cables, mounts, batteries) sit under it with their own ticks
+const GEAR_LIB_KEY = 'filmtk:gearKits';
+const gearKits = () => { const g = gearStore(); if (!g.kits) g.kits = []; return g.kits; };
+const gearView = () => ls.get('filmtk:gearView') === 'kit' ? 'kit' : 'type';
+const gearLib = () => { const v = ls.get(GEAR_LIB_KEY); return Array.isArray(v) ? v : []; };
+const gearLibSet = v => ls.set(GEAR_LIB_KEY, v);
+const gearAcc = i => i.acc || (i.acc = []);
+// pieces an item stands for: itself plus each accessory, counted by quantity
+const gearPieces = i => [{out: i.out, in: i.in}, ...(i.acc || []).map(a => ({out: a.out, in: a.in}))];
+const gearAllOut = items => items.length > 0 && items.every(i => i.out && (i.acc || []).every(a => a.out));
+const gearAllIn = items => items.length > 0 && items.every(i => i.in && (i.acc || []).every(a => a.in));
+const gearMissingAcc = i => i.in ? (i.acc || []).filter(a => !a.in) : [];
+const gearKitName = k => (k && k.name) || 'Untitled kit';
+// what usually goes with a piece of gear, by its name
+const GEAR_ACC_RULES = [
+  [/atomos|ninja|shogun|smallhd|recorder.?monitor|monitor.?recorder|video assist/i, ['HDMI cable', 'Monitor mount (arm or ball head)', 'Batteries (NP-F)', 'Battery charger', 'Recording SSD', 'SSD reader or dock', 'Sun hood']],
+  [/monitor/i, ['HDMI cable', 'Monitor mount (arm or ball head)', 'Batteries (NP-F)', 'Battery charger', 'Sun hood']],
+  [/teradek|hollyland|accsoon|wireless video|video transmitter|cinemaster|mars ?\d/i, ['Transmitter', 'Receiver', 'HDMI or SDI cables', 'Antennas', 'Batteries', 'Mounts']],
+  [/light ?cannon|cannon[- ]?x?\d/i, ['Control panel', 'Power cable', 'Reflector cone', 'Barn doors', 'Light stand']],
+  [/aputure|nanlite|godox|amaran|litepanel|arri sky|skypanel|astera|quasar|fresnel|\bled\b|cob light|panel light|tube light|\blight\b|lights\b/i, ['Power cable', 'Control box or ballast', 'Reflector', 'Barn doors', 'Softbox or diffusion', 'Light stand', 'Sandbag']],
+  [/sony a7|fx3|fx6|fx9|fx30|a7s|bmpcc|pocket cinema|blackmagic|ursa|komodo|\bred\b|canon c\d|c70|c300|c500|alexa|lumix|gh[56]|camera body|cinema camera|\bcamera\b/i, ['Batteries', 'Battery charger', 'Media cards', 'Card reader', 'Body cap', 'Cage', 'Top handle', 'Power cable or dummy battery']],
+  [/\blens\b|lenses|\bprime|zoom lens|\d+ ?mm\b|sigma|zeiss|rokinon|samyang|cooke|dzofilm/i, ['Front and rear caps', 'Lens hood', 'Focus gear ring', 'Lens support', 'Step-up ring']],
+  [/lav|wireless (mic|kit|lav)|sennheiser (g\d|ew)|rode wireless|saramonic|deity|lectrosonic/i, ['Transmitter', 'Receiver', 'Lav mic', 'Mic clips', 'Windscreens', 'Output cable to recorder', 'AA batteries', 'Charging cable']],
+  [/mixpre|sound devices|zoom f\d|zoom h\d|tascam|audio recorder|field recorder|sound recorder/i, ['SD card', 'Batteries or power', 'Headphones', 'XLR cables', 'Timecode or sync cable', 'Bag and strap']],
+  [/shotgun|mkh|ntg|mke ?\d|boom mic|\bmic\b|microphone/i, ['Shock mount', 'Blimp or windscreen', 'Dead cat', 'XLR cable', 'Boom pole']],
+  [/boom pole/i, ['Boom pole bag', 'Boom holder', 'XLR cable (internal or coiled)']],
+  [/tripod|sticks|fluid head/i, ['Fluid head', 'Quick-release plate', 'Spreader', 'Case']],
+  [/gimbal|ronin|crane ?\d|zhiyun|movi/i, ['Batteries or battery grip', 'Charger', 'Quick-release plates', 'Control and focus cables', 'Focus motor', 'Case']],
+  [/slider|dolly|track/i, ['Legs or stands', 'Ball head', 'Track ends and wedges', 'Case']],
+  [/c-?stand|century stand/i, ['Grip head', 'Grip arm', 'Sandbag']],
+  [/follow focus/i, ['Focus gear rings', 'Rod clamp', 'Whip', 'Marking disk']],
+  [/matte box/i, ['Rods and rod clamp', 'Flags', 'Filter trays', 'Lens donut or ring adapters']],
+  [/v-?mount|gold mount|battery kit|batteries/i, ['Charger', 'D-tap cable', 'Battery plate']],
+  [/hazer|haze machine|fog/i, ['Haze fluid', 'Power cable', 'Remote']],
+  [/ssd|hard drive|\bdrive\b/i, ['Cable', 'Case']],
+  [/stinger|extension cord/i, ['Cube taps', 'Ground lifts']]
+];
+function gearAccSugs(i){
+  if (!i.name || i.accHide) return [];
+  const rule = GEAR_ACC_RULES.find(([re]) => re.test(i.name)); if (!rule) return [];
+  const have = (i.acc || []).map(a => (a.name || '').toLowerCase()).filter(Boolean), skip = new Set(i.accSkip || []);
+  const key = n => n.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(' ').filter(w => w.length > 2)[0] || n.toLowerCase();
+  return rule[1].filter(n => !skip.has(n) && !have.some(h => h.includes(key(n))));
+}
+const gearChk = (attr, on, label) => `<input type="checkbox" ${attr} ${on ? 'checked' : ''} aria-label="${esc(label)}">`;
+const gearCount = (i, k) => { const ps = gearPieces(i); return ps.length > 1 ? `<small class="gcount${ps.every(p => p[k]) ? ' all' : ''}">${ps.filter(p => p[k]).length}/${ps.length}</small>` : ''; };
+const gearDelBtn = (attr, label) => `<button type="button" class="gdel" ${attr} aria-label="${esc(label)}" title="Remove"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.7 8.5h5.6l.7-8.5"/></svg></button>`;
+function gearItemRows(i, view){
+  const kits = gearKits(), miss = gearMissingAcc(i), sugs = gearAccSugs(i);
+  const kitOpts = [['', 'Not in a kit'], ...kits.map(k => [k.id, gearKitName(k)])];
+  const last = view === 'kit'
+    ? `<select id="${fid('gi:' + i.id + ':cat')}" data-f="gi:${esc(i.id)}:cat" class="bsel" aria-label="Category">${GEAR_CATS.map(c => `<option${c === (i.cat || 'Other') ? ' selected' : ''}>${c}</option>`).join('')}</select>`
+    : optSel('gi:' + i.id + ':kit', i.kit || '', kitOpts, 'aria-label="Kit"');
+  let h = `<tr class="gmain ${i.in ? 'back' : i.out ? 'out' : ''}">
+    <td>${fin('gi:' + i.id + ':name', i.name, 'placeholder="Item" aria-label="Item"')}${fin('gi:' + i.id + ':serial', i.serial, 'class="sub" placeholder="Serial #" aria-label="Serial number"')}
+      <button type="button" class="gaccadd" data-gaccadd="${esc(i.id)}">+ Accessory</button>${miss.length ? `<small class="gmiss">${miss.length} accessor${miss.length === 1 ? 'y' : 'ies'} not back</small>` : ''}</td>
+    <td class="r">${nin('gi:' + i.id + ':qty', i.qty ?? 1, 'style="width:56px" aria-label="Quantity"')}</td>
+    <td>${perSel('gi:' + i.id + ':src', i.src || 'owned', GEAR_SRC)}</td>
+    <td class="r">${nin('gi:' + i.id + ':cost', i.cost ?? '', 'placeholder="0" aria-label="Rental cost"')}${i.rlo != null ? `<small class="ghint">~${money(i.rlo)}–${money(i.rhi)}/day</small>` : ''}</td>
+    <td><span class="gtick">${gearChk(`data-gchk="${esc(i.id)}|out"`, i.out, 'Checked out')}${gearCount(i, 'out')}</span></td>
+    <td><span class="gtick">${gearChk(`data-gchk="${esc(i.id)}|in"`, i.in, 'Returned')}${gearCount(i, 'in')}</span>${i.in || i.cond ? optSel('gi:' + i.id + ':cond', i.cond || '', GEAR_COND, 'data-rr class="bsel sub" aria-label="Condition back" title="Condition when it came back"') : ''}</td>
+    <td>${fin('gi:' + i.id + ':notes', i.notes, 'placeholder="Condition, who has it" aria-label="Notes"')}</td>
+    <td>${last}</td>
+    <td class="gdelc">${gearDelBtn(`data-gdel="${esc(i.id)}"`, `Remove ${i.name || 'item'} from the gear list`)}</td></tr>`;
+  (i.acc || []).forEach(a => {
+    const sp = 'ga:' + i.id + ':' + a.id + ':';
+    h += `<tr class="gacc ${a.in ? 'back' : a.out ? 'out' : ''}${i.in && !a.in ? ' gmissrow' : ''}">
+      <td><span class="gaccname"><span class="gaccmark" aria-hidden="true">↳</span>${fin(sp + 'name', a.name, `placeholder="Cable, mount, battery…" aria-label="Accessory of ${esc(i.name || 'item')}"`)}${fin(sp + 'serial', a.serial, 'class="sub" placeholder="Serial #" aria-label="Accessory serial number"')}</span></td>
+      <td class="r">${nin(sp + 'qty', a.qty ?? 1, 'style="width:56px" aria-label="Accessory quantity"')}</td>
+      <td colspan="2" class="muted gaccof">with ${esc(i.name || 'this item')}</td>
+      <td>${gearChk(`data-gachk="${esc(i.id)}|${esc(a.id)}|out"`, a.out, 'Accessory packed')}</td>
+      <td>${gearChk(`data-gachk="${esc(i.id)}|${esc(a.id)}|in"`, a.in, 'Accessory returned')}</td>
+      <td>${fin(sp + 'notes', a.notes, 'placeholder="Notes" aria-label="Accessory notes"')}</td><td></td>
+      <td class="gdelc">${gearDelBtn(`data-gadel="${esc(i.id)}|${esc(a.id)}"`, `Remove ${a.name || 'accessory'}`)}</td></tr>`;
+  });
+  if (sugs.length) h += `<tr class="gaccsug"><td colspan="9"><span class="muted">Usually goes with it:</span> ${sugs.map(n => `<button type="button" class="gchip" data-gasug="${esc(i.id)}|${esc(n)}">+ ${esc(n)}</button>`).join('')}
+    <button type="button" class="gchip all" data-gasugall="${esc(i.id)}">Add all ${sugs.length}</button><button type="button" class="gchip ghost" data-gasughide="${esc(i.id)}">Hide</button></td></tr>`;
+  return h;
+}
+function gearKitHead(k, items){
+  const ps = items.flatMap(gearPieces), out = ps.filter(p => p.out).length, back = ps.filter(p => p.in).length, sp = 'gk:' + k.id + ':';
+  const saved = gearLib().some(x => x.id === k.lib);
+  return `<tr class="dgrp gkit"><td colspan="9"><div class="gkithead"><div class="gkitrow">
+    <span class="gkitname">${fin(sp + 'name', k.name, 'placeholder="Kit name, e.g. Camera kit A" aria-label="Kit name"')}</span>
+    <label>From ${perSel(sp + 'src', k.src || 'rental', GEAR_SRC)}</label>
+    ${fin(sp + 'house', k.house, 'class="txt" style="width:170px" placeholder="Rental house or cage" aria-label="Where the kit is from"')}
+    ${fin(sp + 'num', k.num, 'class="txt" style="width:110px" placeholder="Kit or case #" aria-label="Kit or case number"')}
+    <span class="gkitbtns"><button type="button" class="btn ghost" data-gkadd="${esc(k.id)}">+ Item</button><button type="button" class="btn ghost" data-gksave="${esc(k.id)}">${saved ? 'Update in my kits' : 'Save to my kits'}</button>${gearDelBtn(`data-gkdel="${esc(k.id)}"`, `Remove the kit ${gearKitName(k)}`)}</span></div><div class="gkitrow">
+    <label>Pickup ${fin(sp + 'pickup', k.pickup || '', 'type="date" class="txt" style="width:142px" aria-label="Kit pickup date"')}</label>
+    <label>Return ${fin(sp + 'ret', k.ret || '', 'type="date" class="txt" style="width:142px" aria-label="Kit return date"')}</label>
+    <label>Cost ${nin(sp + 'cost', k.cost ?? '', 'placeholder="0" style="width:84px" aria-label="Kit rental cost"')}</label>
+    <span class="gkitprog"><label>${gearChk(`data-gkchk="${esc(k.id)}|out"`, ps.length && out === ps.length, 'Whole kit checked out')} Out</label> <label>${gearChk(`data-gkchk="${esc(k.id)}|in"`, ps.length && back === ps.length, 'Whole kit returned')} Back</label>
+      <span class="muted">${ps.length ? `${out} of ${ps.length} out · ${back} of ${ps.length} back` : 'empty'}</span></span>
+  </div></div></td></tr>`;
+}
+function gearListSection(g){
+  const view = gearView(), kits = gearKits(), items = g.items;
+  const ps = items.flatMap(gearPieces), packed = ps.filter(p => p.out).length, back = ps.filter(p => p.in).length;
+  const total = items.reduce((a, i) => a + num(i.cost), 0) + kits.reduce((a, k) => a + num(k.cost), 0);
+  const lib = gearLib();
+  let body = '';
+  if (view === 'kit'){
+    kits.forEach(k => { const its = items.filter(i => i.kit === k.id); body += gearKitHead(k, its) + its.map(i => gearItemRows(i, view)).join(''); });
+    const loose = items.filter(i => !i.kit || !kits.some(k => k.id === i.kit));
+    if (loose.length) body += `<tr class="dgrp"><td colspan="9">Not in a kit</td></tr>` + loose.map(i => gearItemRows(i, view)).join('');
+  } else {
+    GEAR_CATS.forEach(c => { const its = items.filter(i => (i.cat || 'Other') === c); if (its.length) body += `<tr class="dgrp"><td colspan="9">${esc(c)}</td></tr>` + its.map(i => gearItemRows(i, view)).join(''); });
+  }
+  const libBox = view === 'kit' ? `<div class="glib"><div class="glibh"><b>My saved kits</b><span class="muted">Kits you save here can be added to any project on this device.</span>
+      <span class="glibio"><button type="button" class="btn ghost" id="gLibExport"${lib.length ? '' : ' disabled'}>Save kits to a file</button><button type="button" class="btn ghost" id="gLibImport">Load kits from a file</button></span></div>
+      ${lib.length ? `<div class="gliblist">${lib.map(x => `<div class="glibk"><b>${esc(gearKitName(x))}</b><span class="muted">${x.items.length} item${x.items.length === 1 ? '' : 's'}${x.items.reduce((a, i) => a + (i.acc || []).length, 0) ? ' · ' + x.items.reduce((a, i) => a + (i.acc || []).length, 0) + ' accessories' : ''}${x.house ? ' · ' + esc(x.house) : ''}</span>
+        <span class="gliba"><button type="button" class="btn" data-glibuse="${esc(x.id)}">Add to this project</button><button type="button" class="btn ghost" data-glibdel="${esc(x.id)}" aria-label="Delete ${esc(gearKitName(x))} from my saved kits">Delete</button></span></div>`).join('')}</div>`
+        : '<p class="note" style="margin:6px 0 0">None yet. Build a kit below and click Save to my kits on it.</p>'}</div>` : '';
+  return `<section class="bsec"><div class="sect-h"><h3>Gear list</h3><span class="muted">${items.length} item${items.length === 1 ? '' : 's'}${ps.length > items.length ? ` · ${ps.length} pieces` : ''}${kits.length ? ` · ${kits.length} kit${kits.length === 1 ? '' : 's'}` : ''} · ${packed} out · ${back} back${total ? ' · rentals ' + money(total) : ''}</span>
+      <span class="gearbar"><span class="seg" role="group" aria-label="Show gear"><button type="button" data-gview="type" aria-pressed="${view === 'type'}">By type</button><button type="button" data-gview="kit" aria-pressed="${view === 'kit'}">By kit</button></span>
+      <button class="btn" type="button" id="gearKitAdd">+ New kit</button><button class="btn" type="button" id="gearAdd">+ Add item</button></span></div>
+    ${libBox}
+    ${body ? `<div class="hscroll"><table class="crew btab gear"><thead><tr><th>Item</th><th class="r">Qty</th><th>Source</th><th class="r">Cost</th><th>Out</th><th>In</th><th>Notes</th><th>${view === 'kit' ? 'Category' : 'Kit'}</th><th class="gdelh"><span class="sr">Remove</span></th></tr></thead><tbody>${body}</tbody></table></div>`
+      : `<p class="note" style="margin:0">${view === 'kit' && kits.length ? 'Your kits are empty. Use + Item on a kit, or pick a kit for items in the By type view.' : 'No gear yet. Add the suggestions above or type your own.'}</p>`}
+    <p class="note" style="margin:8px 0 0">Ticking an item ticks its accessories too. Ticking Out or Back on a kit ticks everything in it. Accessories have no cost of their own; the cost stays on the item or the kit.</p></section>`;
+}
+// a kit as saved in the library: no ticks, conditions or project-only notes
+function gearKitToLib(k){
+  const items = gearStore().items.filter(i => i.kit === k.id).map(i => ({cat: i.cat || 'Other', name: i.name || '', qty: i.qty ?? 1, serial: i.serial || '', src: i.src || k.src || 'rental', cost: i.cost ?? '', notes: i.notes || '', acc: (i.acc || []).map(a => ({name: a.name || '', qty: a.qty ?? 1, serial: a.serial || '', notes: a.notes || ''}))}));
+  return {id: k.lib || uid(), name: k.name || '', src: k.src || 'rental', house: k.house || '', num: k.num || '', cost: k.cost ?? '', items, saved: new Date().toISOString().slice(0, 10)};
+}
+function gearKitFromLib(x){
+  const g = gearStore(), k = {id: uid(), lib: x.id, name: x.name, src: x.src, house: x.house, num: x.num, cost: x.cost};
+  gearKits().push(k);
+  (x.items || []).forEach(i => g.items.push({id: uid(), kit: k.id, cat: i.cat, name: i.name, qty: i.qty, serial: i.serial, src: i.src, cost: i.cost, notes: i.notes, acc: (i.acc || []).map(a => ({id: uid(), name: a.name, qty: a.qty, serial: a.serial, notes: a.notes}))}));
+  return k;
+}
+// split a package's contents line ("2x batteries, charger, HDMI cable") into accessories
+function gearSplitContents(s){
+  if (!s || !/,|^\d+x /i.test(s)) return null;
+  return s.split(/,\s*/).map(x => x.trim()).filter(Boolean).map(x => { const m = x.match(/^(\d+)x\s+(.*)$/i); return {id: uid(), name: m ? m[2] : x, qty: m ? +m[1] : 1}; });
+}
+function gearClick(t){
+  const g = gearStore(), d = t.dataset;
+  if (d.gview){ ls.set('filmtk:gearView', d.gview); renderSched(); return true; }
+  if (t.id === 'gearKitAdd'){ snapshot(); const k = {id: uid(), name: '', src: 'rental'}; gearKits().push(k); ls.set('filmtk:gearView', 'kit'); changed(); const el = document.getElementById(fid('gk:' + k.id + ':name')); if (el) el.focus(); return true; }
+  if (d.gkadd){ snapshot(); const k = gearKits().find(x => x.id === d.gkadd), it = {id: uid(), kit: d.gkadd, cat: 'Other', name: '', qty: 1, src: (k && k.src) || 'owned'}; g.items.push(it); changed(); const el = document.getElementById(fid('gi:' + it.id + ':name')); if (el) el.focus(); return true; }
+  if (d.gkdel){ const k = gearKits().find(x => x.id === d.gkdel); if (!k) return true; const n = g.items.filter(i => i.kit === k.id).length; snapshot(); g.kits = gearKits().filter(x => x.id !== k.id); g.items.forEach(i => { if (i.kit === k.id) delete i.kit; }); changed(); toast(`Removed the kit ${gearKitName(k)}.${n ? ` Its ${n} item${n === 1 ? ' stays' : 's stay'} on the list.` : ''} Ctrl+Z puts it back.`, 5000); return true; }
+  if (d.gksave){ const k = gearKits().find(x => x.id === d.gksave); if (!k) return true; if (!g.items.some(i => i.kit === k.id)){ toast('Add some gear to the kit first.'); return true; }
+    const x = gearKitToLib(k), lib = gearLib(), had = lib.findIndex(y => y.id === x.id); if (had >= 0) lib[had] = x; else lib.push(x); gearLibSet(lib);
+    if (k.lib !== x.id){ snapshot(); k.lib = x.id; changed(); } else renderSched();
+    toast(had >= 0 ? `Updated ${gearKitName(k)} in your saved kits.` : `Saved ${gearKitName(k)} to your kits. Add it to any project from By kit › My saved kits.`, 5000); return true; }
+  if (d.glibuse){ const x = gearLib().find(y => y.id === d.glibuse); if (!x) return true; snapshot(); gearKitFromLib(x); ls.set('filmtk:gearView', 'kit'); changed(); toast(`Added ${gearKitName(x)} with ${x.items.length} item${x.items.length === 1 ? '' : 's'}. Ticks start empty.`); return true; }
+  if (d.glibdel){ const x = gearLib().find(y => y.id === d.glibdel); if (!x) return true; gearLibSet(gearLib().filter(y => y.id !== x.id)); renderSched(); toast(`Deleted ${gearKitName(x)} from your saved kits. Projects that use it keep their copy.`, 5000); return true; }
+  if (t.id === 'gLibExport'){ saveFile('My gear kits.json', JSON.stringify({app: 'filmtk', kind: 'gearKits', kits: gearLib()}, null, 1)); return true; }
+  if (t.id === 'gLibImport'){ const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json';
+    inp.onchange = () => { const f = inp.files[0]; if (!f) return; f.text().then(txt => { const v = JSON.parse(txt); const ks = Array.isArray(v) ? v : v && v.kits; if (!Array.isArray(ks)) throw new Error('no kits in that file');
+      const lib = gearLib(); let n = 0; ks.forEach(x => { if (!x || !Array.isArray(x.items)) return; const i = lib.findIndex(y => y.id === x.id); if (i >= 0) lib[i] = x; else lib.push(x); n++; }); gearLibSet(lib); renderSched(); toast(`Loaded ${n} kit${n === 1 ? '' : 's'} into your saved kits.`); })
+      .catch(err => toast('Could not load that file: ' + err.message)); };
+    inp.click(); return true; }
+  if (d.gaccadd){ const it = g.items.find(i => i.id === d.gaccadd); if (!it) return true; snapshot(); const a = {id: uid(), name: '', qty: 1}; gearAcc(it).push(a); changed(); const el = document.getElementById(fid('ga:' + it.id + ':' + a.id + ':name')); if (el) el.focus(); return true; }
+  if (d.gadel){ const [iid, aid] = d.gadel.split('|'), it = g.items.find(i => i.id === iid); if (!it) return true; snapshot(); it.acc = gearAcc(it).filter(a => a.id !== aid); changed(); return true; }
+  if (d.gasug){ const k = d.gasug.indexOf('|'), it = g.items.find(i => i.id === d.gasug.slice(0, k)); if (!it) return true; snapshot(); gearAcc(it).push({id: uid(), name: d.gasug.slice(k + 1), qty: 1}); changed(); return true; }
+  if (d.gasugall){ const it = g.items.find(i => i.id === d.gasugall); if (!it) return true; const ns = gearAccSugs(it); snapshot(); ns.forEach(n => gearAcc(it).push({id: uid(), name: n, qty: 1})); changed(); toast(`Added ${ns.length} accessor${ns.length === 1 ? 'y' : 'ies'}. Remove any you don’t have with the bin on its row.`, 5000); return true; }
+  if (d.gasughide){ const it = g.items.find(i => i.id === d.gasughide); if (!it) return true; snapshot(); it.accHide = true; changed(); return true; }
+  return false;
+}
+function gearChange(e){
+  const d = e.target.dataset || {}, g = gearStore(), on = e.target.checked;
+  if (d.gchk){ const [id, k] = d.gchk.split('|'), it = g.items.find(i => i.id === id); if (it){ snapshot(); it[k] = on; (it.acc || []).forEach(a => { a[k] = on; }); changed(); } return true; }
+  if (d.gachk){ const [iid, aid, k] = d.gachk.split('|'), it = g.items.find(i => i.id === iid), a = it && (it.acc || []).find(x => x.id === aid); if (a){ snapshot(); a[k] = on; changed(); } return true; }
+  if (d.gkchk){ const [kid, k] = d.gkchk.split('|'); snapshot(); g.items.filter(i => i.kit === kid).forEach(i => { i[k] = on; (i.acc || []).forEach(a => { a[k] = on; }); }); changed(); return true; }
+  return false;
+}
 function renderGear(D){
   const g = gearStore(), sugs = gearSuggestions(D), gd = gearDates();
   const total = g.items.reduce((a, i) => a + num(i.cost), 0);
@@ -8123,19 +8327,7 @@ function renderGear(D){
     <p class="note" style="margin:0 0 14px">Blank dates default to the day before your first shoot day (${gd.pickup ? esc(new Date(gd.pickup + 'T12:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric'})) : 'not set'}) and the day after the last (${gd.ret ? esc(new Date(gd.ret + 'T12:00:00').toLocaleDateString('en-US', {month: 'short', day: 'numeric'})) : 'not set'}). Rental costs flow into the Budget under the matching account.</p>
     ${sugs.length ? `<section class="bsec"><div class="sect-h"><h3>Suggested from your plan</h3><span class="muted">From lenses, movement and sound on your setups, Special Equipment tags, night exteriors and safety flags</span><button class="btn" type="button" id="gearAddAll" style="margin-left:auto">Add all ${sugs.length}</button></div>
       <div class="sugs">${sugs.map(s => `<div class="sug"><span class="sugc">${esc(s.cat)}</span><b>${esc(s.name)}${s.qty > 1 ? ' × ' + s.qty : ''}</b><span class="muted">${esc(s.why)}</span><span class="sugb"><button class="btn" type="button" data-gsug="${esc(s.key)}">Add</button><button class="btn ghost" type="button" data-gdis="${esc(s.key)}" aria-label="Dismiss">Skip</button></span></div>`).join('')}</div></section>` : ''}
-    <section class="bsec"><div class="sect-h"><h3>Gear list</h3><span class="muted">${g.items.length} item${g.items.length === 1 ? '' : 's'} · ${packed} out · ${back} back${total ? ' · rentals ' + money(total) : ''}</span><button class="btn" type="button" id="gearAdd" style="margin-left:auto">+ Add item</button></div>
-    ${groups.length ? `<div class="hscroll"><table class="crew btab gear"><thead><tr><th>Item</th><th class="r">Qty</th><th>Source</th><th class="r">Cost</th><th>Out</th><th>In</th><th>Notes</th><th>Category</th><th class="gdelh"><span class="sr">Remove</span></th></tr></thead><tbody>
-      ${groups.map(gr => `<tr class="dgrp"><td colspan="9">${esc(gr.c)}</td></tr>` + gr.items.map(i => `<tr class="${i.in ? 'back' : i.out ? 'out' : ''}">
-        <td>${fin('gi:' + i.id + ':name', i.name, 'placeholder="Item" aria-label="Item"')}${fin('gi:' + i.id + ':serial', i.serial, 'class="sub" placeholder="Serial #" aria-label="Serial number"')}</td>
-        <td class="r">${nin('gi:' + i.id + ':qty', i.qty ?? 1, 'style="width:56px" aria-label="Quantity"')}</td>
-        <td>${perSel('gi:' + i.id + ':src', i.src || 'owned', GEAR_SRC)}</td>
-        <td class="r">${nin('gi:' + i.id + ':cost', i.cost ?? '', 'placeholder="0" aria-label="Rental cost"')}${i.rlo != null ? `<small class="ghint">~${money(i.rlo)}–${money(i.rhi)}/day</small>` : ''}</td>
-        <td><input type="checkbox" data-gchk="${esc(i.id)}|out" ${i.out ? 'checked' : ''} aria-label="Checked out"></td>
-        <td><input type="checkbox" data-gchk="${esc(i.id)}|in" ${i.in ? 'checked' : ''} aria-label="Returned">${i.in || i.cond ? optSel('gi:' + i.id + ':cond', i.cond || '', GEAR_COND, 'data-rr class="bsel sub" aria-label="Condition back" title="Condition when it came back"') : ''}</td>
-        <td>${fin('gi:' + i.id + ':notes', i.notes, 'placeholder="Condition, who has it" aria-label="Notes"')}</td>
-        <td><select id="${fid('gi:' + i.id + ':cat')}" data-f="gi:${esc(i.id)}:cat" class="bsel" aria-label="Category">${GEAR_CATS.map(c => `<option${c === (i.cat || 'Other') ? ' selected' : ''}>${c}</option>`).join('')}</select></td>
-        <td class="gdelc"><button type="button" class="gdel" data-gdel="${esc(i.id)}" aria-label="Remove ${esc(i.name || 'item')} from the gear list" title="Remove from the list"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.7 8.5h5.6l.7-8.5"/></svg></button></td></tr>`).join('')).join('')}
-    </tbody></table></div>` : '<p class="note" style="margin:0">No gear yet. Add the suggestions above or type your own.</p>'}</section>${gearLDSection()}`;
+    ${gearListSection(g)}${gearLDSection()}`;
 }
 /* standard gear package (thesis edition): the course kit with estimated rental-house day rates */
 function gearPkg(){
@@ -8208,7 +8400,14 @@ async function exportGearDocx(){
   let body = brandLine() + wp(wr(title, {b: true, sz: 16, font: COURIER}), {after: 40}) + wp(wr('Gear list · checkout sheet', {color: '5B6571'}), {after: 120});
   body += wtable([3600, 3600, 3600], [{fill: 'E3EEFF', cells: [`PICKUP  ${fd(gd.pickup)}`, `RETURN  ${fd(gd.ret)}`, `FROM  ${g.house || '—'}`], runs: [{b: true}, {b: true}, {b: true}]}]);
   const rows = [];
-  GEAR_CATS.forEach(c => { const its = g.items.filter(i => (i.cat || 'Other') === c); if (!its.length) return; rows.push({span: true, fill: 'E4E2DF', cells: [c]}); its.forEach(i => rows.push({fill: i.cond === 'dmg' || i.cond === 'lost' ? 'E3EEFF' : null, cells: [i.out ? '☑' : '☐', i.in ? '☑' : '☐', i.name || '', i.serial || '', String(i.qty ?? 1), (GEAR_SRC.find(s => s[0] === (i.src || 'owned')) || [, ''])[1], num(i.cost) ? money(num(i.cost)) : '', i.cond ? pxOpt(GEAR_COND, i.cond) : '', i.notes || ''], runs: [{sz: 11}, {sz: 11}, {b: true}]})); });
+  const srcL = v => (GEAR_SRC.find(s => s[0] === (v || 'owned')) || [, ''])[1];
+  const addItem = i => { rows.push({fill: i.cond === 'dmg' || i.cond === 'lost' ? 'E3EEFF' : null, cells: [i.out ? '☑' : '☐', i.in ? '☑' : '☐', i.name || '', i.serial || '', String(i.qty ?? 1), srcL(i.src), num(i.cost) ? money(num(i.cost)) : '', i.cond ? pxOpt(GEAR_COND, i.cond) : '', i.notes || ''], runs: [{sz: 11}, {sz: 11}, {b: true}]});
+    (i.acc || []).forEach(a => rows.push({cells: [a.out ? '☑' : '☐', a.in ? '☑' : '☐', '    ↳ ' + (a.name || 'Accessory'), a.serial || '', String(a.qty ?? 1), '', '', i.in && !a.in ? 'Not back' : '', a.notes || ''], runs: [{sz: 11}, {sz: 11}, {sz: 10}]})); };
+  if (gearView() === 'kit'){
+    const kits = gearKits();
+    kits.forEach(k => { const its = g.items.filter(i => i.kit === k.id); rows.push({span: true, fill: 'E4E2DF', cells: [[gearKitName(k), k.num ? '#' + k.num : '', [srcL(k.src), k.house].filter(Boolean).join(' · '), k.pickup || k.ret ? `${k.pickup ? 'out ' + fd(k.pickup) : ''}${k.pickup && k.ret ? ', ' : ''}${k.ret ? 'back ' + fd(k.ret) : ''}` : '', num(k.cost) ? money(num(k.cost)) : ''].filter(Boolean).join('   ·   ')]}); its.forEach(addItem); });
+    const loose = g.items.filter(i => !i.kit || !kits.some(k => k.id === i.kit)); if (loose.length){ rows.push({span: true, fill: 'E4E2DF', cells: ['Not in a kit']}); loose.forEach(addItem); }
+  } else GEAR_CATS.forEach(c => { const its = g.items.filter(i => (i.cat || 'Other') === c); if (!its.length) return; rows.push({span: true, fill: 'E4E2DF', cells: [c]}); its.forEach(addItem); });
   body += wtable([550, 550, 2700, 1200, 450, 1100, 900, 1000, 2350], rows, {head: ['Out', 'In', 'Item', 'Serial #', 'Qty', 'Source', 'Cost', 'Back as', 'Notes'], align: [null, null, null, null, 'right', null, 'right', null, null]});
   body += fmSigs(['Checked out by · date', 'Released by (rental house or cage) · date', 'Returned by · date', 'Received by (rental house or cage) · date']);
   await saveFile(baseName() + ' - gear list.docx', await buildDocx(body));
@@ -8234,7 +8433,7 @@ function tlRows(){
     const rr = relRows(D), signed = sec => { const r = rr.filter(x => x.sec === sec); return r.length > 0 && r.every(x => x.status === 'signed' || x.status === 'na'); };
     const hz = sceneHazards(D).filter(x => x.active.length);
     const frames = S.setups.length > 0 && S.setups.every(su => framesFor(su).some(f => f.img));
-    hints = {cast_rel: signed('Cast'), crew_rel: signed('Crew'), loc_rel: signed('Locations'), boards: frames, safety: hz.every(x => x.s.ok), sched: sd.days.length > 0 && !D.unscheduled.length, gearpick: (sd.gear && sd.gear.items || []).length > 0 && sd.gear.items.every(i => i.out), gearret: (sd.gear && sd.gear.items || []).length > 0 && sd.gear.items.every(i => i.in)};
+    hints = {cast_rel: signed('Cast'), crew_rel: signed('Crew'), loc_rel: signed('Locations'), boards: frames, safety: hz.every(x => x.s.ok), sched: sd.days.length > 0 && !D.unscheduled.length, gearpick: gearAllOut(sd.gear && sd.gear.items || []), gearret: gearAllIn(sd.gear && sd.gear.items || [])};
   }catch(e){}
   const rows = TL_DEF.map(([id, label, off, base]) => { const s = t.items[id] || {}; return {id, label, auto: shift(base === 'end' ? end : start, off), date: s.date || shift(base === 'end' ? end : start, off), custom: !!s.date, done: !!s.done, owner: s.owner || '', notes: s.notes || '', hint: !!hints[id], fixed: id === 'day1' && !!ds[0]}; });
   t.custom.forEach(c => rows.push({id: 'c:' + c.id, cid: c.id, label: c.label || '', date: c.date || '', done: !!c.done, owner: c.owner || '', notes: c.notes || '', user: true}));
@@ -8356,21 +8555,24 @@ async function exportCreditsDocx(){
 /* ---------- events for the new tabs ---------- */
 $('#sched').addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t || S.stab !== 'gear') return;
+  if (gearClick(t)) return;
   const g = gearStore();
   const fromSug = s => ({id: uid(), sug: s.key, cat: s.cat, name: s.name, qty: s.qty, src: 'owned', cost: '', notes: ''});
   if (t.dataset.gsug){ const s = gearSuggestions(schedData()).find(x => x.key === t.dataset.gsug); if (s){ snapshot(); g.items.push(fromSug(s)); changed(); } return; }
   if (t.dataset.gdis){ snapshot(); g.dismiss[t.dataset.gdis] = true; changed(); return; }
   if (t.id === 'gearAddAll'){ const sugs = gearSuggestions(schedData()); snapshot(); sugs.forEach(s => g.items.push(fromSug(s))); changed(); toast(`Added ${sugs.length} item${sugs.length === 1 ? '' : 's'}.`); return; }
-  if (t.id === 'gpkgAdd'){ const have = new Set(g.items.map(i => i.pkg).filter(Boolean)), add = gearPkg().filter(x => !have.has(x[0])); snapshot(); add.forEach(([k, cat, name, qty, notes, lo, hi]) => g.items.push({id: uid(), pkg: k, cat, name, qty, src: 'school', cost: '', notes, rlo: lo, rhi: hi})); changed(); toast(add.length ? `Added ${add.length} item${add.length === 1 ? '' : 's'} from the standard package. Set Source to Rental on anything you rent.` : 'The whole package is already on your list.', 5000); return; }
+  if (t.id === 'gpkgAdd'){ const have = new Set(g.items.map(i => i.pkg).filter(Boolean)), add = gearPkg().filter(x => !have.has(x[0])); snapshot(); const DK = [['Camera & lenses kit', ['Camera', 'Lenses', 'Support & movement', 'Other']], ['Sound kit', ['Sound']], ['Lighting kit', ['Lighting']], ['Grip & electric kit', ['Grip']], ['Power & media kit', ['Power & media']]];
+    const kitFor = cat => { const d = DK.find(x => x[1].includes(cat)) || DK[0]; let k = gearKits().find(x => x.pkg === d[0]); if (!k){ k = {id: uid(), pkg: d[0], name: d[0], src: 'school'}; gearKits().push(k); } return k.id; };
+    add.forEach(([k, cat, name, qty, notes, lo, hi]) => { const acc = gearSplitContents(notes); g.items.push({id: uid(), pkg: k, kit: kitFor(cat), cat, name, qty, src: 'school', cost: '', notes: acc ? '' : notes, acc: acc || [], rlo: lo, rhi: hi}); }); changed(); toast(add.length ? `Added ${add.length} item${add.length === 1 ? '' : 's'} from the standard package. Set Source to Rental on anything you rent.` : 'The whole package is already on your list.', 5000); return; }
   if (t.id === 'gpkgFill'){ const days = sched().days.length || 1, wk = +g.wk || 4; let n = 0; snapshot(); g.items.forEach(i => { if (i.src === 'rental' && i.rlo != null && !num(i.cost)){ i.cost = Math.round(gearBill((i.rlo + i.rhi) / 2, days, wk)); n++; } }); changed(); toast(`Filled ${n} rental cost${n === 1 ? '' : 's'} for ${days} day${days === 1 ? '' : 's'}. They now show in the budget.`); return; }
   if (t.id === 'gearAdd'){ snapshot(); const it = {id: uid(), cat: 'Other', name: '', qty: 1, src: 'owned'}; g.items.push(it); changed(); const el = document.getElementById(fid('gi:' + it.id + ':name')); if (el) el.focus(); return; }
   if (t.dataset.gdel){ const it = g.items.find(i => i.id === t.dataset.gdel); snapshot(); g.items = g.items.filter(i => i.id !== t.dataset.gdel); changed(); toast(`Removed ${it && it.name ? it.name : 'the item'}. Ctrl+Z puts it back.`); return; }
   if (t.id === 'dlGearDocx'){ exportGearDocx().catch(err => toast('Could not build the gear list: ' + err.message)); return; }
-  if (t.id === 'dlGearCsv'){ saveFile(baseName() + ' - gear list.csv', table(g.items.map(i => ({Category: i.cat || 'Other', Item: i.name || '', Qty: i.qty ?? 1, Source: (GEAR_SRC.find(s => s[0] === (i.src || 'owned')) || [, ''])[1], Cost: i.cost || '', Out: i.out ? 'Yes' : '', In: i.in ? 'Yes' : '', Notes: i.notes || ''})), ['Category', 'Item', 'Qty', 'Source', 'Cost', 'Out', 'In', 'Notes'], ',')); }
+  if (t.id === 'dlGearCsv'){ const kn = i => { const k = gearKits().find(x => x.id === i.kit); return k ? gearKitName(k) : ''; }; saveFile(baseName() + ' - gear list.csv', table(g.items.flatMap(i => [{Kit: kn(i), Category: i.cat || 'Other', Item: i.name || '', 'Accessory of': '', Qty: i.qty ?? 1, Serial: i.serial || '', Source: (GEAR_SRC.find(s => s[0] === (i.src || 'owned')) || [, ''])[1], Cost: i.cost || '', Out: i.out ? 'Yes' : '', In: i.in ? 'Yes' : '', Notes: i.notes || ''}, ...(i.acc || []).map(a => ({Kit: kn(i), Category: i.cat || 'Other', Item: a.name || '', 'Accessory of': i.name || '', Qty: a.qty ?? 1, Serial: a.serial || '', Source: '', Cost: '', Out: a.out ? 'Yes' : '', In: a.in ? 'Yes' : '', Notes: a.notes || ''}))]), ['Kit', 'Category', 'Item', 'Accessory of', 'Qty', 'Serial', 'Source', 'Cost', 'Out', 'In', 'Notes'], ',')); }
 });
 $('#sched').addEventListener('change', e => {
   if (e.target.id === 'gpkgWk'){ snapshot(); gearStore().wk = +e.target.value; changed(); return; }
-  if (e.target.dataset && e.target.dataset.gchk){ const [id, k] = e.target.dataset.gchk.split('|'), it = gearStore().items.find(i => i.id === id); if (it){ snapshot(); it[k] = e.target.checked; changed(); } }
+  if (S.stab === 'gear' && gearChange(e)) return;
 });
 $('#green').addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t || S.gtab !== 'tl') return;
@@ -11091,6 +11293,9 @@ async function mergeProject(d){
   byId(P.cards, OP.cards, 'cards', (y, x) => { fill(y, x); y.copies = (y.copies || []).map((v, k) => v || (x.copies || [])[k]); (x.copies || []).forEach((v, k) => { if (v) y.copies[k] = true; }); y.verified = y.verified || x.verified; y.cleared = y.cleared || x.cleared; });
   const RP = rptStore(); ['camRolls', 'sndRolls'].forEach(k => Object.entries(OP[k] || {}).forEach(([n, v]) => { RP[k][n] = RP[k][n] || {}; fill(RP[k][n], v); })); fill(RP.camDef, OP.camDef); fill(RP.sndDef, OP.sndDef); byId(RP.wild, OP.wild, 'other'); ['cam', 'snd'].forEach(k => byId(RP.rtakes[k], (OP.rtakes || {})[k], 'takes', (y, x) => { fill(y, x); if (x.circle) y.circle = true; }));
   byId(P.pickups, OP.pickups, 'other'); byId(P.photos, OP.photos, 'photos'); byId(P.expenses, OP.expenses, 'expenses'); byId(P.floats, OP.floats, 'other');
+  // gear: items, kits and accessories added there, and anything ticked out or back there
+  { const G = gearStore(), OG = o.gear || {}; const tick = (y, x) => { fill(y, x); ['out', 'in'].forEach(k => { if (x[k]) y[k] = true; }); };
+    byId(gearKits(), OG.kits, 'other'); byId(G.items, OG.items, 'other', (y, x) => { tick(y, x); byId(gearAcc(y), x.acc, 'other', tick); }); }
   // post: cuts, notes and the other post lists, plus scene status and specs
   { const PS = postStore(), OPS = o.post || {}; ['cuts', 'notes', 'adr', 'spot', 'cues', 'vfx', 'qc', 'course', 'recs'].forEach(k => byId(PS[k], OPS[k], 'other', (y, x) => fill(y, x))); n.other += await recUnpack(d.audio, true); n.other += await sfUnpack(d.scriptRecord); Object.entries(OPS.scn || {}).forEach(([k, v]) => { PS.scn[k] = PS.scn[k] || {}; fill(PS.scn[k], v); }); fill(PS.specs, OPS.specs); const PV = pvStore(), OPV = o.previz || {}; ['vers', 'notes', 'recs'].forEach(k => byId(PV[k], OPV[k], 'other', (y, x) => fill(y, x))); const PI = piStore(), OPI = o.pitch || {}; ['vers', 'notes', 'recs', 'runs'].forEach(k => { if (!Array.isArray(PI[k])) PI[k] = []; byId(PI[k], OPI[k], 'other', (y, x) => fill(y, x)); }); if ((!PI.secs || !PI.secs.length) && OPI.secs) PI.secs = OPI.secs;
     const FT = featStore(), OF = o.feat || {}; Object.entries(OF).forEach(([k, v]) => { if (k === 'comps') byId(FT.comps, v, 'other'); else if (k === 'bo') fill(FT.bo, v); else if (FT[k] == null || FT[k] === '') FT[k] = v; }); }
@@ -14463,6 +14668,7 @@ document.addEventListener('keydown', e => {
 const EDITION = 'pro';
 /* version number and what's new; newest first */
 const APP_LOG = EDITION === 'pro' ? [
+  ['6.26', 'November 22, 2026', ['New: gear kits. On People & places › Gear, switch the list between By type and By kit. Make a kit for each package you rent or check out (camera, sound, lighting, G&E), with where it’s from, a kit or case number, its own pickup and return dates and a cost', 'Tick Out or Back on a kit to tick everything in it, and see how many pieces are out and back', 'New: accessories. Click + Accessory under any item to list the cables, mounts, batteries, drives and other parts that go with it. Each has its own packed and returned ticks, and anything that didn’t come back is flagged', 'The Gear tab suggests the usual accessories from the item’s name, such as an HDMI cable, mount and recording drive for a monitor, or the control panel, power cable, reflector and barn doors for a light', 'Save a kit to My saved kits and add it to any other project on this device. Save your kits to a file to move them to another computer', 'The checkout sheet and spreadsheet list accessories under their item, grouped by kit or by type. A kit’s cost goes into the budget, and merging from another phone brings over gear ticks and accessories']],
   ['6.25', 'November 16, 2026', ['New: crew tabs for cloud sync. Add someone as Crew and pick their position (2nd AC, sound mixer, script supervisor, editor and more): each tab is set to Edit, View or Hide to match the job, and you can change any of it', 'Hidden tabs, sections and whole phases disappear for that person, and their project opens on their own tabs. The Producer phase and the money tabs (Budget, Costs, Financing, Contracts, Bid, Usage) start hidden for all crew', 'On a View tab they can look, print and export, but not change anything', 'The cloud checks it too: crew changes only ever reach the tabs they can edit, and money, the production calendar and reviews aren’t sent to anyone they’re hidden from. Run the new Crew tabs setup script in Supabase once', 'Projects now sync each tab’s data on its own, so two people on different tabs never hold each other up']],
   ['6.24', 'November 16, 2026', ['New: Project › New project…: pick what you are making (short film, feature, documentary, TV pilot, vertical series, commercial or animation, with the technique for animation), give it a title, and start a blank project already set to that type', 'Start without a script and write it in Script › Drafts, or pick your screenplay PDF in the same step; the project you had open stays saved', 'The sample banner now offers Start a new project']],
   ['6.23', 'November 15, 2026', ['New Producer › Reviews: send a cut, storyboards or talent options to clients and execs as private links, one per person, with no account or app', 'Cuts on Vimeo or YouTube play inside the review, and every note is stamped with its timecode; storyboard frames get Looks good or Change this; talent gets Approve, Hold or Pass', 'Ask for an email code on confidential reviews; turn any link off, extend it, close it, or send the next round', 'Their notes arrive on the Reviews page: make a calendar task (assigned to the right person), add it to the cut notes, or mark it Not changing; reviewers see each note move from Planned to Done', 'Download an approval record (.docx) of who approved what, and when. Commercials also log each review on Producer › Approvals. Needs the review setup script run once on Supabase']],
@@ -15973,7 +16179,7 @@ const CL_AREAS = {setups: 'Lining', strokes: 'Lining', tags: 'Breakdown', script
   'sched.prod': 'Production', 'sched.post': 'Post', 'sched.release': 'Release', 'sched.producer': 'Producer', 'sched.frames': 'Storyboards', 'sched.mood': 'Mood boards', 'sched.blocking': 'Blocking',
   'sched.previz': 'Previz', 'sched.props': 'Props', 'sched.pitch': 'Pitch', 'sched.feat': 'Feature pitch', 'sched.series': 'Series bible', 'sched.revisions': 'Revisions', 'sched.dlgAct': 'Dialogue actions',
   'sched.forms': 'Forms', 'sched.log': 'Camera and sound log', 'sched.changes': 'Wardrobe changes', 'sched.changeDesc': 'Wardrobe changes', 'sched.dood': 'Day out of days', 'sched.slog': 'Shot log', 'sched.slogDay': 'Shot log', 'sched.treat': 'Treatment', 'sched.meta': 'Project details', 'sched.pcal': 'Production calendar', 'sched.ad': 'Commercial', 'sched.anim': 'Animation'};
-const clArea = p => CL_AREAS[p] || (p.startsWith('sched.') ? p.slice(6).replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase()) : p);
+const clArea = p => CL_AREAS[p] || CL_AREAS[p.split('/')[0]] || (p.startsWith('sched.') ? p.slice(6).replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase()) : p);
 // the same value always gives the same text, whatever order its keys were saved in (the database sorts them)
 const clCanon = v => v === undefined ? 'null' : JSON.stringify(v, (k, x) => x && typeof x === 'object' && !Array.isArray(x) ? Object.keys(x).sort().reduce((o, k2) => (o[k2] = x[k2], o), {}) : x);
 function clHash(s){ let a = 0x811c9dc5, b = 0; for (let i = 0; i < s.length; i++){ const c = s.charCodeAt(i); a = Math.imul(a ^ c, 16777619); b = (Math.imul(b, 31) + c) | 0; } return (a >>> 0).toString(36) + (b >>> 0).toString(36) + s.length.toString(36); }
