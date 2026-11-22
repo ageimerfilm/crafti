@@ -905,6 +905,21 @@ input.tlen{font-variant-numeric:tabular-nums}
 .sugb{display:flex;gap:4px;margin-top:4px}
 .sugb .btn{height:26px;font-size:12px;padding:0 10px}
 table.btab.gear tr.out td{background:var(--accent-soft)}
+.intim .itcards{display:grid;gap:12px;margin:10px 0}
+.itcard{border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:8px;padding:10px 14px;background:var(--raised);display:grid;gap:10px}
+.itcard h3{font-size:15px}.itcs{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--ink,#111);color:#fff;border-radius:4px;padding:2px 7px}
+.itgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px 12px}.itgrid .itwide{grid-column:1/-1}
+.itcast,.itcrew{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:13px}.itactor .pill{margin-left:4px}
+.itrow{display:flex;flex-wrap:wrap;gap:6px 18px}.itcb{display:inline-flex;gap:6px;align-items:flex-start;font-size:13px;margin:2px 0}
+.itchk summary,.itpriv summary,.itres summary{cursor:pointer;font-weight:600;font-size:13.5px}.itchk .itcb{display:flex}
+.itpriv{border-top:1px dashed var(--rule);padding-top:8px}.itconsent{margin:8px 0;padding:8px 10px;border:1px solid var(--rule);border-radius:7px}.itconsent h4{margin:0;font-size:13.5px}
+.itlink{border:0;background:none;color:var(--accent-strong,var(--accent));font-size:12px;font-weight:600;padding:4px 0 0;cursor:pointer;text-align:left}
+.itres ul{margin:8px 0;padding-left:18px;font-size:13px;line-height:1.5}.itlinks{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px}
+.itwarn{border-left:3px solid #B42318;padding-left:8px}.itnote{font-size:12.5px;border-left:3px solid var(--accent);padding:4px 8px;margin:6px 0;background:var(--accent-soft)}
+.pmark.itm{background:var(--ink,#111);color:#FFFFFF}
+.clsens{font-size:12px;white-space:nowrap}
+.cs-cs{border:2px solid var(--ink,#111);border-radius:6px;padding:6px 10px;margin:8px 0}.cs-cs h4{margin:0 0 4px}.cs-cs p{margin:2px 0;font-size:12.5px}
+
 table.btab.gear tr.gacc td{border-top:0;padding-top:2px;padding-bottom:2px}
 table.btab.gear tr.gacc td:first-child{padding-left:22px}
 .gaccname{display:flex;align-items:center;gap:6px}.gaccmark{color:var(--muted);font-size:13px}
@@ -3824,6 +3839,8 @@ function setField(spec, value){
   if (p[0] === 'gg'){ gearStore()[p[1]] = value; return; }
   if (p[0] === 'gi'){ const it = gearStore().items.find(x => x.id === p[1]); if (it) it[p[2]] = value; return; }
   if (p[0] === 'ga'){ const it = gearStore().items.find(x => x.id === p[1]), a = it && (it.acc || []).find(x => x.id === p[2]); if (a) a[p[3]] = value; return; }
+  if (p[0] === 'it'){ intimSet(p[1])[p[2]] = value; return; }
+  if (p[0] === 'ip'){ const P = intimPriv(); P[p[1]] = P[p[1]] || {}; P[p[1]][p[2]] = value; return; }
   if (p[0] === 'gk'){ const k = gearKits().find(x => x.id === p[1]); if (k) k[p[2]] = value; return; }
   if (p[0] === 'tla'){ tlStore().anchor = value; return; }
   if (p[0] === 'tl'){ const t = tlStore(); t.items[p[1]] = t.items[p[1]] || {}; if (p[2] === 'date' && !value) delete t.items[p[1]].date; else t.items[p[1]][p[2]] = value; return; }
@@ -3970,7 +3987,7 @@ function stripHtml(i, D){
   const sel = S.schedSel && S.schedSel.t === 'scene' && S.schedSel.num === i.num;
   const ep = isMicro() ? epShort(i.num, D) : '', dim = isMicro() && S.epF && (epMap(D).get(i.num) || {g: {}}).g.id !== S.epF;
   return `<div class="strip${sel ? ' sel' : ''}${dim ? ' epdim' : ''}" data-num="${esc(i.num)}" style="--sc:${stripColor(i)}" tabindex="0" role="button" aria-label="${ep ? 'Episode ' + ep.slice(1) + ', ' : ''}Scene ${esc(i.num)}, ${esc(i.ie)} ${esc(i.set)}, ${esc(DN_CATS[i.cat])}, ${fmt8(i.e8)} pages">
-    <span class="grip" aria-hidden="true"></span><span class="no">${ep ? `<span class="eptag">${ep}</span>` : ''}${esc(i.num)}${prodMark(i.num)}</span><span class="ie">${esc(i.ie)}</span>
+    <span class="grip" aria-hidden="true"></span><span class="no">${ep ? `<span class="eptag">${ep}</span>` : ''}${esc(i.num)}${prodMark(i.num)}${intimMark(i.num)}</span><span class="ie">${esc(i.ie)}</span>
     <span class="what"><span class="set">${esc(i.set)}</span><span class="syn">${esc(i.syn || '')}</span></span>
     <span class="dn">${esc(DN_CATS[i.cat])}</span><span class="pg">${fmt8(i.e8)}</span>
     <span class="cast" title="${esc(i.cast.map(k => (D.cast.find(c => c.key === k) || {}).name).join(', '))}">${i.castIds.join(', ') || '—'}</span><span class="sus">${i.setups || '—'}</span>
@@ -4339,8 +4356,9 @@ function renderCall(D, sd){
       <div><div class="cs-kv">${kv('Weather', 'day:' + day.id + ':weather', day.weather, esc(autoWeather(day, D)) || 'Forecast')}${kv('Hospital', 'day:' + day.id + ':hospital', day.hospital, esc(autoER(day, D)) || 'Nearest emergency room')}${kv('Parking', 'day:' + day.id + ':parking', day.parking, 'Crew parking')}<span class="cs-k">Sun</span><span style="font-size:12.5px;padding:1px 4px">${esc(sunLine(daySun(day, D))) || '<span class="empty">Add coordinates on the Locations tab</span>'}</span></div></div>
     </div>
     <div><h4>Scenes</h4><table><thead><tr><th>Sc</th><th>Set and description</th><th>I/E</th><th>D/N</th><th>Cast</th><th class="r">Pages</th><th>Location</th></tr></thead><tbody>
-      ${C.xs.map(i => `<tr><td class="k">${esc(i.num)}</td><td><b style="font-family:var(--f-script)">${esc(i.set)}</b><br>${esc(i.syn || '')}</td><td>${esc(i.ie)}</td><td>${esc(DN_CATS[i.cat])}</td><td>${i.castIds.join(', ') || '—'}</td><td class="r">${fmt8(i.e8)}</td><td>${esc(i.loc)}</td></tr>`).join('') || '<tr><td colspan="7" class="empty">No scenes on this day yet.</td></tr>'}
+      ${C.xs.map(i => `<tr><td class="k">${esc(i.num)}</td><td><b style="font-family:var(--f-script)">${esc(i.set)}</b>${intimMark(i.num)}<br>${esc(i.syn || '')}</td><td>${esc(i.ie)}</td><td>${esc(DN_CATS[i.cat])}</td><td>${i.castIds.join(', ') || '—'}</td><td class="r">${fmt8(i.e8)}</td><td>${esc(i.loc)}</td></tr>`).join('') || '<tr><td colspan="7" class="empty">No scenes on this day yet.</td></tr>'}
       <tr class="total"><td></td><td>Total</td><td></td><td></td><td></td><td class="r">${fmt8(C.e8)}</td><td></td></tr></tbody></table></div>
+    ${intimCallHTML(D, day)}
     ${csPkHTML(D, day)}
     <div><h4>Cast</h4><table><thead><tr><th>ID</th><th>Character</th><th>Actor</th><th>Status</th><th>Call</th><th>Notes</th></tr></thead><tbody>
       ${C.cast.map(x => `<tr><td class="k">${x.c.id}</td><td class="k">${esc(x.c.name)}</td><td>${esc(x.actor) || '<span class="empty">Set on Day Out of Days</span>'}</td><td>${esc(x.status)}</td>
@@ -4500,6 +4518,7 @@ async function exportCallDocx(){
     [...C.xs.map(i => ({cells: [i.num, [wp(wr(i.set, {b: true, font: COURIER, sz: 9}), {after: 0}), wp(wr(i.syn || '', {sz: 8.5}), {after: 0})], i.ie, DN_CATS[i.cat], i.castIds.join(', ') || '—', fmt8(i.e8), i.loc], runs: [{b: true, font: COURIER}]})),
       {fill: 'F1F3F5', cells: ['', 'Total', '', '', '', fmt8(C.e8), ''], runs: [{}, {b: true}, {}, {}, {}, {b: true}]}],
     {head: ['Sc', 'Set and description', 'I/E', 'D/N', 'Cast', 'Pages', 'Location'], align: [null, null, null, null, null, 'right', null]});
+  body += intimCallDocx(D, day, H);
   if (pkRows.length) body += H('Pickups') + wtable([3000, 4800, 3000], pkRows.map(x => ({cells: [pkWhat(x), x.i ? `${x.i.num} · ${x.i.set}` : '—', x.why], runs: [{b: true}]})), {head: ['What', 'Scene and set', 'Why']});
   body += H('Cast') + (C.cast.length ? wtable([600, 2300, 2500, 900, 1100, 3400], C.cast.map(x => ({cells: [String(x.c.id), x.c.name, x.actor, x.status || '', fmtTime(x.info.call), x.info.notes || ''], runs: [{b: true, font: COURIER}, {b: true, font: COURIER}]})), {head: ['ID', 'Character', 'Actor', 'Status', 'Call', 'Notes']}) : wp(wr('No cast tagged in these scenes.', {i: true}), {after: 120}));
   body += H('Locations') + wtable([3000, 7800], C.locs.map(l => ({cells: [l.name, [l.info.address, l.info.contact, l.info.notes].filter(Boolean).join(' · ') || 'Address to be added'], runs: [{b: true, font: COURIER}]})), {head: ['Location', 'Address, contact and notes']});
@@ -4597,7 +4616,7 @@ function onFieldChange(e){
   if (spec.startsWith('locname:')){ snapshot(); setField(spec, e.target.value); }
   else setField(spec, e.target.type === 'checkbox' ? e.target.checked : e.target.value);
   persist();
-  const layout = /^(scene|locname|chg|b|bl|bs):|^set:(pagesPerDay|setupsPerDay|firstSetupMin|setupMin|moveMin|mealMin|wrapMin|dayHours)$|^dd:[^:]+:dur:|^gr:.*:status$|^gi:[^:]+:(cat|cost|qty|src|kit|name)$|^gk:|^ga:[^:]+:[^:]+:name$|^gg:|^tl:[^:]+:date$|^tlc:[^:]+:date$|^tla$|^cr:|:coords$|^set:coords$|^lt:.*:(status|n|len)$|^crew:[^:]+:dept$|^day:[^:]+:(date|crew)$|^su:[^:]+:facing$|^cp:[^:]+:(status|name)$|^tm:|^tms:|^pss:|^(ps|pc):[^:]+:date$|^(pd|dc):[^:]+:st$|^pf:[^:]+:(status|deadline|fee|runtime|notify|award)$|^rb:|^rl:|^rw:[^:]+:(type|status|start|end|territory|partner)$|^rm:[^:]+:(date|status)$|^rsc:[^:]+:(date|cap|type)$|^rg:.*:(rsvp|plus)$|^pt:|^pct:|^(crd|srd):|^pcw:|^pts:|^ppf:|^pps:|^pex:[^:]+:(acct|amount|pay|date)$|^pfl:[^:]+:amount$|^pph:[^:]+:(scene|cast|cat)$|^pdl:.*:min$|^pdc:[^:]+:(gb|day|type|name)$|^rt:[^:]+:[^:]+:(n|status|len)$|^pdn:|^pkd:|^ppk:[^:]+:day$|^px:|^pxs:|^pxp:|^pv:|^pi:|^ft:|^ftc:|^ftb:|^pp:[^:]+:(acc|role|name)$|^dk:[^:]+:(date|start|kind|part|st|loc)$|^sl:[^:]+:part$|^pe:[^:]+:dur$|^set:peTarget$|^tr:[^:]+:(name|part)$|^ar:items:[^:]+:(st|cost|what)$|^ar:facts:[^:]+:st$|^ar:fair:[^:]+:item$|^dt:(notes|vers):[^:]+:(st|ver|name)$|^dx:legal:[^:]+:st$|^dx:preview:[^:]+:(part|date)$|^dx:impact:[^:]+:st$|^dx:ethics:by$|^sr:seg:[^:]+:(start|target|st)$|^sr:b:(runtime|eplen)$|^sn:(factor|cont)$|^sn:out:[^:]+:st$/.test(spec);
+  const layout = /^(scene|locname|chg|b|bl|bs):|^set:(pagesPerDay|setupsPerDay|firstSetupMin|setupMin|moveMin|mealMin|wrapMin|dayHours)$|^dd:[^:]+:dur:|^gr:.*:status$|^gi:[^:]+:(cat|cost|qty|src|kit|name)$|^gk:|^it:[^:]+:(lvl|ic|reh)$|^ip:[^:]+:dbl$|^ga:[^:]+:[^:]+:name$|^gg:|^tl:[^:]+:date$|^tlc:[^:]+:date$|^tla$|^cr:|:coords$|^set:coords$|^lt:.*:(status|n|len)$|^crew:[^:]+:dept$|^day:[^:]+:(date|crew)$|^su:[^:]+:facing$|^cp:[^:]+:(status|name)$|^tm:|^tms:|^pss:|^(ps|pc):[^:]+:date$|^(pd|dc):[^:]+:st$|^pf:[^:]+:(status|deadline|fee|runtime|notify|award)$|^rb:|^rl:|^rw:[^:]+:(type|status|start|end|territory|partner)$|^rm:[^:]+:(date|status)$|^rsc:[^:]+:(date|cap|type)$|^rg:.*:(rsvp|plus)$|^pt:|^pct:|^(crd|srd):|^pcw:|^pts:|^ppf:|^pps:|^pex:[^:]+:(acct|amount|pay|date)$|^pfl:[^:]+:amount$|^pph:[^:]+:(scene|cast|cat)$|^pdl:.*:min$|^pdc:[^:]+:(gb|day|type|name)$|^rt:[^:]+:[^:]+:(n|status|len)$|^pdn:|^pkd:|^ppk:[^:]+:day$|^px:|^pxs:|^pxp:|^pv:|^pi:|^ft:|^ftc:|^ftb:|^pp:[^:]+:(acc|role|name)$|^dk:[^:]+:(date|start|kind|part|st|loc)$|^sl:[^:]+:part$|^pe:[^:]+:dur$|^set:peTarget$|^tr:[^:]+:(name|part)$|^ar:items:[^:]+:(st|cost|what)$|^ar:facts:[^:]+:st$|^ar:fair:[^:]+:item$|^dt:(notes|vers):[^:]+:(st|ver|name)$|^dx:legal:[^:]+:st$|^dx:preview:[^:]+:(part|date)$|^dx:impact:[^:]+:st$|^dx:ethics:by$|^sr:seg:[^:]+:(start|target|st)$|^sr:b:(runtime|eplen)$|^sn:(factor|cont)$|^sn:out:[^:]+:st$/.test(spec);
   if (!layout && !(e.target.hasAttribute && e.target.hasAttribute('data-rr'))) return;
   // re-render after focus has moved, then put focus back where the person went
   setTimeout(() => {
@@ -7209,6 +7228,8 @@ function relRows(D){
     dates: sd.days.filter(d => d.scenes.some(n => e.scenes.has(n))).map(d => d.date)}));
   if (isDoc()) partStore().forEach(p => { if (['declined', 'withdrew'].includes(p.acc)) return; rows.push({key: 'par|' + p.id, sec: 'Participants', kind: 'part', type: 'Appearance release', who: p.name || '', role: [pxOpt(PART_ROLE, p.role || 'main'), p.minor ? 'minor, guardian signs' + (p.guard ? ': ' + p.guard : '') : ''].filter(Boolean).join(' · '), dates: []}); if (p.mats) rows.push({key: 'pmat|' + p.id, sec: 'Participant materials', kind: 'pmat', type: 'Materials release', who: p.name || '', role: 'Photos, home video or documents they gave you', dates: []}); });
   { const cn = (crStore().composer || '').trim(); if (cn || fmStore().comp.on) rows.push({key: 'comp|main', sec: 'Music', kind: 'composer', type: 'Composer agreement', who: cn, role: 'Original score', dates: []}); }
+  { const need = new Map(); intimScenes(D).filter(x => intimRider(x.s.lvl)).forEach(x => (x.i.cast || []).forEach(k => { if (!need.has(k)) need.set(k, []); need.get(k).push(x.i.num); }));
+    need.forEach((scs, k) => { const c = D.cast.find(x => x.key === k); if (c) rows.push({key: 'intim|' + k, castKey: k, sec: 'Cast', kind: 'intim', type: 'Nudity and simulated sex rider', who: (sd.castInfo[k] || {}).actor || '', role: `${c.id}. ${c.name} · nudity and simulated sex rider · Sc ${scs.join(', ')}`, character: c.name, dates: sd.days.filter(d => d.scenes.some(n => scs.includes(n))).map(d => d.date)}); }); }
   g.other.forEach(o => rows.push({key: 'oth|' + o.id, id: o.id, sec: 'Other clearances', kind: 'other', type: o.type || 'Materials release', who: o.label || '', role: '', dates: []}));
   rows.forEach(r => { r.st = g.rel[r.key] || {}; r.status = r.st.status || 'none'; });
   return rows;
@@ -7220,7 +7241,7 @@ function renderReleases(D){
     <div class="tstat ${done === rows.length && rows.length ? 'under' : ''}"><span>Signed or not needed</span><b>${done} / ${rows.length}</b><small>${rows.length - done ? rows.length - done + ' still open' : 'All paperwork is in'}</small></div>
     <div class="tstat"><span>Sent, waiting</span><b>${rows.filter(r => r.status === 'sent').length}</b><small>Follow up before the shoot</small></div>
     <div class="tstat"><span>Not sent</span><b>${rows.filter(r => r.status === 'none').length}</b><small>Generate the forms below</small></div></div>
-    <p class="note" style="margin:0 0 14px">Every person, location and group of extras who appears in or is used for the film needs a signed release. Festivals and distributors ask for them. Generated forms fill in the production, role, dates and pay from the rest of the app. They are templates, not legal advice; have your school or an attorney check them.</p>`;
+    <p class="note" style="margin:0 0 14px">Every person, location and group of extras who appears in or is used for the film needs a signed release. Festivals and distributors ask for them. Generated forms fill in the production, role, dates and pay from the rest of the app. They are templates, not legal advice; have an attorney check them.</p>`;
   const notice = isDoc() ? `<div class="bset"><span class="muted" style="font-size:12.5px">Filming in public or in a busy place? Post a filming notice so people know they may appear in the film.</span><button class="btn" type="button" id="dlNotice">Filming notice (.docx)</button></div>` : '';
   const body = notice + secs.map(sec => {
     const rs = rows.filter(r => r.sec === sec);
@@ -7485,8 +7506,9 @@ function relDoc(r){
   const sig = labels => wtable([5400, 5400], labels.map(([a, b2]) => { const rr = /signature/i.test(a) ? sgRole(a) : null, blank = wp(wr(' ', {sz: 14}), {after: 0});
     const top = l => /signature/i.test(l) ? (sgPic(sgRole(l), 2400) || blank) : /^date/i.test(l) && rr && sgDate(rr) ? wp(wr(sgDate(rr), {sz: 10, b: true}), {after: 0}) : /printed name/i.test(l) && sgName('party') ? wp(wr(sgName('party'), {sz: 10, b: true}), {after: 0}) : blank;
     return {cells: [[top(a), wp(wr(a, {sz: 8, color: '5B6571', caps: true}), {after: 0})], [top(b2), wp(wr(b2, {sz: 8, color: '5B6571', caps: true}), {after: 0})]]}; }));
-  const foot = wp(wr('Template provided as a starting point. It is not legal advice; have your school or an attorney review it before use.', {i: true, sz: 8, color: '8A939D'}), {before: 200});
+  const foot = wp(wr('Template provided as a starting point. It is not legal advice; have an attorney review it before use.', {i: true, sz: 8, color: '8A939D'}), {before: 200});
   const dates = fmtDates(r.dates);
+  if (r.kind === 'intim') return intimRiderXml(r, H, P, sig, foot, co, title);
   if (r.kind === 'composer') return composerDoc(r, H, P, sig, foot, co, title);
   if (r.kind === 'talent') return talentXml(r);
   if (r.kind === 'loc') return locationXml(r);
@@ -7516,9 +7538,177 @@ const HAZ = [
   {id: 'animals', label: 'Animals', kw: /\b(dog|dogs|cat|cats|horse|horses|snake|bird|birds|animal|puppy|kitten)\b/i, tip: 'Owner or handler on set at all times. Quiet, controlled set during animal shots. Ask about allergies on the crew.'},
   {id: 'night', label: 'Night exterior', tip: 'Hi-vis vests for crew near roads. Light all walkways. Buddy system; nobody walks to their car alone. Arrange rides for tired crew.'},
   {id: 'minors', label: 'Minors', kw: /\b(child|children|kid|kids|boy|girl|teen(ager)?|baby|toddler|\(\d{1,2}\))/i, tip: 'Parent or guardian on set at all times. Follow your state’s child labor rules and work-hour limits. Guardian signs the talent release.'},
-  {id: 'intimacy', label: 'Intimacy / sensitive', kw: /\b(kiss(es|ing)?|undress(es)?|naked|nude|intimate|in bed|makes? out)\b/i, tip: 'Closed set. Discuss and agree on the action with the actors in advance and in writing. Intimacy coordinator or agreed choreography; modesty garments.'}
+  {id: 'intimacy', label: 'Intimacy / sensitive', kw: /\b(kiss(es|ing)?|undress(es|ing)?|naked|nude|nudity|topless|intimate|in bed|makes? out|making out|make love|makes love|making love|have sex|has sex|having sex|sex scene)\b/i, tip: 'Closed set. Discuss and agree on the action with the actors in advance and in writing. Intimacy coordinator or agreed choreography; modesty garments.'}
 ];
 const HAZD = Object.fromEntries(HAZ.map(h => [h.id, h]));
+/* ---------- intimate scenes: kissing, intimate touching, simulated sex and nudity ---------- */
+// planned like stunts: agreed in advance and in writing, rehearsed, shot on a closed set; photos from these scenes stay with the people the owner chooses
+const INTIM_LV = [['', 'Choose what the scene calls for'], ['kiss', 'Kissing'], ['touch', 'Intimate touching'], ['sim', 'Simulated sex'], ['partial', 'Partial nudity'], ['full', 'Full nudity']];
+const intimRider = lv => lv === 'sim' || lv === 'partial' || lv === 'full';
+const INTIM_CHK = [
+  ['talk', 'Each actor has talked through the action and agreed to it, in advance and in writing'],
+  ['ic', 'Intimacy coordinator (or agreed choreographer) is booked for the rehearsal and the shoot'],
+  ['reh', 'Choreography rehearsed with the actors before the shoot day, at walking pace first'],
+  ['garm', 'Modesty garments and barriers fitted, with spares; robes ready between takes'],
+  ['sign', 'Closed-set signs up; everyone not on the list steps out before rehearsal'],
+  ['mon', 'Monitors and video village limited to the closed-set list; no playback for others'],
+  ['phone', 'No phones, behind-the-scenes photos or video during the scene'],
+  ['check', 'Check-in with each actor before and after every setup; stop word agreed'],
+  ['foot', 'Footage of the scene goes only to the editor and the people who need it']
+];
+const intimPart = 'sched.green/intimP';
+function intimStore(){ const g = gstore(); if (!g.intim) g.intim = {}; if (!g.intim.scenes) g.intim.scenes = {}; return g.intim; }
+const intimS = num => ((gstore().intim || {}).scenes || {})[num] || {};
+const intimSet = num => { const st = intimStore(); return st.scenes[num] || (st.scenes[num] = {}); };
+const intimPriv = () => { const g = gstore(); return g.intimP || (g.intimP = {}); };
+// may this person see consent details and restricted photos? Always, on their own; in the cloud, the owner and the people the owner marked
+function intimSens(){
+  if (!CLOUD) return true; let l = null; try{ l = clLink(); }catch(e){} if (!l) return true;
+  const r = CL.roles[l.id] || {}; return (r.role || l.role) === 'owner' || !!r.sens;
+}
+function intimScenes(D){
+  let xs = []; try{ xs = sceneHazards(D).filter(x => x.active.includes('intimacy')); }catch(e){}
+  return xs.map(x => ({i: x.i, s: intimS(x.i.num)}));
+}
+const intimClosed = s => s.closed !== false;
+// scenes whose photos and storyboard frames are restricted
+function intimPhotoScenes(){ try{ return new Set(intimScenes(schedData()).filter(x => x.s.photos !== false).map(x => x.i.num)); }catch(e){ return new Set(); } }
+function intimPhotoIds(){
+  const sc = intimPhotoScenes(), out = new Set(); if (!sc.size) return out;
+  const sus = new Set((S.setups || []).filter(su => sc.has(su.scene)).map(su => su.id));
+  ((S.sched || {}).frames || []).forEach(f => { if (sus.has(f.setup)){ out.add(f.id); out.add(f.id + '~base'); } });
+  ((((S.sched || {}).prod || {}).photos) || []).forEach(p => { if (sc.has(p.scene) || sus.has(p.setup)) out.add(p.id); });
+  return out;
+}
+async function idbDelK(k){ try{ const db = await idb(); await new Promise(res => { const tx = db.transaction('files', 'readwrite'); tx.objectStore('files').delete(k); tx.oncomplete = res; tx.onerror = res; }); }catch(e){} }
+// the cast in a scene, with their consent status from Releases
+function intimCast(D, i){ return (i.cast || []).map(k => { const c = D.cast.find(x => x.key === k); return c ? {c, actor: (sched().castInfo[k] || {}).actor || '', st: (gstore().rel['intim|' + k] || {}).status || 'none'} : null; }).filter(Boolean); }
+const INTIM_REL = {none: 'Not started', sent: 'Sent', signed: 'Signed', na: 'Not needed'};
+function intimCard(D, x){
+  const n = x.i.num, s = x.s, sp = 'it:' + n + ':', sd = sched(), crew = sd.crew, cast = intimCast(D, x.i), rider = intimRider(s.lvl);
+  const ics = crew.filter(c => /intimacy/i.test(c.position || ''));
+  const icOpts = [['', ics.length ? 'Choose' : 'None yet'], ...crew.filter(c => c.name || c.position).map(c => [c.id, [c.position, c.name].filter(Boolean).join(': ')])];
+  const chk = s.chk || {};
+  return `<article class="itcard">
+    <div class="sect-h"><h3>${esc(n)} · ${esc(x.i.ie)} ${esc(x.i.set)}</h3><span class="muted">${esc(DN_CATS[x.i.cat])}</span>${intimClosed(s) ? '<span class="itcs">Closed set</span>' : ''}</div>
+    <div class="itgrid">
+      <label class="fld"><span>What the scene calls for</span>${optSel(sp + 'lvl', s.lvl || '', INTIM_LV, 'aria-label="What the scene calls for"')}</label>
+      <label class="fld"><span>Intimacy coordinator</span>${optSel(sp + 'ic', s.ic || '', icOpts, 'aria-label="Intimacy coordinator"')}${ics.length ? '' : '<button type="button" class="itlink" data-itaddic="1">+ Add an intimacy coordinator to the crew list</button>'}</label>
+      <label class="fld"><span>Rehearsal</span>${fin(sp + 'reh', s.reh || '', 'type="date" class="txt" aria-label="Rehearsal date"')}</label>
+    </div>
+    <div class="itcast"><span class="cs-k">Cast</span>${cast.length ? cast.map(a => `<span class="itactor"><b>${a.c.id}. ${esc(a.c.name)}</b>${a.actor ? ' · ' + esc(a.actor) : ''}${rider ? ` <span class="pill ${a.st === 'signed' ? 'ok' : 'none'}">Rider: ${INTIM_REL[a.st] || a.st}</span>` : ''}</span>`).join('') : '<span class="muted">No cast tagged in this scene.</span>'}
+      ${rider ? '<small class="muted">Track the riders on Releases. The rider form fills in from the consent details below.</small>' : ''}</div>
+    <div class="itrow"><label class="tog"><input type="checkbox" data-itchk="${esc(n)}|closed" ${intimClosed(s) ? 'checked' : ''}> Closed set</label>
+      <label class="tog"><input type="checkbox" data-itchk="${esc(n)}|photos" ${s.photos !== false ? 'checked' : ''}> Restrict photos and storyboard frames from this scene</label></div>
+    ${intimClosed(s) ? `<div class="itcrew"><span class="cs-k">Essential crew on the closed set</span>${crew.length ? crew.map(c => `<label class="itcb"><input type="checkbox" data-itcrew="${esc(n)}|${esc(c.id)}" ${(s.crew || []).includes(c.id) ? 'checked' : ''}> ${esc(c.position || 'Crew')}${c.name ? ': ' + esc(c.name) : ''}</label>`).join('') : '<span class="muted">Add your crew on the Crew tab, then pick who stays.</span>'}</div>` : ''}
+    <details class="itchk"${Object.keys(chk).length && Object.keys(chk).length < INTIM_CHK.length ? ' open' : ''}><summary>Before and on the day <span class="muted">${INTIM_CHK.filter(c => chk[c[0]]).length} of ${INTIM_CHK.length} done</span></summary>
+      ${INTIM_CHK.map(([k, l]) => `<label class="itcb"><input type="checkbox" data-itdo="${esc(n)}|${k}" ${chk[k] ? 'checked' : ''}> ${esc(l)}</label>`).join('')}</details>
+    <label class="fld"><span>Notes for the AD and the call sheet</span>${fin(sp + 'notes', s.notes, 'class="txt" placeholder="Timing, where robes are, who the actors check in with"')}</label>
+    ${intimConsentBlock(D, x, cast)}
+  </article>`;
+}
+function intimConsentBlock(D, x, cast){
+  if (!cast.length) return '';
+  if (!intimSens()) return '<p class="note itpriv">Consent details for this scene are kept private: only the owner and the people they mark in Cloud sync can see them.</p>';
+  const P = intimPriv();
+  return `<details class="itpriv"><summary>Consent details <span class="muted">private: only you${CLOUD ? ' and the people you mark in Cloud sync' : ''} can see these</span></summary>
+    ${cast.map(a => { const p = P[a.c.key] || {}, sp = 'ip:' + a.c.key + ':';
+      return `<div class="itconsent"><div class="sect-h"><h4>${a.c.id}. ${esc(a.c.name)}${a.actor ? ' · ' + esc(a.actor) : ''}</h4><button class="btn" type="button" data-itrider="${esc(a.c.key)}" style="margin-left:auto">Consent rider (.docx)</button></div>
+        <div class="itgrid">
+          <label class="fld itwide"><span>The action, as agreed</span>${fta(sp + 'acts', p.acts || '', 'class="txt" rows="2" placeholder="Describe exactly what happens, in plain words the actor has read and agreed to"')}</label>
+          <label class="fld"><span>Nudity and body areas</span>${fin(sp + 'nude', p.nude, 'class="txt" placeholder="None, or exactly what is seen"')}</label>
+          <label class="fld"><span>Modesty garments and barriers</span>${fin(sp + 'garm', p.garm, 'class="txt" placeholder="e.g. flesh-tone garment, barrier pad"')}</label>
+          <label class="fld"><span>Body double</span>${optSel(sp + 'dbl', p.dbl || '', [['', '—'], ['no', 'Not used'], ['ok', 'May be used, as agreed'], ['only', 'Used for the nudity']], 'aria-label="Body double"')}</label>
+          <label class="fld itwide"><span>Conditions and anything else agreed</span>${fin(sp + 'cond', p.cond, 'class="txt" placeholder="e.g. no stills, approve the cut of this scene, partner choice"')}</label>
+        </div></div>`; }).join('')}
+  </details>`;
+}
+function intimSection(D){
+  const xs = intimScenes(D); if (!xs.length) return '';
+  const l = CLOUD ? (() => { try{ return clLink(); }catch(e){ return null; } })() : null;
+  const cloudNote = l ? (CL.sensSql === false ? '<p class="note itwarn">Photo restrictions need the Intimate scenes setup script in Supabase. Until it runs, photos from these scenes sync like any other.</p>'
+    : `<p class="note" style="margin:0">Restricted photos and frames go only to the owner and the people marked <b>Restricted material</b> in Cloud sync. Everyone else sees a blank.</p>`) : '';
+  return `<section class="bsec intim"><div class="sect-h"><h3>Intimate scenes</h3><span class="muted">${xs.length} scene${xs.length === 1 ? '' : 's'} with kissing, intimate touching, simulated sex or nudity</span></div>
+    <p class="note" style="margin:0 0 10px">Plan these like stunts: the action is agreed with each actor in advance and in writing, choreographed and rehearsed, and shot on a closed set. Actors can change their mind before the scene is shot.</p>
+    ${cloudNote}
+    <div class="itcards">${xs.map(x => intimCard(D, x)).join('')}</div>
+    <details class="itres"><summary>Good practice and resources</summary>
+      <ul>
+        <li>Tell actors about nudity or simulated sex before they audition: in the role description and the casting notice. Never ask for nudity at an audition, and don’t use an intimate scene as an audition side.</li>
+        <li>Get each actor’s consent in writing before they’re hired, describing exactly what the scene involves. They can withdraw consent before the scene is shot; talk about a body double then, never on the spot.</li>
+        <li>Hire an intimacy coordinator for any nudity or simulated sex, and whenever an actor asks for one.</li>
+        <li>Keep the set closed: only the people the scene needs, monitors limited to them, no phones or behind-the-scenes photos.</li>
+        <li>Never film or photograph anything that wasn’t agreed, and keep the footage with the people who need it.</li>
+      </ul>
+      <div class="itlinks">
+        <a href="https://sagaftra.org/intimacycoordinators" target="_blank" rel="noopener">SAG-AFTRA: intimacy coordinators</a>
+        <a href="https://www.sagaftra.org/files/sa_documents/SA_IntimacyCoord.pdf" target="_blank" rel="noopener">Standards and protocols for the use of intimacy coordinators (PDF)</a>
+        <a href="https://sagaftra.org/contracts-industry-resources/report-discrimination/intimacy-coordinator-resources/view-registry" target="_blank" rel="noopener">SAG-AFTRA intimacy coordinator registry</a>
+        <a href="https://www.idcprofessionals.com" target="_blank" rel="noopener">Intimacy Directors &amp; Coordinators (IDC)</a>
+      </div>
+    </details></section>`;
+}
+// a lock on the stripboard and call sheet for closed-set scenes
+const intimMark = num => { const s = intimS(num); return s.lvl && intimClosed(s) ? '<i class="pmark itm" title="Closed set: intimate scene">CS</i>' : ''; };
+function intimCallRows(D, day){
+  return intimScenes(D).filter(x => day.scenes.includes(x.i.num) && intimClosed(x.s)).map(x => {
+    const crew = sched().crew, ic = crew.find(c => c.id === x.s.ic);
+    return {num: x.i.num, set: x.i.set, crew: (x.s.crew || []).map(id => crew.find(c => c.id === id)).filter(Boolean).map(c => [c.position, c.name].filter(Boolean).join(': ')), ic: ic ? [ic.position, ic.name].filter(Boolean).join(': ') : '', notes: x.s.notes || ''};
+  });
+}
+function intimCallHTML(D, day){
+  const rs = intimCallRows(D, day); if (!rs.length) return '';
+  return `<div class="cs-cs"><h4>Closed set</h4>${rs.map(r => `<p><b>Sc ${esc(r.num)}</b> · ${esc(r.set)}. Essential crew only: ${r.crew.length ? esc(r.crew.join(', ')) : 'list to be set on Greenlight › Safety'}.${r.ic ? ' Intimacy coordinator: ' + esc(r.ic) + '.' : ''} No phones or photos.${r.notes ? ' ' + esc(r.notes) : ''}</p>`).join('')}</div>`;
+}
+function intimCallDocx(D, day, H){
+  const rs = intimCallRows(D, day); if (!rs.length) return '';
+  return H('Closed set') + rs.map(r => wp([wr(`Sc ${r.num} · ${r.set}.  `, {b: true, sz: 9.5}), wr(`Essential crew only: ${r.crew.length ? r.crew.join(', ') : 'list to be set'}.${r.ic ? ' Intimacy coordinator: ' + r.ic + '.' : ''} No phones or photos.${r.notes ? ' ' + r.notes : ''}`, {sz: 9.5})], {after: 60, shade: 'F1F3F5'})).join('') + wp('', {after: 100});
+}
+// the role carries a notice in Casting when its scenes need consent
+function intimRoleNote(D, key){
+  const xs = intimScenes(D).filter(x => x.s.lvl && (x.i.cast || []).includes(key)); if (!xs.length) return null;
+  const lv = [...new Set(xs.map(x => (INTIM_LV.find(l => l[0] === x.s.lvl) || [, ''])[1].toLowerCase()))];
+  const and = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+  return {scenes: xs.map(x => x.i.num), text: `This role includes ${and(lv)} (Sc ${xs.map(x => x.i.num).join(', ')}). Say so in the role description and casting notice, before anyone auditions. Never ask for nudity at an audition, and don’t use these scenes as audition sides.`};
+}
+// the consent rider, filled from the private consent details when this person can see them
+function intimRiderXml(r, H, P, sig, foot, co, title){
+  const D = schedData(), key = r.castKey, p = intimSens() ? (intimPriv()[key] || {}) : {}, c = D.cast.find(x => x.key === key) || {};
+  const xs = intimScenes(D).filter(x => (x.i.cast || []).includes(key));
+  const lv = l => (INTIM_LV.find(x => x[0] === l) || [, '______'])[1];
+  const line = (lab, v) => wp([wr(lab + '  ', {b: true, sz: 10}), wr(v || '______________________________________________', {sz: 10.5})], {after: 100});
+  const dbl = {no: 'A body double will not be used.', ok: 'A body double may be used, as agreed with the Performer.', only: 'A body double will be used for the nudity.'}[p.dbl] || 'Body double: ☐ will not be used  ☐ may be used as agreed  ☐ will be used for the nudity.';
+  return H('NUDITY AND SIMULATED SEX RIDER') +
+    P(`This rider is part of the agreement between ${co} (“Producer”) and the performer named below (“Performer”) for the role of ${c.name || r.character || '______________'} in the motion picture currently titled “${title}” (the “Picture”). It describes the nudity and simulated sex the Performer has agreed to, and how those scenes will be handled.`) +
+    line('Performer:', r.who) + line('Role:', c.name ? `${c.id}. ${c.name}` : '') +
+    wp(wr('SCENES', {b: true, sz: 10}), {before: 120, after: 60}) +
+    wtable([1200, 4600, 3000], (xs.length ? xs : [{i: {num: '', set: ''}, s: {}}]).map(x => ({cells: [x.i.num ? 'Sc ' + x.i.num : '', x.i.set || '', x.s.lvl ? lv(x.s.lvl) : '']})), {head: ['Scene', 'Set', 'What it calls for']}) +
+    wp('', {after: 80}) +
+    line('The action, as agreed:', p.acts) + line('Nudity and body areas:', p.nude) + line('Modesty garments and barriers:', p.garm) + P(dbl) + line('Other conditions:', p.cond) +
+    P('The scenes will be shot on a closed set, with only the people needed present and monitors limited to them. No still photographs, behind-the-scenes photos or video of these scenes will be taken except as agreed here. Footage will be seen only by those who need it to make the Picture.') +
+    P('Nothing beyond what is described here will be asked of the Performer on the day. Any change needs the Performer’s written consent, agreed in advance and not on set. The Performer may withdraw consent at any time before a scene is shot. Once a scene has been shot as agreed, the Producer may use that footage in the Picture.') +
+    P('No nude images or footage of the Performer will be used in advertising, publicity or trailers without the Performer’s separate written consent.') +
+    sig([['Performer signature', 'Date'], ['Printed name', 'Producer signature'], ['Producer printed name and title', 'Date']]) +
+    wp(wr('Template provided as a starting point. It is not legal advice; have an attorney review it before use. Union productions must follow the union’s own nudity and simulated sex rules.', {i: true, sz: 8, color: '8A939D'}), {before: 200});
+}
+async function intimRiderDocx(key){
+  const D = schedData(), c = D.cast.find(x => x.key === key); if (!c) return;
+  const r = relRows(D).find(x => x.key === 'intim|' + key) || {key: 'intim|' + key, kind: 'intim', castKey: key, who: (sched().castInfo[key] || {}).actor || '', character: c.name, type: 'Nudity and simulated sex rider'};
+  await saveFile(`${baseName()} - consent rider - ${c.name}.docx`, await buildDocx(relDoc(r)));
+}
+function intimClick(t){
+  const d = t.dataset;
+  if (d.itaddic){ snapshot(); sched().crew.push({id: uid(), dept: 'Safety & Medical', position: 'Intimacy Coordinator', name: '', phone: '', email: ''}); changed(); toast('Added an Intimacy Coordinator to the crew list. Add their name on the Crew tab.', 5000); return true; }
+  if (d.itrider){ intimRiderDocx(d.itrider).catch(err => toast('Could not build the rider: ' + err.message)); return true; }
+  return false;
+}
+function intimChange(e){
+  const d = e.target.dataset || {}, on = e.target.checked;
+  if (d.itchk){ const [n, k] = d.itchk.split('|'); snapshot(); intimSet(n)[k] = on; changed(); return true; }
+  if (d.itcrew){ const [n, id] = d.itcrew.split('|'), s = intimSet(n); snapshot(); s.crew = (s.crew || []).filter(x => x !== id); if (on) s.crew.push(id); changed(); return true; }
+  if (d.itdo){ const [n, k] = d.itdo.split('|'), s = intimSet(n); snapshot(); s.chk = s.chk || {}; if (on) s.chk[k] = true; else delete s.chk[k]; changed(); return true; }
+  return false;
+}
 function sceneHazards(D){
   const g = gstore();
   return D.infos.map(i => {
@@ -7545,7 +7735,7 @@ function renderSafety(D, showAll){
     ${x.active.map(id => `<label class="fld hzrow"><span>${esc(HAZD[id].label)}${x.auto.has(id) ? ` <em class="muted">· found: ${esc(x.auto.get(id))}</em>` : ''}</span>${fta('gsp:' + x.i.num + ':' + id, (x.s.prec || {})[id] || '', 'class="txt" rows="2" placeholder="' + esc(HAZD[id].tip) + '"')}</label>`).join('')}
     ${x.active.length ? `<label class="fld" style="max-width:420px"><span>Safety lead for this scene</span>${fin('gs:' + x.i.num + ':lead', x.s.lead, 'class="txt" placeholder="Name or position, e.g. 1st AD"')}</label>` : ''}
   </article>`;
-  return `<div class="bset" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+  return `${intimSection(D)}<div class="bset" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
       <label style="display:grid;gap:4px">Nearest hospital / ER${fin('g:hospital', info.hospital ?? (sd.days.find(d => d.hospital) || {}).hospital ?? (autoER(null, D) || undefined), 'class="txt" placeholder="Name, address, phone"')}</label>
       <label style="display:grid;gap:4px">Emergency contact${fin('g:emergency', info.emergency, 'class="txt" placeholder="Producer or safety officer phone"')}</label>
       <label style="display:grid;gap:4px">Set medic / first aid${fin('g:medic', info.medic ?? medics, 'class="txt" placeholder="Name, where the kit is"')}</label>
@@ -8574,6 +8764,8 @@ $('#sched').addEventListener('change', e => {
   if (e.target.id === 'gpkgWk'){ snapshot(); gearStore().wk = +e.target.value; changed(); return; }
   if (S.stab === 'gear' && gearChange(e)) return;
 });
+$('#green').addEventListener('click', e => { const t = e.target.closest('button'); if (t && S.gtab === 'safety') intimClick(t); });
+$('#green').addEventListener('change', e => { if (S.gtab === 'safety') intimChange(e); });
 $('#green').addEventListener('click', e => {
   const t = e.target.closest('button'); if (!t || S.gtab !== 'tl') return;
   const tl = tlStore();
@@ -9310,6 +9502,11 @@ function readyItems(){
     if (!(inf.contact || '').trim()) add('Locations', 'nice', 'lcon:' + l.key, `${l.name} has no contact person`, {stab: 'locs'});
   });
   sd.days.forEach((d, k) => { if (d.scenes.length && !(d.hospital || '').trim() && !autoER(d, D)) add('Safety', 'must', 'er:' + d.id, `Day ${k + 1} call sheet has no nearest hospital`, {stab: 'calls', day: d.id}); });
+  intimScenes(D).forEach(x => { const n = x.i.num, s = x.s;
+    if (!s.lvl) add('Safety', 'should', 'itl:' + n, `Scene ${n}: say what the intimate scene calls for`, {gtab: 'safety'});
+    if (intimRider(s.lvl) && !s.ic) add('Safety', 'should', 'itic:' + n, `Scene ${n}: no intimacy coordinator`, {gtab: 'safety'});
+    if (s.lvl && !s.reh) add('Safety', 'should', 'itr:' + n, `Scene ${n}: set a rehearsal for the intimate scene`, {gtab: 'safety'});
+    if (s.lvl && intimClosed(s) && !(s.crew || []).length) add('Safety', 'nice', 'itc:' + n, `Scene ${n}: pick the essential crew for the closed set`, {gtab: 'safety'}); });
   sceneHazards(D).filter(x => x.active.length && !x.s.ok).forEach(x => add('Safety', 'must', 'hz:' + x.i.num, `Scene ${x.i.num}: review the ${x.active.map(id => (HAZD[id] || {}).label || id).join(', ').toLowerCase()} plan`, {gtab: 'safety'}));
   // releases
   relRows(D).forEach(r => { if (r.status === 'none' || r.status === 'sent') add('Releases', r.sec === 'Crew' ? 'should' : 'must', 'rel:' + r.key, `${r.type} for ${r.who || r.character || r.role || 'an unnamed entry'} is ${r.status === 'sent' ? 'out for signature' : 'not sent yet'}`, {gtab: 'rel'}); });
@@ -9434,6 +9631,7 @@ function renderCasting(D){
       <div class="crole-h"><span class="cdot">${r.id}</span><h3>${esc(r.name)}</h3><span class="muted">${r.present.length} scene${r.present.length === 1 ? '' : 's'} · ${r.lines} line${r.lines === 1 ? '' : 's'} · ${fmt8(r.e8)} pg</span>
         <span class="pill ${cast || typed ? 'ok' : 'none'}" style="margin-left:auto">${cast ? 'Cast: ' + esc(cast.name || 'unnamed') : typed ? 'Cast: ' + esc(typed) : 'Not cast'}</span></div>
       ${conf.length ? `<p class="cconf">${conf.map(x => `${esc(x.p.name)} is unavailable on Day ${x.k + 1} (${esc(shortDate(x.day.date))}), when ${esc(r.name)} works`).join('<br>')}. Move those scenes on the Stripboard or change the date.</p>` : ''}
+      ${(() => { const it = intimRoleNote(D, r.key); return it ? `<p class="itnote">${esc(it.text)}${sides.some(n => it.scenes.includes(n)) ? ' <b>One of the audition sides is an intimate scene: pick another.</b>' : ''}</p>` : ''; })()}
       <div class="gl-two"><label class="fld"><span>Role description</span>${fin('crole:' + r.key + ':desc', info.desc, 'class="txt" placeholder="Age range, look, qualities, special skills"')}</label>
         <label class="fld"><span>Audition notes for this role</span>${fin('crole:' + r.key + ':notes', info.notes, 'class="txt" placeholder="What the reader should know, where the audition is"')}</label></div>
       <div class="asides"><span class="cs-k">Audition sides</span>${r.present.map(n => `<button type="button" class="scchip${sides.includes(n) ? ' on' : ''}" data-asc="${esc(r.key)}|${esc(n)}" aria-pressed="${sides.includes(n)}" title="Include scene ${esc(n)}">${esc(n)}</button>`).join('')}
@@ -9477,6 +9675,7 @@ async function exportCastingDocx(){
     const info = C.roles[r.key] || {}, ppl = C.people.filter(p => p.role === r.key), cast = castOf(r.key);
     body += wp([wr(`${r.id}. ${r.name}`, {b: true, sz: 13, font: COURIER}), wr(`   ${r.present.length} scenes · ${r.lines} lines${cast ? ' · CAST: ' + (cast.name || '') : (sd.castInfo[r.key] || {}).actor ? ' · CAST: ' + sd.castInfo[r.key].actor : ''}`, {sz: 9.5, color: '5B6571'})], {before: 200, after: 40, keep: true});
     if (info.desc) body += wp(wr(info.desc, {i: true}), {after: 40});
+    { const it = intimRoleNote(D, r.key); if (it) body += wp(wr(it.text, {sz: 9, b: true}), {after: 60}); }
     body += wp(wr('Audition sides: scene ' + roleSides(r.key, r).join(', '), {sz: 9, color: '5B6571'}), {after: 80});
     if (ppl.length) body += wtable([2000, 1200, 1300, 900, 2800, 2200, 1200], ppl.map(p => ({fill: p.status === 'cast' ? 'E0F0E6' : p.status === 'cb' ? 'E3EEFF' : null, cells: [p.name || 'Unnamed', CAST_STATUS.find(s => s[0] === (p.status || 'aud'))[1], [audFmt(p), p.fmt === 'tape' && p.tape ? p.tape : ''].filter(Boolean), p.rate ? '★'.repeat(+p.rate) : '', p.notes || '', p.cbnotes || '', (p.unavail || []).slice().sort().map(shortDate).join(', ')], runs: [{b: true}]})), {head: ['Actor', 'Status', 'Audition', 'Rating', 'Audition notes', 'Callback notes', 'Unavailable']});
     else body += wp(wr('No auditionees yet.', {i: true, color: '5B6571'}), {after: 80});
@@ -10216,7 +10415,7 @@ function renderMkt(){
 }
 
 /* screenings */
-const SCR_TYPES = [['crew', 'Cast and crew screening'], ['premiere', 'Premiere'], ['test', 'Test screening'], ['fest', 'Festival screening'], ['class', 'Class or school screening'], ['other', 'Other']];
+const SCR_TYPES = [['crew', 'Cast and crew screening'], ['premiere', 'Premiere'], ['test', 'Test screening'], ['fest', 'Festival screening'], ['class', 'Educational screening'], ['other', 'Other']];
 const SCR_CHECK = [['venue', 'Venue booked and confirmed'], ['copy', 'Screening copy made and tested'], ['tech', 'Tech check in the room (picture, sound, subtitles)'], ['invite', 'Invitations sent'], ['qa', 'Q&A moderator and questions'], ['photo', 'Photographer or someone filming'], ['signage', 'Poster, signs and laurels printed'], ['access', 'Accessibility: captions, seating, entrance'], ['ins', 'Venue insurance or permit (if required)'], ['feedback', 'Feedback cards or survey (test screenings)']];
 const RSVP = [['inv', 'Invited'], ['yes', 'Yes'], ['maybe', 'Maybe'], ['no', 'No']];
 function renderScr(){
@@ -10230,7 +10429,7 @@ function renderScr(){
       <div class="fest-h">${fin('rsc:' + s.id + ':name', s.name, 'class="txt fname" placeholder="Screening name" aria-label="Screening name"')}${optSel('rsc:' + s.id + ':type', s.type || 'crew', SCR_TYPES, 'aria-label="Type"')}<button type="button" class="x" data-scdel="${esc(s.id)}" aria-label="Remove screening">×</button></div>
       <div class="fest-flags">${d != null ? `<span class="pill ${d < 0 ? 'none' : d <= 7 ? 'warn' : 'none'}">${d < 0 ? 'Held' : d === 0 ? 'Today' : 'In ' + d + ' days'}</span>` : ''}<span class="pill ${cap && heads > cap ? 'warn late' : 'ok'}">${heads} coming${cap ? ' of ' + cap + ' seats' : ''}</span><span class="pill ${done === SCR_CHECK.length ? 'ok' : 'none'}">${done}/${SCR_CHECK.length} checklist</span></div>
       <div class="scr-g">
-        <div class="fest-g">${ff('date', 'Date and time', 'type="datetime-local"')}${ff('venue', 'Venue', 'placeholder="Theater, school, gallery"')}
+        <div class="fest-g">${ff('date', 'Date and time', 'type="datetime-local"')}${ff('venue', 'Venue', 'placeholder="Theater, gallery, community space"')}
           ${ff('addr', 'Address', '')}${ff('cap', 'Seats', 'type="number" min="0"')}
           ${ff('tech', 'Tech check', 'type="datetime-local"')}${ff('format', 'Screening format', 'placeholder="DCP, ProRes, Blu-ray, MP4"')}
           ${ff('tickets', 'Tickets or RSVP link', '')}${ff('qa', 'Q&A panel', 'placeholder="Director, lead actors, moderator"')}</div>
@@ -10955,7 +11154,7 @@ function renderTS(D){
       ${crew.length ? `<div class="hscroll"><table class="crew dpr ts">${head}<tbody>${crew.map(row).join('')}</tbody></table></div>` : '<p class="note" style="margin:0">Name your crew on People &amp; places → Crew to keep their hours.</p>'}</section>
     <section class="bsec"><div class="sect-h"><h3>Whole shoot</h3><span class="muted">Totals across every day with times</span></div>
       ${tot.size ? `<div class="hscroll"><table class="crew dpr"><thead><tr><th>Name</th><th class="r">Days</th><th class="r">Hours</th><th class="r">Overtime</th><th>Shortest rest</th></tr></thead><tbody>${[...tot.values()].sort((a, b) => b.h - a.h).map(o => `<tr><td><b>${esc(o.x.name)}</b> <span class="muted">· ${esc(o.x.role || '')}</span></td><td class="r">${o.days}</td><td class="r">${dur(o.h)}</td><td class="r">${o.ot ? `<b class="warnt">${dur(o.ot)}</b>` : '—'}</td><td>${o.rest == null ? '—' : `<span class="pill ${o.rest < p.ts.rest * 60 ? 'warn late' : 'ok'}">${dur(Math.round(o.rest))}</span>`}</td></tr>`).join('')}</tbody></table></div>` : '<p class="note" style="margin:0">No hours logged yet.</p>'}</section>
-    <p class="note">Worked hours subtract the meal. Overtime and rest limits differ by union, state and school policy; set yours above. This sheet records time; it is not payroll.</p>`;
+    <p class="note">Worked hours subtract the meal. Overtime and rest limits differ by union, state and production policy; set yours above. This sheet records time; it is not payroll.</p>`;
 }
 function tsFill(day){
   const D = schedData(), P = prodDay(day), T = P.times, {cast, crew} = tsPeople(D, day); let n = 0;
@@ -13472,7 +13671,7 @@ function renderPreview(){
     ${P.map(x => `<tr><td>${optSel(`dx:preview:${x.id}:part`, x.part || '', pOpts, 'aria-label="Participant"')}</td><td>${fin(`dx:preview:${x.id}:date`, x.date, 'type="date" class="txt" style="width:145px" aria-label="Date"')}</td><td>${fin(`dx:preview:${x.id}:cut`, x.cut, 'class="txt" placeholder="Fine cut v2" style="width:120px" aria-label="Cut shown"')}</td><td style="min-width:200px">${fta(`dx:preview:${x.id}:resp`, x.resp, 'class="txt pxta" rows="1" aria-label="Their response"')}</td><td style="min-width:200px">${fta(`dx:preview:${x.id}:ask`, x.ask, 'class="txt pxta" rows="1" aria-label="Changes asked for"')}</td><td style="min-width:200px">${fta(`dx:preview:${x.id}:out`, x.out, 'class="txt pxta" rows="1" aria-label="What you did"')}</td><td><button type="button" class="x" data-dxdel="preview|${esc(x.id)}" aria-label="Remove">×</button></td></tr>`).join('')}
     </tbody></table></div>` : ''}`;
 }
-const IM_KIND = [['org', 'Organization or partner'], ['screen', 'Community screening'], ['edu', 'School or educator'], ['policy', 'Policy or advocacy'], ['press', 'Press or podcast'], ['other', 'Other']];
+const IM_KIND = [['org', 'Organization or partner'], ['screen', 'Community screening'], ['edu', 'Educator or education group'], ['policy', 'Policy or advocacy'], ['press', 'Press or podcast'], ['other', 'Other']];
 const IM_ST = [['idea', 'Idea'], ['ask', 'Reached out'], ['yes', 'Agreed'], ['done', 'Done'], ['no', 'Not now']];
 function renderImpact(){
   const I = dxStore('impact'); if (!Array.isArray(I.items)) I.items = [];
@@ -14668,6 +14867,7 @@ document.addEventListener('keydown', e => {
 const EDITION = 'pro';
 /* version number and what's new; newest first */
 const APP_LOG = EDITION === 'pro' ? [
+  ['6.27', 'November 22, 2026', ['New: intimate scenes. Flag a scene for kissing, intimate touching, simulated sex or nudity on Greenlight › Safety (the app spots most of them from the script). Each one gets a plan: what the scene calls for, the intimacy coordinator, a rehearsal date, a closed set with the essential crew you pick, and a before-and-on-the-day checklist', 'Scenes with simulated sex or nudity add a consent rider for each actor to Releases. The rider form fills in from private consent details: the action as agreed, nudity, modesty garments, body double and conditions', 'Closed-set scenes are marked CS on the stripboard and get a Closed set block on the call sheet with the essential crew and coordinator. Casting flags roles that need disclosure before auditions, and warns if an intimate scene is an audition side', 'Cloud sync: photos and storyboard frames from these scenes, and the consent details, reach only the owner and the crew members you mark Restricted material. Run the new Intimate scenes setup script in Supabase once', 'Intimacy coordinator is now a crew position preset, and Good practice and resources links to SAG-AFTRA’s standards and coordinator registry']],
   ['6.26', 'November 22, 2026', ['New: gear kits. On People & places › Gear, switch the list between By type and By kit. Make a kit for each package you rent or check out (camera, sound, lighting, G&E), with where it’s from, a kit or case number, its own pickup and return dates and a cost', 'Tick Out or Back on a kit to tick everything in it, and see how many pieces are out and back', 'New: accessories. Click + Accessory under any item to list the cables, mounts, batteries, drives and other parts that go with it. Each has its own packed and returned ticks, and anything that didn’t come back is flagged', 'The Gear tab suggests the usual accessories from the item’s name, such as an HDMI cable, mount and recording drive for a monitor, or the control panel, power cable, reflector and barn doors for a light', 'Save a kit to My saved kits and add it to any other project on this device. Save your kits to a file to move them to another computer', 'The checkout sheet and spreadsheet list accessories under their item, grouped by kit or by type. A kit’s cost goes into the budget, and merging from another phone brings over gear ticks and accessories']],
   ['6.25', 'November 16, 2026', ['New: crew tabs for cloud sync. Add someone as Crew and pick their position (2nd AC, sound mixer, script supervisor, editor and more): each tab is set to Edit, View or Hide to match the job, and you can change any of it', 'Hidden tabs, sections and whole phases disappear for that person, and their project opens on their own tabs. The Producer phase and the money tabs (Budget, Costs, Financing, Contracts, Bid, Usage) start hidden for all crew', 'On a View tab they can look, print and export, but not change anything', 'The cloud checks it too: crew changes only ever reach the tabs they can edit, and money, the production calendar and reviews aren’t sent to anyone they’re hidden from. Run the new Crew tabs setup script in Supabase once', 'Projects now sync each tab’s data on its own, so two people on different tabs never hold each other up']],
   ['6.24', 'November 16, 2026', ['New: Project › New project…: pick what you are making (short film, feature, documentary, TV pilot, vertical series, commercial or animation, with the technique for animation), give it a title, and start a blank project already set to that type', 'Start without a script and write it in Script › Drafts, or pick your screenplay PDF in the same step; the project you had open stays saved', 'The sample banner now offers Start a new project']],
@@ -14683,7 +14883,7 @@ const APP_LOG = EDITION === 'pro' ? [
   ['6.14', 'November 12, 2026', ['Cloud sync: what you type in the cloud menu (your email, the sign-in code, crew invites and the access list) is no longer erased when the menu refreshes after a sync', 'Deleting a draft, draft note or table read now sticks. Before, the next sync brought it back from the cloud; now the deletion syncs to everyone working on the project']],
   ['6.13', 'November 12, 2026', ['Lining: a setup in a night scene can be marked Day-for-night. The schedule and Dashboard stop warning that a night exterior is planned while it is still light, and check it against daylight instead. DFN prints with the shot, like MOS']],
   ['6.12', 'November 10, 2026', ['The Script tabs (Drafts, Draft notes, Dialogue and Pitch) now belong to each project. Opening another project, from the cloud or a file, shows only that project’s drafts, notes and pitch', 'Drafts written before this version were kept once for every project. They show on the Script tabs as Drafts from before, to bring into the project they belong to, or hide']],
-  ['6.11', 'November 10, 2026', ['Projects stay separate. Opening a project from the cloud now starts clean and takes everything from the cloud, so casting, crew, characters, continuity and storyboards from the project open before no longer carry over', 'Load project file asks first when the open project has work in it or is synced to the cloud: open the file’s own script first, open it as a separate project, or replace the open one. Before, it always replaced the open project, in the cloud too', 'Two projects on the same script PDF (two students on one script, say) now each keep their own copy on this device, so one never overwrites the other']],
+  ['6.11', 'November 10, 2026', ['Projects stay separate. Opening a project from the cloud now starts clean and takes everything from the cloud, so casting, crew, characters, continuity and storyboards from the project open before no longer carry over', 'Load project file asks first when the open project has work in it or is synced to the cloud: open the file’s own script first, open it as a separate project, or replace the open one. Before, it always replaced the open project, in the cloud too', 'Two projects on the same script PDF (two people on one script, say) now each keep their own copy on this device, so one never overwrites the other']],
   ['6.10', 'November 9, 2026', ['Blocking: the Light tool opens a menu of fixtures: fresnel, open face, PAR, HMI, ellipsoidal (Leko), LED point source, LED panel, LED tube, softbox, cyc light, china ball, space light, practical, and sun or window. Each has its own icon and starts with its usual watts and beam, and a Beam slider sets the spread', 'Blocking: a Grip tool (G) places flags, cutters, solids, floppies, single and double nets, silks, diffusion frames, overheads, bounce boards, negative fill, reflectors, C-stands, combo stands, apple boxes and sandbags. Turn and size each one on the plan; they go in the exported diagrams and the Word list']],
   ['6.9', 'November 9, 2026', ['Blocking: lighting and power plots. A Power tool places generators, tie-ins, house panels, wall outlets, distro and spider boxes, lunchboxes, splitters, dimmers, batteries and cable crossovers, and a Cable tool runs stingers, Bates, feeder, Socapex and DMX between them, snapping to lights and power', 'Blocking: give each light its watts and what it is plugged into, and each power piece its rating and what feeds it. A Power load table adds up the watts and amps on every source and distro and flags anything over 80% of its rating', 'Blocking: Show picks everything, the lighting and power plot alone, or the blocking without power, on screen and in the exported diagrams. Copying another scene’s plan brings its power along']],
   ['6.8', 'November 8, 2026', ['Storyboard › Animatic: title and text overlays fade in and out in Safari (on a Mac, iPhone and iPad), in the preview and in the exported video. Safari had been drawing them at full strength throughout']],
@@ -14738,7 +14938,7 @@ const APP_LOG = EDITION === 'pro' ? [
   ['8.14', 'November 12, 2026', ['Cloud sync: what you type in the cloud menu (your email, the sign-in code, crew invites and the access list) is no longer erased when the menu refreshes after a sync', 'Deleting a draft, draft note or table read now sticks. Before, the next sync brought it back from the cloud; now the deletion syncs to everyone working on the project']],
   ['8.13', 'November 12, 2026', ['Lining: a setup in a night scene can be marked Day-for-night. The schedule and Dashboard stop warning that a night exterior is planned while it is still light, and check it against daylight instead. DFN prints with the shot, like MOS']],
   ['8.12', 'November 10, 2026', ['The Script tabs (Drafts, Draft notes, Dialogue and Pitch) now belong to each project. Opening another project, from the cloud or a file, shows only that project’s drafts, notes and pitch', 'Drafts written before this version were kept once for every project. They show on the Script tabs as Drafts from before, to bring into the project they belong to, or hide']],
-  ['8.11', 'November 10, 2026', ['Projects stay separate. Opening a project from the cloud now starts clean and takes everything from the cloud, so casting, crew, characters, continuity and storyboards from the project open before no longer carry over', 'Load project file asks first when the open project has work in it or is synced to the cloud: open the file’s own script first, open it as a separate project, or replace the open one. Before, it always replaced the open project, in the cloud too', 'Two projects on the same script PDF (two students on one script, say) now each keep their own copy on this device, so one never overwrites the other']],
+  ['8.11', 'November 10, 2026', ['Projects stay separate. Opening a project from the cloud now starts clean and takes everything from the cloud, so casting, crew, characters, continuity and storyboards from the project open before no longer carry over', 'Load project file asks first when the open project has work in it or is synced to the cloud: open the file’s own script first, open it as a separate project, or replace the open one. Before, it always replaced the open project, in the cloud too', 'Two projects on the same script PDF (two people on one script, say) now each keep their own copy on this device, so one never overwrites the other']],
   ['8.10', 'November 9, 2026', ['Blocking: the Light tool opens a menu of fixtures: fresnel, open face, PAR, HMI, ellipsoidal (Leko), LED point source, LED panel, LED tube, softbox, cyc light, china ball, space light, practical, and sun or window. Each has its own icon and starts with its usual watts and beam, and a Beam slider sets the spread', 'Blocking: a Grip tool (G) places flags, cutters, solids, floppies, single and double nets, silks, diffusion frames, overheads, bounce boards, negative fill, reflectors, C-stands, combo stands, apple boxes and sandbags. Turn and size each one on the plan; they go in the exported diagrams and the Word list']],
   ['8.9', 'November 9, 2026', ['Blocking: lighting and power plots. A Power tool places generators, tie-ins, house panels, wall outlets, distro and spider boxes, lunchboxes, splitters, dimmers, batteries and cable crossovers, and a Cable tool runs stingers, Bates, feeder, Socapex and DMX between them, snapping to lights and power', 'Blocking: give each light its watts and what it is plugged into, and each power piece its rating and what feeds it. A Power load table adds up the watts and amps on every source and distro and flags anything over 80% of its rating', 'Blocking: Show picks everything, the lighting and power plot alone, or the blocking without power, on screen and in the exported diagrams. Copying another scene’s plan brings its power along']],
   ['8.8', 'November 8, 2026', ['Storyboard › Animatic: title and text overlays fade in and out in Safari (on a Mac, iPhone and iPad), in the preview and in the exported video. Safari had been drawing them at full strength throughout']],
@@ -16002,7 +16202,8 @@ const PERM_POS = [
   ['Post supervisor', ['psched', 'cuts', 'turn', 'finish', 'deliv', 'credits'], ['dly', 'data', 'setlog', 'psound', 'music', 'vfx', 'paper', 'fest']],
   ['Sound designer', ['psound'], ['psched', 'cuts', 'music', 'dly']], ['Composer', ['music'], ['psched', 'cuts', 'psound']],
   ['VFX supervisor', ['vfx'], ['psched', 'cuts', 'sboard', 'previz', 'dly']], ['Colorist', ['turn', 'finish'], ['psched', 'cuts', 'dly', 'deliv']],
-  ['Publicist', ['kit', 'bb', 'mkt', 'fest', 'rplan'], ['credits', 'cast', 'crew', 'pitch']]
+  ['Publicist', ['kit', 'bb', 'mkt', 'fest', 'rplan'], ['credits', 'cast', 'crew', 'pitch']],
+  ['Intimacy coordinator', ['green'], ['script', 'bd', 'cast', 'board', 'shots', 'calls', 'sboard', 'today']]
 ];
 // with no position picked: everything can be looked at except money and the Producer phase
 const permDefHide = () => PERM.filter(u => u.money || u.g === 'Producer').map(u => u.id);
@@ -16224,8 +16425,11 @@ const clHereArea = () => { try{ const s = curSec(); return s ? s.name : ''; }cat
 const clImgName = (id, v) => String(id).replace(/[^\w-]/g, '_') + '-v' + (v || 0);
 function clImgRefs(){
   const out = new Map(); ((S.sched || {}).frames || []).forEach(f => { if (f.img) out.set(f.id, clImgName(f.id, f.v)); if (f.base) out.set(f.id + '~base', clImgName(f.id + '~base', f.v)); });
-  imgIdsOf().forEach(id => { if (!out.has(id)) out.set(id, clImgName(id, 0)); }); return out;
+  imgIdsOf().forEach(id => { if (!out.has(id)) out.set(id, clImgName(id, 0)); });
+  const R = intimPhotoIds(); if (R.size) for (const [id, n] of out) if (R.has(id)) out.set(id, 's_' + n);
+  return out;
 }
+async function clImgDrop(pid, n, names){ try{ await clStore('object/' + CL_BUCKET, {method: 'DELETE', body: JSON.stringify({prefixes: [pid + '/' + n]})}); names.delete(n); }catch(e){} }
 async function clImgList(pid){ const names = new Set(); for (let off = 0; ; off += 1000){ const r = await clStore(`object/list/${CL_BUCKET}`, {method: 'POST', body: JSON.stringify({prefix: pid, limit: 1000, offset: off})}); (r || []).forEach(o => o && o.name && names.add(o.name)); if (!r || r.length < 1000) break; } return names; }
 const clImgPath = (pid, n) => `${CL_BUCKET}/${pid}/${encodeURIComponent(n)}`;
 
@@ -16234,7 +16438,8 @@ async function clRoleOf(id, fresh){
   const c = CL.roles[id]; if (c && !fresh && Date.now() - c.t < 120000 && (c.role !== 'crew' || c.tabs)) return c.role;
   const role = await clApi('rpc/project_role', {method: 'POST', body: JSON.stringify({pid: id})});
   let mine = {}; if (role === 'crew'){ const m = await clApi(`project_members?project_id=eq.${id}&email=eq.${encodeURIComponent(clMe())}&select=tabs,parts,hide`).catch(() => null); mine = (m && m[0]) || {}; }
-  CL.roles[id] = Object.assign({role: role || null, t: Date.now()}, role === 'crew' ? {tabs: mine.tabs || [], parts: mine.parts || [], hide: mine.hide || null} : {}); return role || null;
+  let sens = role === 'owner'; if (role){ try{ sens = !!(await clApi('rpc/sens_ok', {method: 'POST', body: JSON.stringify({pid: id})})); CL.sensSql = true; }catch(e){ CL.sensSql = false; } }
+  CL.roles[id] = Object.assign({role: role || null, t: Date.now(), sens}, role === 'crew' ? {tabs: mine.tabs || [], parts: mine.parts || [], hide: mine.hide || null} : {}); return role || null;
 }
 const clRoleNow = () => { const l = clLink(); return l && CL.roles[l.id] ? CL.roles[l.id].role : (l && l.role) || null; };
 
@@ -16251,7 +16456,8 @@ async function clSync(opts = {}){
     if (!role){ clSetLink(null, key); CL.conflicts = []; clBanner(); toast('This project is no longer shared with you. Your copy stays on this device.', 4200); clStatus(''); return; }
     link.role = role; const canEdit = !clRO(role), full = role === 'owner' || role === 'editor', rc = CL.roles[link.id] || {};
     if (role === 'crew'){ link.tabs = rc.tabs || link.tabs || []; link.parts = rc.parts || link.parts || []; link.hide = rc.hide || link.hide || null; } else { delete link.tabs; delete link.parts; delete link.hide; }
-    const mayWrite = p => full || (role === 'crew' && clPartOk(p, link.parts));
+    const sens = role === 'owner' || !!rc.sens, rx = n => n.startsWith('s_');
+    const mayWrite = p => (p !== intimPart || sens) && (full || (role === 'crew' && clPartOk(p, link.parts)));
     const remote = await clApi(`project_parts?project_id=eq.${link.id}&select=part,rev,updated_at,updated_by`) || [];
     const R = Object.fromEntries(remote.map(r => [r.part, r]));
     const L0 = await clLocal(), H0 = {}; for (const [p, v] of Object.entries(L0)) H0[p] = clHash(clCanon(v));
@@ -16265,10 +16471,15 @@ async function clSync(opts = {}){
     // 1. photos added here go up first, so the crew never sees a frame before its picture
     if (canEdit) for (const [id, n] of refs0){
       if (link.img[id] === n) continue;
-      const names = await listed(); if (names.has(n)) continue;
-      const b = await idbGetK('img:' + id); if (!b) continue;
+      if (rx(n) && !sens) continue;   // a restricted photo taken by someone not on the list stays on their device
+      const names = await listed(); if (names.has(n)){ if (rx(n) && full && names.has(n.slice(2))) await clImgDrop(link.id, n.slice(2), names); continue; }
+      let b = await idbGetK('img:' + id);
+      // a photo restricted after it went up: move the shared copy to the restricted one
+      if (!b && rx(n) && names.has(n.slice(2))){ try{ b = await clStore('object/authenticated/' + clImgPath(link.id, n.slice(2)), {blob: true}); if (b && b.size) await idbSetK('img:' + id, b); else b = null; }catch(e){ b = null; } }
+      if (!b) continue;
       await clStore('object/' + clImgPath(link.id, n), {method: 'POST', headers: {'Content-Type': b.type || 'image/jpeg', 'x-upsert': 'true'}, body: b});
       names.add(n); link.img[id] = n;
+      if (rx(n) && full && names.has(n.slice(2))) await clImgDrop(link.id, n.slice(2), names);
     }
     // 2. what the crew changed
     const pulled = [], conflicts = [];
@@ -16307,6 +16518,8 @@ async function clSync(opts = {}){
     // 4. photos the crew added
     let got = 0;
     for (const [id, n] of clImgRefs()){
+      // restricted and not on the list: a copy that came through the cloud goes, once the shared copy is gone
+      if (rx(n) && !sens){ if (link.img[id] && (link.img[id] === n || !(await listed()).has(n.slice(2)))){ await idbDelK('img:' + id); if (IMG.has(id)){ URL.revokeObjectURL(IMG.get(id)); IMG.delete(id); } delete link.img[id]; got++; } continue; }
       if (link.img[id] === n) continue;
       const names = await listed(); if (!names.has(n)) continue;
       try{ const b = await clStore('object/authenticated/' + clImgPath(link.id, n), {blob: true}); if (b && b.size){ await idbSetK('img:' + id, b); if (IMG.has(id)){ URL.revokeObjectURL(IMG.get(id)); IMG.delete(id); } link.img[id] = n; got++; } }catch(e){}
@@ -16547,7 +16760,8 @@ document.addEventListener('change', async e => {
 async function clCrewLoad(force){
   const l = clLink(); if (!l || !CL.sess){ CL.crew = null; return; }
   if (!force && CL.crewFor === l.id && CL.crew) return;
-  CL.crew = await clApi(`project_members?project_id=eq.${l.id}&select=email,role,invited_by,created_at,tabs,parts,hide,position&order=created_at`) || []; CL.crewFor = l.id;
+  const q = `project_members?project_id=eq.${l.id}&select=email,role,invited_by,created_at,tabs,parts,hide,position%s&order=created_at`;
+  try{ CL.crew = await clApi(q.replace('%s', ',sensitive')) || []; CL.sensSql = true; }catch(e){ CL.crew = await clApi(q.replace('%s', '')) || []; CL.sensSql = false; } CL.crewFor = l.id;
 }
 function clInviteText(email){
   const app = 'Crafti', where = /^https:/.test(location.protocol) && !/claude\.ai$/.test(location.hostname) ? location.origin + location.pathname : '';
@@ -16604,7 +16818,7 @@ function clRender0(){
       <div class="clinv"><input class="txt" id="clInvEmail" type="email" placeholder="crew@example.com" aria-label="Crew member’s email"><select class="txt" id="clInvRole" aria-label="Role"><option value="editor">Editor</option><option value="crew">Crew: chosen tabs</option><option value="viewer">Viewer</option></select><button class="btn primary" type="button" data-clact="invite">Add to crew</button></div>${CLF.clInvRole === 'crew' ? permPicker('inv') : ''}
       ${CL.invite ? `<div class="clinvok"><span>Added <b>${esc(CL.invite)}</b>. They’ll see the project when they sign in. Send them a note so they know:</span><button class="btn" type="button" data-clact="copyinv">Copy invite message</button>${navigator.share ? '<button class="btn ghost" type="button" data-clact="shareinv">Share…</button>' : ''}</div>` : ''}` : `<p class="note" style="margin:0">${esc(ROLE_SAYS[role] || '')}</p>`}
     ${crewList ? `<ul class="cllist">${`<li><div><b>${role === 'owner' ? esc(clName() || clMe()) + ' (you)' : 'The owner'}</b><small>${role === 'owner' ? esc(clMe()) : 'Shared this project'}</small></div><span class="pill">Owner</span></li>`}${crewList.map(c => { const me = c.email === clMe(), on = CL.here.find(h => h.email === c.email);
-      return `<li><div><b>${esc(c.email)}${me ? ' (you)' : ''}</b><small>${on ? 'Here now' + (on.area ? ' · in ' + esc(on.area) : '') : 'Added ' + esc(clWhen(c.created_at))}${c.role === 'crew' ? `<span class="cltabs">${c.position ? esc(c.position) + ' · ' : ''}${esc(permSummary(c))}</span>` : ''}</small></div>${role === 'owner' ? `<select class="txt" data-clrole="${esc(c.email)}" aria-label="Role for ${esc(c.email)}"><option value="editor"${c.role === 'editor' ? ' selected' : ''}>Editor</option><option value="crew"${c.role === 'crew' ? ' selected' : ''}>Crew</option><option value="viewer"${c.role === 'viewer' ? ' selected' : ''}>Viewer</option></select>${c.role === 'crew' ? `<button class="btn" type="button" data-clact="permedit" data-email="${esc(c.email)}">Tabs…</button>` : ''}<button class="btn ghost" type="button" data-clrm="${esc(c.email)}">Remove</button>` : `<span class="pill">${ROLE_NAME[c.role] || c.role}</span>`}</li>${role === 'owner' && CL.permEdit === c.email ? `<li class="permli">${permPicker(c.email)}</li>` : ''}`; }).join('')}</ul>
+      return `<li><div><b>${esc(c.email)}${me ? ' (you)' : ''}</b><small>${on ? 'Here now' + (on.area ? ' · in ' + esc(on.area) : '') : 'Added ' + esc(clWhen(c.created_at))}${c.role === 'crew' ? `<span class="cltabs">${c.position ? esc(c.position) + ' · ' : ''}${esc(permSummary(c))}</span>` : ''}</small></div>${role === 'owner' ? `<select class="txt" data-clrole="${esc(c.email)}" aria-label="Role for ${esc(c.email)}"><option value="editor"${c.role === 'editor' ? ' selected' : ''}>Editor</option><option value="crew"${c.role === 'crew' ? ' selected' : ''}>Crew</option><option value="viewer"${c.role === 'viewer' ? ' selected' : ''}>Viewer</option></select>${c.role === 'crew' ? `<button class="btn" type="button" data-clact="permedit" data-email="${esc(c.email)}">Tabs…</button>` : ''}<button class="btn ghost" type="button" data-clrm="${esc(c.email)}">Remove</button>${CL.sensSql !== false ? `<label class="tog clsens" title="Consent details and photos from intimate scenes"><input type="checkbox" data-clsens="${esc(c.email)}" ${c.sensitive ? 'checked' : ''}> Restricted material</label>` : ''}` : `<span class="pill">${ROLE_NAME[c.role] || c.role}</span>`}</li>${role === 'owner' && CL.permEdit === c.email ? `<li class="permli">${permPicker(c.email)}</li>` : ''}`; }).join('')}</ul>
       ${!crewList.length && role === 'owner' ? '<p class="note" style="margin:0">No one else yet.</p>' : ''}` : '<p class="note" style="margin:0">Loading the crew…</p>'}
     ${role !== 'owner' && role !== 'reviewer' && (CL.crew || []).some(c => c.email === clMe()) ? '<div class="row"><button class="btn ghost" type="button" data-clact="leave">Leave this project</button></div>' : ''}`;
   const acc = CL.access, isAdmin = acc && acc.role === 'admin', revList = (CL.list || []).filter(r => r.role === 'reviewer'), myList = CL.list ? CL.list.filter(r => r.role !== 'reviewer') : null;
@@ -16678,6 +16892,7 @@ document.addEventListener('change', async e => {
   if (t.dataset.permst){ const [k, id] = t.dataset.permst.split('|'); permSet(k, [id], t.value); const row = t.closest('.permrow'); if (row) row.classList.toggle('off', t.value === 'hide'); return; }
   if (t.dataset.permpos){ permPreset(t.dataset.permpos, t.value); clRender(); return; }
   if (t.id === 'clInvRole'){ clRender(); return; }
+  if (t.dataset.clsens){ const l = clLink(), em = t.dataset.clsens; try{ await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(em)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify({sensitive: t.checked})}); await clCrewLoad(true); toast(t.checked ? `${em} can now see consent details and restricted photos.` : `${em} can no longer see restricted material. Restricted photos already on their device are removed at their next sync.`, 5000); }catch(er){ CL.err = er.message; } clRender(); return; }
   if (t.dataset.clrole){ const l = clLink(), em = t.dataset.clrole, crew = t.value === 'crew'; try{ await clApi(`project_members?project_id=eq.${l.id}&email=eq.${encodeURIComponent(em)}`, {method: 'PATCH', headers: {Prefer: 'return=minimal'}, body: JSON.stringify(Object.assign({role: t.value}, crew ? (permPreset(em, ''), permBody(em)) : {tabs: null, parts: null, hide: null, see_parts: null, position: null}))}); await clCrewLoad(true); if (crew){ CL.permEdit = em; toast('Now pick what they can change and see.'); } else toast('Role changed.'); }catch(er){ CL.err = er.message; } clRender(); }
 });
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target && ['clEmail', 'clCode', 'clInvEmail'].includes(e.target.id)){ e.preventDefault(); const b = $('#cloudModal [data-clact="' + ({clEmail: 'send', clCode: 'verify', clInvEmail: 'invite'})[e.target.id] + '"]'); if (b) b.click(); } if (e.key === 'Escape' && $('#cloudModal') && !$('#cloudModal').hidden) $('#cloudModal').hidden = true; });
